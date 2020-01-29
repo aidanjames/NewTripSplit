@@ -20,10 +20,10 @@ struct PersonCardView: View {
                 .shadow(radius: 5, x: 4, y: 4)
             VStack(spacing: 8) {
                 ZStack {
-                    Image(person.wrappedPhoto)
+                    person.wrappedMemberImage
                         .resizable()
-                        .scaledToFit()
-                        .frame(height: 75)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 75, height: 75)
                         .clipShape(Circle())
                 }
                 Text(person.wrappedName)

@@ -15,7 +15,7 @@ struct PersonListItemView: View {
     
     var body: some View {
         HStack {
-            Image(person.wrappedPhoto)
+            person.wrappedMemberImage
                 .resizable()
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())

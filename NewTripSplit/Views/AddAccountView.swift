@@ -16,20 +16,10 @@ struct AddAccountView: View {
     @State private var showingAddMemberView = false
     @State private var showingImagePickerView = false
     @State private var members = [Person]()
-    @State private var accountImage = Image("gbp")
-    
+   
     @State private var inputImage: UIImage?
-    @State private var imageUUID: String?
-    var imageId: String {
-        if let imageId = imageUUID {
-            return imageId
-        } else {
-            return selectedBaseCurrency.rawValue.lowercased()
-        }
-    }
-    
+
     var moc: NSManagedObjectContext
-    
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -43,7 +33,6 @@ struct AddAccountView: View {
                             Text(currency.rawValue)
                         }
                     }
-                    
                 }
                 Section(header: Text("Image").font(.body)) {
                     HStack {
@@ -54,7 +43,7 @@ struct AddAccountView: View {
                                 .frame(width: 80, height: 80)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                         } else {
-                            Image(imageId)
+                            Image(selectedBaseCurrency.rawValue.lowercased())
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 80, height: 80)
@@ -64,18 +53,19 @@ struct AddAccountView: View {
                         Button("Change") {
                             self.showingImagePickerView.toggle()
                         }
-                        .sheet(isPresented: $showingImagePickerView, onDismiss: loadImage) {
+                        .sheet(isPresented: $showingImagePickerView) {
                             ImagePicker(image: self.$inputImage)
                         }
                     }
                 }
                 Section(header: Text("Members").font(.body)) {
-                    Button(action: {}) {
+                    Button(action: { self.showingAddMemberView.toggle() }) {
                         HStack {
                             Image(systemName: "person.badge.plus.fill")
                             Text("Add member")
                         }
                     }
+                    .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: self.moc, members: self.$members) }
                     ForEach(members, id: \.wrappedId) { member in
                         PersonListItemView(person: member, showingCheckmark: false)
                     }
@@ -97,17 +87,17 @@ struct AddAccountView: View {
         let account = Trip(context: self.moc)
         account.id = UUID()
         account.dateCreated = Date()
-        account.image = self.imageId
         account.name = self.accountName
         
         // Convert to data
         if let inputImage = self.inputImage {
+            let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
                 // Save to device
-                FileManager.default.writeData(jpegData, to: self.imageId)
+                FileManager.default.writeData(jpegData, to: imageID)
+                account.image = imageID
             }
         }
-        
         
         account.baseCurrency = selectedBaseCurrency.rawValue
         
@@ -123,14 +113,7 @@ struct AddAccountView: View {
         
         self.presentationMode.wrappedValue.dismiss()
     }
-    
-    
-    func loadImage() {
-        guard let inputImage = inputImage else { return }
-        self.accountImage = Image(uiImage: inputImage)
-        self.imageUUID = UUID().uuidString
-        
-    }
+
     
 }
 

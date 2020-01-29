@@ -9,7 +9,7 @@
 
 import Foundation
 import CoreData
-
+import SwiftUI
 
 extension Trip {
 
@@ -29,8 +29,7 @@ extension Trip {
     public var wrappedId: UUID { id ?? UUID() }
     public var wrappedDateCreated: Date { dateCreated ?? Date() }
     public var wrappedName: String { name ?? "Unknown name" }
-    public var wrappedImage: String { image ?? "Unknown photo" }
-    public var wrappedBaseCurrency: String { baseCurrency ?? "Unknown currency" }
+    public var wrappedBaseCurrency: String { baseCurrency ?? "GBP" }
     public var wrappedCurrenciesUsed: [String] { currenciesUsed ?? [] }
 
     public var sortedPeopleArray: [Person] {
@@ -46,6 +45,17 @@ extension Trip {
            }
            return false
         }  
+    }
+    
+    public var wrappedAccountImage: Image {
+        if let imageName = image {
+            if let imageData: Data = FileManager.default.fetchData(from: imageName) {
+                if let uiImage = UIImage(data: imageData) {
+                    return Image(uiImage: uiImage)
+                }
+            }
+        }
+        return Image(wrappedBaseCurrency.lowercased())
     }
     
     public var transactionsArray: [Transaction] {

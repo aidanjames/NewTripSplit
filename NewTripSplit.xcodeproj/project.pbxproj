@@ -32,7 +32,6 @@
 		3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812523DCA0F7009301BB /* TransactionDetailView.swift */; };
 		3D81812823DCAE34009301BB /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812723DCAE34009301BB /* LocationFetcher.swift */; };
 		3D81812A23DCC4B4009301BB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812923DCC4B4009301BB /* MapView.swift */; };
-		3D90F9A123C3EA250065B039 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D90F9A023C3EA250065B039 /* AddTripView.swift */; };
 		3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D90F9A223C3FB340065B039 /* AddExpenseView.swift */; };
 		3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */; };
 		3DB1739C23BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */; };
@@ -43,7 +42,6 @@
 		3DB173A123BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739923BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift */; };
 		3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743923BFFE7300010233 /* TransactionListItemView.swift */; };
 		3DB1743F23C0021500010233 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743E23C0021500010233 /* TripView.swift */; };
-		3DBDDF1223C920BF0012F714 /* AddPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1123C920BF0012F714 /* AddPersonView.swift */; };
 		3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1323C929AD0012F714 /* TransactionListView.swift */; };
 		3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975023C3C02F003042F0 /* ColorExtension.swift */; };
 		3DD0975523C3DA44003042F0 /* FunctionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */; };
@@ -77,7 +75,6 @@
 		3D81812523DCA0F7009301BB /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		3D81812723DCAE34009301BB /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		3D81812923DCC4B4009301BB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		3D90F9A023C3EA250065B039 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		3D90F9A223C3FB340065B039 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
 		3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListItemView.swift; sourceTree = "<group>"; };
 		3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -88,7 +85,6 @@
 		3DB1739923BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Trip+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		3DB1743923BFFE7300010233 /* TransactionListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListItemView.swift; sourceTree = "<group>"; };
 		3DB1743E23C0021500010233 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
-		3DBDDF1123C920BF0012F714 /* AddPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonView.swift; sourceTree = "<group>"; };
 		3DBDDF1323C929AD0012F714 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
 		3DD0975023C3C02F003042F0 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionButtonView.swift; sourceTree = "<group>"; };
@@ -167,14 +163,12 @@
 				3D81812B23DCCDEC009301BB /* Transaction Views */,
 				3D70CD8723CFAF8700701C23 /* Side Bets Views */,
 				3D57F29323BFC7D200938E11 /* ContentView.swift */,
-				3DBDDF1123C920BF0012F714 /* AddPersonView.swift */,
 				3D90F9A223C3FB340065B039 /* AddExpenseView.swift */,
 				3DB1743E23C0021500010233 /* TripView.swift */,
 				3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */,
 				3D03455923C0BB630062A3E8 /* PersonCardView.swift */,
 				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
 				3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */,
-				3D90F9A023C3EA250065B039 /* AddTripView.swift */,
 				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
 				3D145EEB23E0CA310078AC75 /* AddMemberView.swift */,
 			);
@@ -310,7 +304,6 @@
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
-				3D90F9A123C3EA250065B039 /* AddTripView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,
 				3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */,
@@ -319,7 +312,6 @@
 				3D70CD8D23CFB00E00701C23 /* PlaceBetView.swift in Sources */,
 				3DB173A023BFD63E00DF2CE1 /* Trip+CoreDataClass.swift in Sources */,
 				3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */,
-				3DBDDF1223C920BF0012F714 /* AddPersonView.swift in Sources */,
 				3DB173A123BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift in Sources */,
 				3D70CD9F23CFB86400701C23 /* Wager.swift in Sources */,
 				3D03455A23C0BB630062A3E8 /* PersonCardView.swift in Sources */,

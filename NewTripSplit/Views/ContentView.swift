@@ -23,7 +23,7 @@ struct ContentView: View {
                     ForEach(trips, id: \.id) { trip in
                         NavigationLink(destination: TripView(trip: trip)) {
                             HStack {
-                                Image("eur")
+                                trip.wrappedAccountImage
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 60, height: 60)
@@ -33,15 +33,14 @@ struct ContentView: View {
                         }
                     }
                 }
-//                .sheet(isPresented: $showingAddTrip) { AddTripView(moc: self.moc) }
                 .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc)}
             }
                 
-            .navigationBarTitle("Trips")
+            .navigationBarTitle("Accounts")
             .navigationBarItems(trailing:
                 HStack {
                     Button(action: { self.showingAddTrip.toggle() }) {
-                        Text("Add trip")
+                        Text("Add account")
                             .padding()
                     }
                 }

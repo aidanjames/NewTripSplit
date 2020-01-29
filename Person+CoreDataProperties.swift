@@ -9,7 +9,7 @@
 
 import Foundation
 import CoreData
-
+import SwiftUI
 
 extension Person {
 
@@ -36,7 +36,6 @@ extension Person {
             return "Unknown name"
         }
     }
-    public var wrappedPhoto: String { photo ?? "unknown" }
 
     public var beneficiaryArray: [Transaction] {
         let set = beneficiary as? Set<Transaction> ?? []
@@ -61,7 +60,16 @@ extension Person {
         return String(format: "%.02f", abs(localBal))
     }
     
-    
+    public var wrappedMemberImage: Image {
+        if let imageName = photo {
+            if let imageData: Data = FileManager.default.fetchData(from: imageName) {
+                if let uiImage = UIImage(data: imageData) {
+                    return Image(uiImage: uiImage)
+                }
+            }
+        }
+        return Image("unknown")
+    }
     
 
 }
