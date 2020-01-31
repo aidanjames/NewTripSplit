@@ -13,7 +13,10 @@ struct TripView: View {
     @ObservedObject var trip: Trip
     
     @State private var bottomSheetIsOpen = false
-    @State private var showingAddExpenseSheet = false
+    @State private var showingAddExpenseView = false
+    @State private var showingAddMemberView = false
+    @State private var showingSettlementView = false
+    @State private var showingMemberSummaryView = false
     @Environment(\.managedObjectContext) var moc
     
     
@@ -21,37 +24,48 @@ struct TripView: View {
         
         GeometryReader { geo in
             ZStack {
+                Color(hex: "EFEEEE")
                 VStack {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
+                        HStack(spacing: 7) {
                             ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
                                 Button(action: { self.printInfoAboutPerson(person: person) }) {
-                                    PersonCardView(person: person)
+                                    MemberCardView(person: person)
                                         .padding(.vertical)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                            }
-                            Button(action: {}) {
-                                VStack {
-                                    Image(systemName: "person.crop.circle.badge.plus")
-                                        .font(.largeTitle)
-                                    Text("Add person")
+                                .sheet(isPresented: self.$showingMemberSummaryView) {
+                                    Text("Placeholder for member summary view")
                                 }
-                                .foregroundColor(.blue)
-                                .padding(.trailing)
                             }
-                            .padding()
                         }
                     }
-                    VStack(spacing: 15) {
-                        Button(action: { self.showingAddExpenseSheet.toggle() }) {
-                            FunctionButtonView(width: 250, height: 80, text: "Add expense", image: "plus.circle.fill")
+                    
+                    
+                    HStack {
+                        Button(action: { self.showingAddExpenseView.toggle() }) {
+                            NeumorphicButton(width: 150, height: 80, text: "Transaction", image: "plus")
                         }
-                        Button(action: {print("Need to show settlement page.")}) {
-                            FunctionButtonView(width: 250, height: 80, text: "Settlement", image: "sterlingsign.circle.fill")
+                        .sheet(isPresented: self.$showingAddExpenseView) {
+                            AddExpenseView(moc: self.moc, trip: self.trip)
                         }
                         NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-                            FunctionButtonView(width: 250, height: 80, text: "Side bets", image: "centsign.circle.fill")
+                            NeumorphicButton(width: 150, height: 80, text: "Side bets", image: "hand.raised")
+                        }
+                    }
+                    .padding(.top, 20)
+                    HStack {
+                        Button(action: { self.showingSettlementView.toggle() }) {
+                            NeumorphicButton(width: 150, height: 80, text: "Settlement", image: "equal")
+                        }
+                        .sheet(isPresented: self.$showingSettlementView) {
+                            Text("Placeholder for settlement view")
+                        }
+                        Button(action: { self.showingAddMemberView.toggle() }) {
+                            NeumorphicButton(width: 150, height: 80, text: "Add member", image: "person.badge.plus")
+                        }
+                        .sheet(isPresented: self.$showingAddMemberView) {
+                            AddMemberToTripView(moc: self.moc, account: self.trip)
                         }
                     }
                     Spacer()
@@ -60,13 +74,13 @@ struct TripView: View {
                     .shadow(radius: 5)
             }
             .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
-            .sheet(isPresented: self.$showingAddExpenseSheet) {
-                AddExpenseView(moc: self.moc, trip: self.trip)
-            }
+            
         }
+        
     }
     
     func printInfoAboutPerson(person: Person) {
+        self.showingMemberSummaryView.toggle()
         print("Person name: \(person.wrappedName)")
         print("Person balance: \(person.localBal)")
         print("Transactions paid for:")

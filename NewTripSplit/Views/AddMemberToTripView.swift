@@ -1,19 +1,18 @@
 //
-//  AddMemberView.swift
+//  AddMemberToTripView.swift
 //  NewTripSplit
 //
-//  Created by Aidan Pendlebury on 28/01/2020.
+//  Created by Aidan Pendlebury on 31/01/2020.
 //  Copyright © 2020 Aidan Pendlebury. All rights reserved.
 //
 
 import CoreData
 import SwiftUI
 
-struct AddMemberView: View {
-
+struct AddMemberToTripView: View {
+    
     var moc: NSManagedObjectContext
-//    var account: Trip?
-    @Binding var members: [Person]
+    var account: Trip
     
     @State private var name = ""
     @State private var showingImagePickerView = false
@@ -24,7 +23,7 @@ struct AddMemberView: View {
     var body: some View {
         NavigationView {
             Form {
-
+                
                 Section(header: Text("Member details")) {
                     TextField("Member name", text: $name)
                 }
@@ -54,12 +53,12 @@ struct AddMemberView: View {
                     }
                 }
             }
-        .navigationBarTitle(Text("New member"))
-        .navigationBarItems(
-            leading:
-            Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
-            trailing:
-            Button("Add to account") { self.saveMember() })
+            .navigationBarTitle(Text("New member"))
+            .navigationBarItems(
+                leading:
+                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                trailing:
+                Button("Add to account") { self.saveMember() })
         }
     }
     
@@ -79,29 +78,29 @@ struct AddMemberView: View {
                 member.photo = imageID
             }
         }
-            self.members.append(member)
         
+        member.trip = self.account
+        account.addToPeople(member)
+        try? self.moc.save()
         
         self.presentationMode.wrappedValue.dismiss()
-        
-//        if self.account != nil {
-//            member.trip = self.account
-//            account?.addToPeople(member)
-//            try? self.moc.save() // We're only saving the moc if there's a trip
-//        }
+
     }
     
-
+    
 }
 
-struct AddMemberView_Previews: PreviewProvider {
+struct AddMemberToTripView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let person1 = Person(context: moc)
         person1.name = "Aidan James"
         person1.photo = "person1"
         person1.id = UUID()
+        let account = Trip(context: moc)
+        account.id = UUID()
         
-        return AddMemberView(moc: moc, members: .constant([person1]))
+        
+        return AddMemberToTripView(moc: moc, account: account)
     }
 }

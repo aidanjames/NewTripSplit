@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */; };
-		3D03455A23C0BB630062A3E8 /* PersonCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03455923C0BB630062A3E8 /* PersonCardView.swift */; };
 		3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EE923E0C1910078AC75 /* AddAccountView.swift */; };
 		3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EEB23E0CA310078AC75 /* AddMemberView.swift */; };
 		3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */; };
 		3D16979723D5B31D002F9E4E /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */; };
 		3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */; };
+		3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */; };
+		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
 		3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28C23BFC7D200938E11 /* AppDelegate.swift */; };
 		3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */; };
 		3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F29023BFC7D200938E11 /* NewTripSplit.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 		3D81812823DCAE34009301BB /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812723DCAE34009301BB /* LocationFetcher.swift */; };
 		3D81812A23DCC4B4009301BB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812923DCC4B4009301BB /* MapView.swift */; };
 		3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D90F9A223C3FB340065B039 /* AddExpenseView.swift */; };
+		3D98DDC223E4D01F0029D432 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D98DDC123E4D01F0029D432 /* MemberCardView.swift */; };
 		3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */; };
 		3DB1739C23BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */; };
 		3DB1739D23BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739523BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift */; };
@@ -49,12 +51,13 @@
 
 /* Begin PBXFileReference section */
 		3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
-		3D03455923C0BB630062A3E8 /* PersonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCardView.swift; sourceTree = "<group>"; };
 		3D145EE923E0C1910078AC75 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		3D145EEB23E0CA310078AC75 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicButton.swift; sourceTree = "<group>"; };
+		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
 		3D57F28923BFC7D200938E11 /* NewTripSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTripSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D57F28C23BFC7D200938E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		3D81812723DCAE34009301BB /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		3D81812923DCC4B4009301BB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		3D90F9A223C3FB340065B039 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
+		3D98DDC123E4D01F0029D432 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
 		3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListItemView.swift; sourceTree = "<group>"; };
 		3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3DB1739523BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -166,11 +170,13 @@
 				3D90F9A223C3FB340065B039 /* AddExpenseView.swift */,
 				3DB1743E23C0021500010233 /* TripView.swift */,
 				3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */,
-				3D03455923C0BB630062A3E8 /* PersonCardView.swift */,
 				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
 				3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */,
 				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
 				3D145EEB23E0CA310078AC75 /* AddMemberView.swift */,
+				3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */,
+				3D98DDC123E4D01F0029D432 /* MemberCardView.swift */,
+				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -292,6 +298,7 @@
 			files = (
 				3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */,
 				3DB1739E23BFD63E00DF2CE1 /* Person+CoreDataClass.swift in Sources */,
+				3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */,
 				3DB1739C23BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift in Sources */,
 				3D70CD8B23CFB00100701C23 /* NewOddsView.swift in Sources */,
 				3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */,
@@ -307,6 +314,7 @@
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,
 				3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */,
+				3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */,
 				3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */,
 				3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */,
 				3D70CD8D23CFB00E00701C23 /* PlaceBetView.swift in Sources */,
@@ -314,7 +322,6 @@
 				3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */,
 				3DB173A123BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift in Sources */,
 				3D70CD9F23CFB86400701C23 /* Wager.swift in Sources */,
-				3D03455A23C0BB630062A3E8 /* PersonCardView.swift in Sources */,
 				3DD0975523C3DA44003042F0 /* FunctionButtonView.swift in Sources */,
 				3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */,
 				3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */,
@@ -322,6 +329,7 @@
 				3D7D0BEA23D0B373005F1DAA /* Betting.swift in Sources */,
 				3D70CD8923CFAFA500701C23 /* SideBetsSummaryView.swift in Sources */,
 				3D70CD9123CFB3CA00701C23 /* BetCardView.swift in Sources */,
+				3D98DDC223E4D01F0029D432 /* MemberCardView.swift in Sources */,
 				3DB1743F23C0021500010233 /* TripView.swift in Sources */,
 				3D70CD9D23CFB7D900701C23 /* Odds.swift in Sources */,
 				3D16979723D5B31D002F9E4E /* FileManagerExtension.swift in Sources */,
