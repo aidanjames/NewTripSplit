@@ -12,24 +12,37 @@ struct NeumorphicButton: View {
     
     var width: CGFloat
     var height: CGFloat
-    var text: String
-    var image: String?
+    var belowButtonText: String?
+    var onButtonText: String?
+    var onButtonImage: String?
+    var circleShape: Bool = true
     
     var body: some View {
         VStack {
             ZStack {
-                Circle()
+                if circleShape {
+                    Circle()
                     .foregroundColor(Color(hex: "EFEEEE"))
-                    .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 6, y: 6)
-                    .shadow(color: Color(hex: "FFFFFF"), radius: 5, x: -6, y: -6)
-                if image != nil {
-                    Image(systemName: image!)
-                        .font(.largeTitle)
+                    .shadow(color: Color(hex: "D1CDC7"), radius: 4, x: 4, y: 4)
+                    .shadow(color: Color(hex: "FFFFFF"), radius: 4, x: -4, y: -4)
+                } else {
+                    RoundedRectangle(cornerRadius: 16)
+                    .foregroundColor(Color(hex: "EFEEEE"))
+                    .shadow(color: Color(hex: "D1CDC7"), radius: 4, x: 4, y: 4)
+                    .shadow(color: Color(hex: "FFFFFF"), radius: 4, x: -4, y: -4)
                 }
-                
+                    
+                if onButtonImage != nil {
+                    Image(systemName: onButtonImage!)
+                        .font(.largeTitle)
+                } else if onButtonText != nil {
+                    Text(onButtonText!)
+                }
             }
             .frame(width: width, height: height)
-            Text(text)
+            if belowButtonText != nil {
+                Text(belowButtonText!)
+            }
         }
         .foregroundColor(.blue)
     }
@@ -37,6 +50,6 @@ struct NeumorphicButton: View {
 
 struct NeumorphicButton_Previews: PreviewProvider {
     static var previews: some View {
-        NeumorphicButton(width: 100, height: 100, text: "New transaction", image: "plus")
+        NeumorphicButton(width: 100, height: 100, belowButtonText: "New transaction", onButtonImage: "plus")
     }
 }

@@ -17,8 +17,8 @@ struct MemberCardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(Color(hex: "EFEEEE"))
-                .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 6, y: 6)
-                .shadow(color: Color(hex: "FFFFFF"), radius: 5, x: -6, y: -6)
+                .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 5, y: 5)
+                .shadow(color: Color(hex: "FFFFFF"), radius: 5, x: -5, y: -5)
             VStack(spacing: 8) {
                 ZStack {
                     person.wrappedMemberImage

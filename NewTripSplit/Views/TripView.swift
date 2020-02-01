@@ -44,25 +44,25 @@ struct TripView: View {
                     
                     HStack {
                         Button(action: { self.showingAddExpenseView.toggle() }) {
-                            NeumorphicButton(width: 150, height: 80, text: "Transaction", image: "plus")
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Transaction", onButtonImage: "plus")
                         }
                         .sheet(isPresented: self.$showingAddExpenseView) {
                             AddExpenseView(moc: self.moc, trip: self.trip)
                         }
                         NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-                            NeumorphicButton(width: 150, height: 80, text: "Side bets", image: "hand.raised")
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", onButtonImage: "hand.raised")
                         }
                     }
                     .padding(.top, 20)
                     HStack {
                         Button(action: { self.showingSettlementView.toggle() }) {
-                            NeumorphicButton(width: 150, height: 80, text: "Settlement", image: "equal")
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Settlement", onButtonImage: "equal")
                         }
                         .sheet(isPresented: self.$showingSettlementView) {
                             Text("Placeholder for settlement view")
                         }
                         Button(action: { self.showingAddMemberView.toggle() }) {
-                            NeumorphicButton(width: 150, height: 80, text: "Add member", image: "person.badge.plus")
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Add member", onButtonImage: "person.badge.plus")
                         }
                         .sheet(isPresented: self.$showingAddMemberView) {
                             AddMemberToTripView(moc: self.moc, account: self.trip)

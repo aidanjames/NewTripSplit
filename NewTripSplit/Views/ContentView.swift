@@ -18,32 +18,26 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(trips, id: \.id) { trip in
-                        NavigationLink(destination: TripView(trip: trip)) {
-                            HStack {
-                                trip.wrappedAccountImage
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                Text(trip.wrappedName)
-                            }
+            ScrollView {
+                ZStack {
+                    Color(hex: "EFEEEE")
+                    VStack {
+                        ForEach(trips, id: \.id) { trip in
+                            AccountCardView(account: trip)
                         }
+                        Spacer()
                     }
                 }
-                .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc)}
+                .navigationBarTitle("Accounts")
+                .navigationBarItems(trailing:
+                    HStack {
+                        Button(action: { self.showingAddTrip.toggle() }) {
+                            Text("Add account")
+                        }
+                        .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc)}
+                    }
+                )
             }
-            .navigationBarTitle("Accounts")
-            .navigationBarItems(trailing:
-                HStack {
-                    Button(action: { self.showingAddTrip.toggle() }) {
-                        Text("Add account")
-                            .padding()
-                    }
-                }
-            )
         }
     }
     
