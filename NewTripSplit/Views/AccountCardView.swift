@@ -60,6 +60,15 @@ struct AccountCardView: View {
     }
     
     func deleteAccount() {
+        
+        for member in account.sortedPeopleArray {
+            moc.delete(member)
+        }
+        
+        for transaction in account.transactionsArray {
+            moc.delete(transaction)
+        }
+        
         moc.delete(account)
     }
 }

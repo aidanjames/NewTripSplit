@@ -15,6 +15,7 @@
 		3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */; };
 		3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */; };
 		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
+		3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */; };
 		3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28C23BFC7D200938E11 /* AppDelegate.swift */; };
 		3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */; };
 		3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F29023BFC7D200938E11 /* NewTripSplit.xcdatamodeld */; };
@@ -59,6 +60,7 @@
 		3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicButton.swift; sourceTree = "<group>"; };
 		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
+		3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptView.swift; sourceTree = "<group>"; };
 		3D57F28923BFC7D200938E11 /* NewTripSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTripSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D57F28C23BFC7D200938E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				3DB1743923BFFE7300010233 /* TransactionListItemView.swift */,
 				3D81812923DCC4B4009301BB /* MapView.swift */,
 				3D81812523DCA0F7009301BB /* TransactionDetailView.swift */,
+				3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */,
 			);
 			path = "Transaction Views";
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */,
 				3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */,
 				3DB1739F23BFD63E00DF2CE1 /* Person+CoreDataProperties.swift in Sources */,
+				3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */,
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
 				3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,

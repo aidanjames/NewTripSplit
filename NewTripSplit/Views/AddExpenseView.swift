@@ -24,6 +24,11 @@ struct AddExpenseView: View {
     @State private var paidBySelection = 0
     @State private var firstEntry = true
     @State private var useCurrentLocation = true
+    @State private var showingImagePicker = false
+    @State private var showingCameraOrPhotoLibActionSheet = false
+    @State private var useCamera = false
+    
+    @State private var inputImage: UIImage?
     
     let locationFetcher = LocationFetcher()
     
@@ -50,10 +55,30 @@ struct AddExpenseView: View {
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
                 Text("Currency: \(trip.wrappedBaseCurrency)")
                 Toggle(isOn: $useCurrentLocation) {
+                    // Need a check here to make sure we can access location
                     Text("Use current location")
                 }
                 .onAppear(perform: fetchLocation)
-
+                Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
+                    self.showingCameraOrPhotoLibActionSheet.toggle()
+                }
+                .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                    ActionSheet(title: Text("Add receipt"), buttons: [
+                        .default(Text("Take a photo")) {
+                            self.useCamera = true
+                            self.showingImagePicker.toggle()
+                        },
+                        .default(Text("Use photo album")) {
+                            self.useCamera = false
+                            self.showingImagePicker.toggle()
+                        },
+                        .cancel()
+                    ])
+                }
+                .sheet(isPresented: $showingImagePicker) {
+                    ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                }
+                
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
@@ -116,11 +141,10 @@ struct AddExpenseView: View {
         
         transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
         self.trip.sortedPeopleArray[paidBySelection].localBal += amountAsDouble
-//        self.trip.sortedPeopleArray[paidBySelection].addToPayer(transaction)
+
         
         for person in paidFor {
             person.localBal -= amountOwedByBeneficiaries
-//            person.addToBeneficiary(transaction)
             transaction.addToPaidFor(person)
         }
         
@@ -136,8 +160,17 @@ struct AddExpenseView: View {
             transactionDate = Calendar.current.date(byAdding: .second, value: Int.random(in: 1...1000), to: transactionDate) ?? Date()
         }
         transaction.date = transactionDate
-
         
+        // If we have a receipt image...
+        if let inputImage = self.inputImage {
+            let imageID = UUID().uuidString
+            if let jpegData = inputImage.jpegData(compressionQuality: 1) {
+                // Save to device
+                FileManager.default.writeData(jpegData, to: imageID)
+                transaction.photo = imageID
+            }
+        }
+
         try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()
 

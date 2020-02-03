@@ -19,6 +19,7 @@ struct TransactionDetailView: View {
     
     @State private var centerCoordinate = CLLocationCoordinate2D()
     @State private var showingDeleteAlert = false
+    @State private var receiptViewShowing = false
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -48,6 +49,16 @@ struct TransactionDetailView: View {
                                 }
                                 Text("Amount: \(Currencies.format(amount: self.transaction!.baseAmt))")
                                 Text("Date: \(self.transaction!.dateDisplay)")
+                                if self.transaction!.photo != nil {
+                                    Button("View receipt") {
+                                        // present receipt view
+                                        self.receiptViewShowing.toggle()
+                                    }
+                                    .foregroundColor(.blue)
+                                    .sheet(isPresented: self.$receiptViewShowing) {
+                                        TransactionReceiptView(transaction: self.transaction!)
+                                    }
+                                }
                             }
                             Section(header: Text("Paid by")) {
                                 Text("\(self.transaction!.paidBy?.wrappedName ?? "")")

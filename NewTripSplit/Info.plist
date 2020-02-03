@@ -51,6 +51,8 @@
 	<string>We need to access your location to add extra information to your transactions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your photo album to allow you to add images to the app.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access your camera to allow you to take photo images to add to the app, such as receipt images.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

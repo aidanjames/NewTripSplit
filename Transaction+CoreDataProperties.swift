@@ -35,7 +35,7 @@ extension Transaction {
     public var wrappedDate: Date { date ?? Date() }
     public var wrappedId: UUID { id ?? UUID() }
     public var wrappedTitle: String { title ?? "Unknown title" }
-    public var wrappedPhoto: String { photo ?? "Unknown photo" }
+//    public var wrappedPhoto: String { photo ?? "Unknown photo" }
     public var wrappedAdditionalInfo: String { additionalInfo ?? "" }
     public var wrappedTrnCurrency: String { trnCurrency ?? "Unknown currency" }
     
