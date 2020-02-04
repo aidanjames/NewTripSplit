@@ -14,11 +14,12 @@ struct AddAccountView: View {
     @State private var accountName = ""
     @State private var selectedBaseCurrency = Currencies.gbp
     @State private var showingAddMemberView = false
-    @State private var showingImagePickerView = false
+    @State private var showingImagePicker = false
     @State private var members = [Person]()
-   
     @State private var inputImage: UIImage?
-
+    @State private var showingCameraOrPhotoLibActionSheet = false
+    @State private var useCamera = false
+    
     var moc: NSManagedObjectContext
     
     @Environment(\.presentationMode) var presentationMode
@@ -51,10 +52,23 @@ struct AddAccountView: View {
                         }
                         
                         Button("Change") {
-                            self.showingImagePickerView.toggle()
+                            self.showingCameraOrPhotoLibActionSheet.toggle()
                         }
-                        .sheet(isPresented: $showingImagePickerView) {
-                            ImagePicker(image: self.$inputImage)
+                        .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                            ActionSheet(title: Text("Add receipt"), buttons: [
+                                .default(Text("Take a photo")) {
+                                    self.useCamera = true
+                                    self.showingImagePicker.toggle()
+                                },
+                                .default(Text("Use photo album")) {
+                                    self.useCamera = false
+                                    self.showingImagePicker.toggle()
+                                },
+                                .cancel()
+                            ])
+                        }
+                        .sheet(isPresented: $showingImagePicker) {
+                            ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                         }
                     }
                 }
@@ -113,7 +127,7 @@ struct AddAccountView: View {
         
         self.presentationMode.wrappedValue.dismiss()
     }
-
+    
     
 }
 

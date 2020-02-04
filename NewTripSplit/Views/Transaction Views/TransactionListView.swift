@@ -11,7 +11,6 @@ import SwiftUI
 
 struct TransactionListView: View {
     
-    
     @Binding var bottomSheetIsOpen: Bool
     var geoSize: CGSize
     var moc: NSManagedObjectContext
@@ -19,7 +18,7 @@ struct TransactionListView: View {
     @State private var showingTransactionDetailView = false
     @Environment(\.colorScheme) var colorScheme
     
-    var dates: [String] {
+    var dates: [String] { // Consider moving this to a function
         let dateDic = Dictionary(grouping: trip.transactionsArray) { $0.dateDisplay }
         var dateArray = [String]()
         for date in dateDic {

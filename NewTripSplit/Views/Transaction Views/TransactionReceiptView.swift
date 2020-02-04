@@ -19,13 +19,12 @@ struct TransactionReceiptView: View {
                 VStack {
                     if self.image != nil {
                         self.image!
-                        .resizable()
+                            .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: geo.size.width, height: geo.size.height * 0.7)
                     } else {
                         Text("No image")
                     }
-                    
                 }
                 .navigationBarTitle("Reciept view", displayMode: .inline)
                 .onAppear(perform: self.loadImage)
@@ -37,7 +36,6 @@ struct TransactionReceiptView: View {
         if let imageName = transaction.photo {
             if let imageData: Data = FileManager.default.fetchData(from: imageName) {
                 if let uiImage = UIImage(data: imageData) {
-//                    return Image(uiImage: uiImage)
                     self.image = Image(uiImage: uiImage)
                 }
             }

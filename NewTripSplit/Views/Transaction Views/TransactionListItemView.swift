@@ -18,15 +18,14 @@ struct TransactionListItemView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(transaction.wrappedTitle)
-//                Text("Paid by \(transaction.wrappedPaidBy.firstName) for \(ListFormatter.localizedString(byJoining: paidForNames)).")
-                Text("Paid by \(transaction.paidBy?.firstName ?? "FUCK") for \(ListFormatter.localizedString(byJoining: paidForNames)).")
+                Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(ListFormatter.localizedString(byJoining: paidForNames)).")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
             Spacer()
             Text("\(Currencies.format(amount: transaction.trnAmt, withSymbol: true, withSign: true))")
         }
-    .onAppear(perform: populatePaidForNames)
+        .onAppear(perform: populatePaidForNames)
     }
     
     func populatePaidForNames() {

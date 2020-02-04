@@ -40,7 +40,6 @@ struct TransactionDetailView: View {
                             MapView(centreCoordinate: self.$centerCoordinate, annotation: self.annotation)
                                 .frame(width: geo.size.width, height: geo.size.height * 0.3)
                         }
-                        
                         List {
                             Section(header: Text("Transaction details")) {
                                 Text("\(self.transaction!.wrappedTitle)")
@@ -67,10 +66,7 @@ struct TransactionDetailView: View {
                                 ForEach(self.transaction!.paidForArray, id: \.self) { person in
                                     Text(person.wrappedName)
                                 }
-                                
-                                
                             }
-                            
                         }
                         
                         Spacer()

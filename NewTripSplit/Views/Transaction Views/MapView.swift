@@ -17,18 +17,14 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-
+        
         mapView.addAnnotation(annotation)
         
         return mapView
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
-//        let regionRadius: CLLocationDistance = 1000
-//        let coordinateRegion = MKCoordinateRegion(center: centreCoordinate,
-//                                                  latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
-//        view.setRegion(coordinateRegion, animated: true)
-
+        
     }
     
     func makeCoordinator() -> Coordinator {
@@ -68,7 +64,7 @@ struct MapView: UIViewRepresentable {
             if let annotationView = views.first {
                 if let annotation = annotationView.annotation {
                     let region = MKCoordinateRegion(center: annotation.coordinate,
-                                                                      latitudinalMeters: 500, longitudinalMeters: 500)
+                                                    latitudinalMeters: 500, longitudinalMeters: 500)
                     mapView.setRegion(region, animated: true)
                 }
             }
