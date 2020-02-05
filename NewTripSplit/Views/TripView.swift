@@ -59,7 +59,7 @@ struct TripView: View {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Settlement", onButtonImage: "equal")
                         }
                         .sheet(isPresented: self.$showingSettlementView) {
-                            Text("Placeholder for settlement view")
+                            SettlementView(moc: self.moc, account: self.trip)
                         }
                         Button(action: { self.showingAddMemberView.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Add member", onButtonImage: "person.badge.plus")
