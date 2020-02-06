@@ -22,8 +22,12 @@ struct ContentView: View {
                 ZStack {
                     Color(hex: "EFEEEE")
                     VStack {
-                        ForEach(trips, id: \.id) { trip in
-                            AccountCardView(account: trip)
+                        if trips.isEmpty {
+                            Text("No trips - add one.")
+                        } else {
+                            ForEach(trips, id: \.id) { trip in
+                                AccountCardView(account: trip)
+                            }
                         }
                         Spacer()
                     }
@@ -34,7 +38,9 @@ struct ContentView: View {
                         Button(action: { self.showingAddTrip.toggle() }) {
                             Text("Add account")
                         }
-                        .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc)}
+                        .sheet(isPresented: $showingAddTrip) {
+                            AddAccountView(moc: self.moc)
+                        }
                     }
                 )
             }

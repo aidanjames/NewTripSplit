@@ -95,8 +95,12 @@ struct AddMemberView: View {
             }
         }
         self.members.append(member)
-                
-        self.presentationMode.wrappedValue.dismiss()
+          
+        // Fixes an issue with attempting to update state whilst it is being rendered.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+        
     }
     
     
