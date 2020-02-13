@@ -14,8 +14,6 @@ public enum Currencies: String, CaseIterable {
     
     static func format(currency: String = "GBP", amount: Double, withSymbol: Bool = true, withSign: Bool = true) -> String {
         
-        
-        
         var currencySymbol: String {
             switch currency {
             case "GBP":

@@ -50,7 +50,6 @@ struct TransactionDetailView: View {
                                 Text("Date: \(self.transaction!.dateDisplay)")
                                 if self.transaction!.photo != nil {
                                     Button("View receipt") {
-                                        // present receipt view
                                         self.receiptViewShowing.toggle()
                                     }
                                     .foregroundColor(.blue)
@@ -68,16 +67,18 @@ struct TransactionDetailView: View {
                                 }
                             }
                         }
-                        
                         Spacer()
                     }
                     .onAppear(perform: self.populateCenterCoordinate)
                     .navigationBarTitle("\(self.transaction?.wrappedTitle ?? "Unknown")", displayMode: .inline)
-                    .navigationBarItems(trailing:
+                    .navigationBarItems(
+                        leading:
                         Button(action: { self.showingDeleteAlert.toggle() }) {
                             Image(systemName: "trash")
                                 .padding(3)
-                        }
+                        },
+                        trailing:
+                        Button("Done") { self.presentationMode.wrappedValue.dismiss() }
                     )
                         .alert(isPresented: self.$showingDeleteAlert) {
                             Alert(title: Text("Delete transaction?"), message: Text("Are you sure you want to delete this transaction. All members balances will be updated."), primaryButton: .destructive(Text("Delete transaction")) {
@@ -126,13 +127,10 @@ struct TransactionDetailView: View {
             try? self.moc.save()
         }
         
-        
     }
-    
 }
 
 struct TransactionDetailView_Previews: PreviewProvider {
-    
     
     static var previews: some View {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
