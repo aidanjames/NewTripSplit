@@ -17,6 +17,7 @@
 		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
 		3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */; };
 		3D47A87123EB69060095655C /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47A87023EB69060095655C /* SettlementView.swift */; };
+		3D540A6823F5CF6600CEBBAF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D540A6723F5CF6600CEBBAF /* NetworkService.swift */; };
 		3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28C23BFC7D200938E11 /* AppDelegate.swift */; };
 		3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */; };
 		3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F29023BFC7D200938E11 /* NewTripSplit.xcdatamodeld */; };
@@ -63,6 +64,7 @@
 		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
 		3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptView.swift; sourceTree = "<group>"; };
 		3D47A87023EB69060095655C /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
+		3D540A6723F5CF6600CEBBAF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3D57F28923BFC7D200938E11 /* NewTripSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTripSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D57F28C23BFC7D200938E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D540A6623F5CF5000CEBBAF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3D540A6723F5CF6600CEBBAF /* NetworkService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		3D57F28023BFC7D200938E11 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +140,7 @@
 		3D57F28B23BFC7D200938E11 /* NewTripSplit */ = {
 			isa = PBXGroup;
 			children = (
+				3D540A6623F5CF5000CEBBAF /* Networking */,
 				3DB1743B23BFFE9B00010233 /* Helpers */,
 				3D6ED07023BFF5F7004F7083 /* Views */,
 				3D57F2A523BFC9B500938E11 /* Model */,
@@ -330,6 +341,7 @@
 				3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */,
 				3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */,
 				3D70CD8D23CFB00E00701C23 /* PlaceBetView.swift in Sources */,
+				3D540A6823F5CF6600CEBBAF /* NetworkService.swift in Sources */,
 				3DB173A023BFD63E00DF2CE1 /* Trip+CoreDataClass.swift in Sources */,
 				3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */,
 				3DB173A123BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift in Sources */,

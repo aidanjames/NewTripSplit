@@ -114,6 +114,7 @@ struct AddAccountView: View {
         }
         
         account.baseCurrency = selectedBaseCurrency.rawValue
+        account.currenciesUsed = [selectedBaseCurrency.rawValue]
         
         for member in members {
             member.trip = account

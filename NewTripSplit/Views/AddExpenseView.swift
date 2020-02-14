@@ -18,7 +18,7 @@ struct AddExpenseView: View {
     
     @State private var expenseName = ""
     @State private var transactionAmount = ""
-    @State private var currency = "GBP"
+    @State private var selectedTransactionCurrency = Currencies.gbp
     @State private var paidForSelected = 0
     @State private var transactionDate = Date()
     @State private var paidBySelection = 0
@@ -35,7 +35,7 @@ struct AddExpenseView: View {
     var amountAsDouble: Double {
         Double(transactionAmount) ?? 0
     }
-
+    
     
     var amountOwedByBeneficiaries: Double {
         guard paidFor.count > 0 else { return 0 }
@@ -53,7 +53,19 @@ struct AddExpenseView: View {
                 TextField("Expense description", text: $expenseName)
                 TextField("Amount", text: $transactionAmount).keyboardType(.decimalPad)
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                Text("Currency: \(trip.wrappedBaseCurrency)")
+                Text("Base Currency: \(trip.wrappedBaseCurrency)")
+                
+                Picker("Trn currency", selection: $selectedTransactionCurrency) {
+                    ForEach(Currencies.allCases, id: \.self) { currency in
+                        Text(currency.rawValue)
+                    }
+                }
+//                .onAppear(perform: populateLastCurrencyUsed)
+                
+                Button("Print") {
+                    print("Selected currency: \(self.selectedTransactionCurrency)")
+                }
+                
                 Toggle(isOn: $useCurrentLocation) {
                     // Need a check here to make sure we can access location
                     Text("Use current location")
@@ -78,6 +90,7 @@ struct AddExpenseView: View {
                 .sheet(isPresented: $showingImagePicker) {
                     ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                 }
+                //                Button("Fetch data") { self.fetchData() }
                 
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
@@ -100,7 +113,7 @@ struct AddExpenseView: View {
                 }
                 .onAppear(perform: everyoneIsBeneficiary)
             }
-            .navigationBarTitle("Add expense")
+            .navigationBarTitle("Add transaction")
             .navigationBarItems(
                 leading:
                 Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
@@ -109,14 +122,13 @@ struct AddExpenseView: View {
             )
             
         }
-//        .onTapGesture { UIApplication.shared.endEditing() }
     }
     
     func fetchLocation() {
         self.locationFetcher.start()
         
     }
-
+    
     func everyoneIsBeneficiary() {
         guard firstEntry else { return }
         for person in trip.sortedPeopleArray {
@@ -141,7 +153,7 @@ struct AddExpenseView: View {
         
         transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
         self.trip.sortedPeopleArray[paidBySelection].localBal += amountAsDouble
-
+        
         
         for person in paidFor {
             person.localBal -= amountOwedByBeneficiaries
@@ -170,14 +182,39 @@ struct AddExpenseView: View {
                 transaction.photo = imageID
             }
         }
-
+        
         try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()
-
+        
     }
-
     
+    func fetchData() {
+        NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=USD,GBP") { result in
+            switch result {
+            case .success(let str):
+                print(str)
+            case .failure(let error):
+                switch error {
+                case .badURL:
+                    print("Bad URL")
+                case .requestFailed:
+                    print("Bad URL")
+                case .unknown:
+                    print("Unknown error")
+                }
+            }
+        }
+    }
+    
+//    func populateLastCurrencyUsed() {
+//        if let currency = self.trip.wrappedCurrenciesUsed.first {
+//            self.selectedTransactionCurrency = currency
+//        }
+//    }
 }
+
+
+
 
 struct AddExpenseView_Previews: PreviewProvider {
     static var previews: some View {
