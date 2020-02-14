@@ -19,10 +19,10 @@ struct AddExpenseView: View {
     @State private var expenseName = ""
     @State private var transactionAmount = ""
     @State private var selectedTransactionCurrency = Currencies.gbp
+    @State private var firstEntry = true
     @State private var paidForSelected = 0
     @State private var transactionDate = Date()
     @State private var paidBySelection = 0
-    @State private var firstEntry = true
     @State private var useCurrentLocation = true
     @State private var showingImagePicker = false
     @State private var showingCameraOrPhotoLibActionSheet = false
@@ -50,22 +50,21 @@ struct AddExpenseView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Expense description", text: $expenseName)
-                TextField("Amount", text: $transactionAmount).keyboardType(.decimalPad)
-                DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                Text("Base Currency: \(trip.wrappedBaseCurrency)")
+                TextField("Transaction description", text: $expenseName)
+                TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
                 
-                Picker("Trn currency", selection: $selectedTransactionCurrency) {
+                if trip.baseCurrency != selectedTransactionCurrency.rawValue {
+                    Text("Base amount £xx.xx (xchg rate: 0.64335)")
+                }
+                
+                DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
+                
+                Picker("Transaction currency", selection: $selectedTransactionCurrency) {
                     ForEach(Currencies.allCases, id: \.self) { currency in
                         Text(currency.rawValue)
                     }
                 }
-//                .onAppear(perform: populateLastCurrencyUsed)
-                
-                Button("Print") {
-                    print("Selected currency: \(self.selectedTransactionCurrency)")
-                }
-                
+                .onAppear(perform: populateLastCurrencyUsed)
                 Toggle(isOn: $useCurrentLocation) {
                     // Need a check here to make sure we can access location
                     Text("Use current location")
@@ -206,11 +205,15 @@ struct AddExpenseView: View {
         }
     }
     
-//    func populateLastCurrencyUsed() {
-//        if let currency = self.trip.wrappedCurrenciesUsed.first {
-//            self.selectedTransactionCurrency = currency
-//        }
-//    }
+    func populateLastCurrencyUsed() {
+        guard firstEntry else { return }
+        if let currency = self.trip.wrappedCurrenciesUsed.first {
+            if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
+                self.selectedTransactionCurrency = currencyObject
+            }
+        }
+    }
+    
 }
 
 
