@@ -27,19 +27,28 @@ struct AddExpenseView: View {
     @State private var showingImagePicker = false
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
+    @State private var exchangeRate = 0.0
     
     @State private var inputImage: UIImage?
     
     let locationFetcher = LocationFetcher()
     
-    var amountAsDouble: Double {
-        Double(transactionAmount) ?? 0
+    var baseTransactionAmount: Double {
+        if let trnAmount = Double(transactionAmount) {
+            guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return trnAmount }
+            if exchangeRate > 0 {
+                return (Double(transactionAmount) ?? 0) / exchangeRate
+            } else {
+                return 0
+            }
+        }
+        return 0
     }
     
     
     var amountOwedByBeneficiaries: Double {
         guard paidFor.count > 0 else { return 0 }
-        return amountAsDouble / Double(paidFor.count)
+        return baseTransactionAmount / Double(paidFor.count)
     }
     
     var paidFor: [Person] {
@@ -54,7 +63,7 @@ struct AddExpenseView: View {
                 TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
                 
                 if trip.baseCurrency != selectedTransactionCurrency.rawValue {
-                    Text("Base amount £xx.xx (xchg rate: 0.64335)")
+                    Text("Base amount \(Currencies.format(amount: baseTransactionAmount)) (rate: \(exchangeRate))")
                 }
                 
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
@@ -89,7 +98,7 @@ struct AddExpenseView: View {
                 .sheet(isPresented: $showingImagePicker) {
                     ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                 }
-                //                Button("Fetch data") { self.fetchData() }
+                Button("Fetch data") { self.setExchangeRate() }
                 
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
@@ -139,19 +148,19 @@ struct AddExpenseView: View {
     
     func saveExpense() {
         
-        guard !expenseName.isEmpty, !paidFor.isEmpty, amountAsDouble > 0 else { return }
+        guard !expenseName.isEmpty, !paidFor.isEmpty, baseTransactionAmount > 0 else { return }
         
         // Create the transaction
         let transaction = Transaction(context: self.moc)
         transaction.id = UUID()
         transaction.title = expenseName
-        transaction.baseAmt = amountAsDouble
-        transaction.exchangeRate = 0
-        transaction.trnAmt = amountAsDouble
+        transaction.baseAmt = baseTransactionAmount
+        transaction.exchangeRate = self.exchangeRate
+        transaction.trnAmt = Double(transactionAmount) ?? 0
         transaction.trip = self.trip
         
         transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
-        self.trip.sortedPeopleArray[paidBySelection].localBal += amountAsDouble
+        self.trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
         
         
         for person in paidFor {
@@ -187,20 +196,12 @@ struct AddExpenseView: View {
         
     }
     
-    func fetchData() {
-        NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=USD,GBP") { result in
-            switch result {
-            case .success(let str):
-                print(str)
-            case .failure(let error):
-                switch error {
-                case .badURL:
-                    print("Bad URL")
-                case .requestFailed:
-                    print("Bad URL")
-                case .unknown:
-                    print("Unknown error")
-                }
+    func setExchangeRate() {
+        if let baseCurrency = trip.baseCurrency {
+            let transactionCurrency = selectedTransactionCurrency
+            let currencyPair = CurrencyPair(baseCurr: baseCurrency, foreignCurr: transactionCurrency.rawValue)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.exchangeRate = currencyPair.exchangeRate
             }
         }
     }

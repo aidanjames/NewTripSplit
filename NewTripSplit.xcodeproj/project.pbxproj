@@ -16,6 +16,7 @@
 		3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */; };
 		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
 		3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */; };
+		3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */; };
 		3D47A87123EB69060095655C /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47A87023EB69060095655C /* SettlementView.swift */; };
 		3D540A6823F5CF6600CEBBAF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D540A6723F5CF6600CEBBAF /* NetworkService.swift */; };
 		3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28C23BFC7D200938E11 /* AppDelegate.swift */; };
@@ -63,6 +64,7 @@
 		3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicButton.swift; sourceTree = "<group>"; };
 		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
 		3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptView.swift; sourceTree = "<group>"; };
+		3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		3D47A87023EB69060095655C /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
 		3D540A6723F5CF6600CEBBAF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3D57F28923BFC7D200938E11 /* NewTripSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTripSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +176,7 @@
 				3DB1739823BFD63E00DF2CE1 /* Trip+CoreDataClass.swift */,
 				3DB1739923BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift */,
 				3D6ED07123BFFA2D004F7083 /* Currencies.swift */,
+				3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
 				3D47A87123EB69060095655C /* SettlementView.swift in Sources */,
+				3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,

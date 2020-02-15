@@ -23,7 +23,7 @@ struct TransactionListItemView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("\(Currencies.format(amount: transaction.trnAmt, withSymbol: true, withSign: true))")
+            Text("\(Currencies.format(amount: transaction.baseAmt, withSymbol: true, withSign: true))")
         }
         .onAppear(perform: populatePaidForNames)
     }

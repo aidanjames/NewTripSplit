@@ -15,7 +15,7 @@ class NetworkService {
     private init() {
     }
     
-    func fetchData(from urlString: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
+    func fetchData(from urlString: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         // check the URL is OK, otherwise return with a failure
         guard let url = URL(string: urlString) else {
             completion(.failure(.badURL))
@@ -27,8 +27,8 @@ class NetworkService {
             DispatchQueue.main.async {
                 if let data = data {
                     // success: convert the data to a string and send it back
-                    let stringData = String(decoding: data, as: UTF8.self)
-                    completion(.success(stringData))
+//                    let stringData = String(decoding: data, as: UTF8.self)
+                    completion(.success(data))
                 } else if error != nil {
                     // any sort of network failure
                     completion(.failure(.requestFailed))
