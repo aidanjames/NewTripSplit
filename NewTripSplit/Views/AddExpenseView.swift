@@ -162,6 +162,10 @@ struct AddExpenseView: View {
         transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
         self.trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
         
+        if selectedTransactionCurrency.rawValue != trip.baseCurrency {
+            trip.currenciesUsed?.insert(selectedTransactionCurrency.rawValue, at: 0)
+        }
+        
         
         for person in paidFor {
             person.localBal -= amountOwedByBeneficiaries
