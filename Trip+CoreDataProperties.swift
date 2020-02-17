@@ -30,7 +30,7 @@ extension Trip {
     public var wrappedDateCreated: Date { dateCreated ?? Date() }
     public var wrappedName: String { name ?? "Unknown name" }
     public var wrappedBaseCurrency: String { baseCurrency ?? "GBP" }
-    public var wrappedCurrenciesUsed: [String] { currenciesUsed ?? [] }
+    public var wrappedCurrenciesUsed: [String] { currenciesUsed ?? ["GBP"] }
 
     public var sortedPeopleArray: [Person] {
         let set = people as? Set<Person> ?? []

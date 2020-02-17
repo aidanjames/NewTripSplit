@@ -23,7 +23,15 @@ struct TransactionListItemView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("\(Currencies.format(amount: transaction.baseAmt, withSymbol: true, withSign: true))")
+            VStack(alignment: .trailing) {
+                Text("\(Currencies.format(amount: transaction.baseAmt, withSymbol: true, withSign: true))")
+                if transaction.baseAmt != transaction.trnAmt { // Foreign transaction
+                    Text("\(Currencies.format(currency: transaction.trnCurrency ?? "GBP", amount: transaction.trnAmt, withSymbol: true, withSign: true))")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+            }
         }
         .onAppear(perform: populatePaidForNames)
     }
@@ -51,6 +59,10 @@ struct TransactionListItemView_Previews: PreviewProvider {
         transaction.title = "Shopping"
         transaction.paidBy = person
         transaction.addToPaidFor(person2)
+        transaction.baseAmt = 45.23
+        transaction.trnAmt = 50.00
+        transaction.exchangeRate = 1.234543
+        transaction.trnCurrency = "EUR"
         return TransactionListItemView(transaction: transaction)
             .previewLayout(.sizeThatFits)
     }

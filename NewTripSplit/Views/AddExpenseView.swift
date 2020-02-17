@@ -133,12 +133,12 @@ struct AddExpenseView: View {
     }
     
     func fetchLocation() {
+        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         self.locationFetcher.start()
-        
     }
     
     func everyoneIsBeneficiary() {
-        guard firstEntry else { return }
+        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         for person in trip.sortedPeopleArray {
             person.isSelected = true
         }
@@ -158,20 +158,24 @@ struct AddExpenseView: View {
         transaction.exchangeRate = self.exchangeRate
         transaction.trnAmt = Double(transactionAmount) ?? 0
         transaction.trip = self.trip
+        transaction.trnCurrency = selectedTransactionCurrency.rawValue
         
-        transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
-        self.trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
-        
-        if selectedTransactionCurrency.rawValue != trip.baseCurrency {
+        // To allow the transaction currency to be pre-populated with the most recently used currency on the next transaction
+        if selectedTransactionCurrency.rawValue != trip.wrappedCurrenciesUsed[0] {
             trip.currenciesUsed?.insert(selectedTransactionCurrency.rawValue, at: 0)
         }
         
+        // Increase the balance of the person paying
+        transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
+        self.trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
         
+        // Reduce the balance of each beneficiary
         for person in paidFor {
             person.localBal -= amountOwedByBeneficiaries
             transaction.addToPaidFor(person)
         }
         
+        // TODO: What if we don't have permission to get location?
         if useCurrentLocation {
             if let location = self.locationFetcher.lastKnownLocation {
                 transaction.longitude = location.longitude
@@ -189,7 +193,7 @@ struct AddExpenseView: View {
         if let inputImage = self.inputImage {
             let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
-                // Save to device
+                // Save data to device
                 FileManager.default.writeData(jpegData, to: imageID)
                 transaction.photo = imageID
             }
@@ -197,7 +201,6 @@ struct AddExpenseView: View {
         
         try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()
-        
     }
     
     func setExchangeRate() {
@@ -211,7 +214,7 @@ struct AddExpenseView: View {
     }
     
     func populateLastCurrencyUsed() {
-        guard firstEntry else { return }
+        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         if let currency = self.trip.wrappedCurrenciesUsed.first {
             if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
                 self.selectedTransactionCurrency = currencyObject
