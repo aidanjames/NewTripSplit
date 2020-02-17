@@ -26,7 +26,7 @@ struct TransactionListItemView: View {
             VStack(alignment: .trailing) {
                 Text("\(Currencies.format(amount: transaction.baseAmt, withSymbol: true, withSign: true))")
                 if transaction.baseAmt != transaction.trnAmt { // Foreign transaction
-                    Text("\(Currencies.format(currency: transaction.trnCurrency ?? "GBP", amount: transaction.trnAmt, withSymbol: true, withSign: true))")
+                    Text("\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true))")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

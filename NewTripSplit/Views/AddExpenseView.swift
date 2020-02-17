@@ -16,6 +16,8 @@ struct AddExpenseView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @ObservedObject var currencyPair = CurrencyPair()
+    
     @State private var expenseName = ""
     @State private var transactionAmount = ""
     @State private var selectedTransactionCurrency = Currencies.gbp
@@ -36,15 +38,14 @@ struct AddExpenseView: View {
     var baseTransactionAmount: Double {
         if let trnAmount = Double(transactionAmount) {
             guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return trnAmount }
-            if exchangeRate > 0 {
-                return (Double(transactionAmount) ?? 0) / exchangeRate
+            if currencyPair.exchangeRate > 0 {
+                return (Double(transactionAmount) ?? 0) / currencyPair.exchangeRate
             } else {
                 return 0
             }
         }
         return 0
     }
-    
     
     var amountOwedByBeneficiaries: Double {
         guard paidFor.count > 0 else { return 0 }
@@ -55,25 +56,29 @@ struct AddExpenseView: View {
         return trip.sortedPeopleArray.filter { $0.isSelected }
     }
     
+    var saveButtonDisabled: Bool {
+        if ((trip.baseCurrency != selectedTransactionCurrency.rawValue) && currencyPair.exchangeRate == 0) || baseTransactionAmount == 0 || expenseName.isEmpty  {
+            return true
+        }
+        return false
+    }
     
     var body: some View {
         NavigationView {
             Form {
                 TextField("Transaction description", text: $expenseName)
                 TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
-                
-                if trip.baseCurrency != selectedTransactionCurrency.rawValue {
-                    Text("Base amount \(Currencies.format(amount: baseTransactionAmount)) (rate: \(exchangeRate))")
-                }
-                
-                DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                
                 Picker("Transaction currency", selection: $selectedTransactionCurrency) {
                     ForEach(Currencies.allCases, id: \.self) { currency in
                         Text(currency.rawValue)
                     }
                 }
-                .onAppear(perform: populateLastCurrencyUsed)
+                if trip.baseCurrency != selectedTransactionCurrency.rawValue {
+                    Text("Base amount \(Currencies.format(amount: baseTransactionAmount)) (rate: \(currencyPair.exchangeRate))")
+                        .onAppear(perform: setExchangeRate)
+                }
+                DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
+                    .onAppear(perform: populateLastCurrencyUsed)
                 Toggle(isOn: $useCurrentLocation) {
                     // Need a check here to make sure we can access location
                     Text("Use current location")
@@ -98,8 +103,6 @@ struct AddExpenseView: View {
                 .sheet(isPresented: $showingImagePicker) {
                     ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                 }
-                Button("Fetch data") { self.setExchangeRate() }
-                
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
@@ -107,7 +110,6 @@ struct AddExpenseView: View {
                         }
                     }
                 }
-                
                 Section(header: Text("Paid for:")) {
                     List {
                         ForEach(trip.sortedPeopleArray, id: \.id) { person in
@@ -126,9 +128,8 @@ struct AddExpenseView: View {
                 leading:
                 Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") { self.saveExpense() }
+                Button("Save") { self.saveExpense() }.disabled(self.saveButtonDisabled)
             )
-            
         }
     }
     
@@ -136,6 +137,7 @@ struct AddExpenseView: View {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         self.locationFetcher.start()
     }
+    
     
     func everyoneIsBeneficiary() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
@@ -203,15 +205,19 @@ struct AddExpenseView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
+    
     func setExchangeRate() {
+        currencyPair.exchangeRate = 0
+        guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return }
         if let baseCurrency = trip.baseCurrency {
-            let transactionCurrency = selectedTransactionCurrency
-            let currencyPair = CurrencyPair(baseCurr: baseCurrency, foreignCurr: transactionCurrency.rawValue)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.exchangeRate = currencyPair.exchangeRate
-            }
+            let transactionCurrency = selectedTransactionCurrency.rawValue
+            
+            self.currencyPair.baseCurrency = String(baseCurrency.prefix(3))
+            self.currencyPair.foreignCurrency = String(transactionCurrency.prefix(3))
+            self.currencyPair.getExchangeRate()
         }
     }
+    
     
     func populateLastCurrencyUsed() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency

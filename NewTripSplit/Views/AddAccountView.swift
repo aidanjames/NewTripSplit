@@ -44,7 +44,7 @@ struct AddAccountView: View {
                                 .frame(width: 80, height: 80)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                         } else {
-                            Image(selectedBaseCurrency.rawValue.lowercased())
+                            Image(String(selectedBaseCurrency.rawValue.lowercased().prefix(3)))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 80, height: 80)

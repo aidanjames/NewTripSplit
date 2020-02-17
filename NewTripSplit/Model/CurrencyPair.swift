@@ -8,15 +8,14 @@
 
 import Foundation
 
-class CurrencyPair {
-    var baseCurrency: String
-    var foreignCurrency: String
-    var exchangeRate: Double = 0.0
+class CurrencyPair: ObservableObject {
+    var baseCurrency: String = ""
+    var foreignCurrency: String = ""
     
-    init(baseCurr: String, foreignCurr: String) {
-        self.baseCurrency = baseCurr
-        self.foreignCurrency = foreignCurr
-        
+    @Published var error: String? // Add some error handling to the add transaction view
+    @Published var exchangeRate: Double = 0.0
+    
+    func getExchangeRate() {
         NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
             switch result {
             case .success(let str):
@@ -33,14 +32,16 @@ class CurrencyPair {
                 switch error {
                 case .badURL:
                     print("Bad URL")
+                    self.error = "Bad URL"
                 case .requestFailed:
                     print("Bad URL")
+                    self.error = "Bad URL"
                 case .unknown:
                     print("Unknown error")
+                    self.error = "Unknown error"
                 }
             }
         }
-        
     }
     
     // {"rates":{"USD":1.3029997116},"base":"GBP","date":"2020-02-14"}
