@@ -23,15 +23,15 @@ public enum Currencies: String, CaseIterable {
         
        var currencySymbol: String {
             switch currency {
-            case "GBP - British pound":
+            case "GBP - British pound", "GBP":
                 return "£"
-            case "EUR - Euro":
+            case "EUR - Euro", "EUR":
                 return "€"
-            case "HKD - HK dollar":
+            case "HKD - HK dollar", "HKD":
                 return "HK$"
-            case "DKK - Danish kroner":
+            case "DKK - Danish kroner", "DKK":
                 return "Kr"
-            case "NR - Indian rupee":
+            case "INR - Indian rupee", "INR":
                 return "₹"
             default:
                 return "$"

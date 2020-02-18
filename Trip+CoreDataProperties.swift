@@ -55,7 +55,7 @@ extension Trip {
                 }
             }
         }
-        return Image(wrappedBaseCurrency.lowercased())
+        return Image(wrappedBaseCurrency.prefix(3).lowercased())
     }
     
     public var transactionsArray: [Transaction] {

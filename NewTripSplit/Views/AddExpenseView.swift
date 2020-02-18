@@ -33,6 +33,8 @@ struct AddExpenseView: View {
     
     @State private var inputImage: UIImage?
     
+    @State private var showingRateError = false
+    
     let locationFetcher = LocationFetcher()
     
     var baseTransactionAmount: Double {
@@ -73,9 +75,21 @@ struct AddExpenseView: View {
                         Text(currency.rawValue)
                     }
                 }
-                if trip.baseCurrency != selectedTransactionCurrency.rawValue {
-                    Text("Base amount \(Currencies.format(amount: baseTransactionAmount)) (rate: \(currencyPair.exchangeRate))")
+                if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
+                    Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
                         .onAppear(perform: setExchangeRate)
+                }
+                if currencyPair.error != nil {
+                    Text("Cannot fetch exchange rate")
+                        .foregroundColor(.red)
+                        .onAppear(perform: showError)
+                        .actionSheet(isPresented: $showingRateError) {
+                            ActionSheet(title: Text("Failed to get exchange rate"), buttons: [
+                                .default(Text("Try again")) { self.setExchangeRate() },
+                                .default(Text("Enter rate manually")) { print("To do") },
+                                .cancel()
+                            ])
+                        }
                 }
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
                     .onAppear(perform: populateLastCurrencyUsed)
@@ -133,11 +147,16 @@ struct AddExpenseView: View {
         }
     }
     
+    
     func fetchLocation() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         self.locationFetcher.start()
     }
     
+    
+    func showError() {
+        self.showingRateError = true
+    }
     
     func everyoneIsBeneficiary() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
@@ -208,6 +227,7 @@ struct AddExpenseView: View {
     
     func setExchangeRate() {
         currencyPair.exchangeRate = 0
+        currencyPair.error = nil
         guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return }
         if let baseCurrency = trip.baseCurrency {
             let transactionCurrency = selectedTransactionCurrency.rawValue

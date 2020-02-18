@@ -27,11 +27,11 @@ class NetworkService {
             DispatchQueue.main.async {
                 if let data = data {
                     // success: convert the data to a string and send it back
-//                    let stringData = String(decoding: data, as: UTF8.self)
                     completion(.success(data))
                 } else if error != nil {
                     // any sort of network failure
                     completion(.failure(.requestFailed))
+                    print(error!.localizedDescription)
                 } else {
                     // this ought not to be possible, yet here we are
                     completion(.failure(.unknown))

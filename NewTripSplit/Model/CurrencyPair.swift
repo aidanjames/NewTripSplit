@@ -25,26 +25,25 @@ class CurrencyPair: ObservableObject {
                     print(rateObject)
                     if let rate = rateObject.rates[self.foreignCurrency] {
                         self.exchangeRate = rate
-                        print(rate)
+                        self.error = nil
                     }
                 }
             case .failure(let error):
                 switch error {
                 case .badURL:
                     print("Bad URL")
-                    self.error = "Bad URL"
+                    self.error = error.localizedDescription
                 case .requestFailed:
                     print("Bad URL")
-                    self.error = "Bad URL"
+                    self.error = error.localizedDescription
                 case .unknown:
                     print("Unknown error")
-                    self.error = "Unknown error"
+                    self.error = error.localizedDescription
                 }
             }
         }
     }
     
-    // {"rates":{"USD":1.3029997116},"base":"GBP","date":"2020-02-14"}
 }
 
 struct ExchangeRate: Codable {
