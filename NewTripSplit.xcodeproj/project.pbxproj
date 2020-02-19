@@ -51,7 +51,6 @@
 		3DB1743F23C0021500010233 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743E23C0021500010233 /* TripView.swift */; };
 		3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1323C929AD0012F714 /* TransactionListView.swift */; };
 		3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975023C3C02F003042F0 /* ColorExtension.swift */; };
-		3DD0975523C3DA44003042F0 /* FunctionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,7 +100,6 @@
 		3DB1743E23C0021500010233 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		3DBDDF1323C929AD0012F714 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
 		3DD0975023C3C02F003042F0 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
-		3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +189,6 @@
 				3DB1743E23C0021500010233 /* TripView.swift */,
 				3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */,
 				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
-				3DD0975423C3DA44003042F0 /* FunctionButtonView.swift */,
 				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
 				3D145EEB23E0CA310078AC75 /* AddMemberView.swift */,
 				3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */,
@@ -350,7 +347,6 @@
 				3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */,
 				3DB173A123BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift in Sources */,
 				3D70CD9F23CFB86400701C23 /* Wager.swift in Sources */,
-				3DD0975523C3DA44003042F0 /* FunctionButtonView.swift in Sources */,
 				3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */,
 				3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */,
 				3D81812823DCAE34009301BB /* LocationFetcher.swift in Sources */,

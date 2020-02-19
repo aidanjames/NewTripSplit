@@ -20,13 +20,13 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 ZStack {
-                    Color(hex: "EFEEEE")
                     VStack {
                         if trips.isEmpty {
                             Text("No trips - add one.")
                         } else {
                             ForEach(trips, id: \.id) { trip in
                                 AccountCardView(account: trip)
+                                    .padding(.horizontal)
                             }
                         }
                         Spacer()

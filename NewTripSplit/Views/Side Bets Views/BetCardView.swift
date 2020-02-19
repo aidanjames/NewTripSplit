@@ -20,6 +20,10 @@ struct BetCardView: View {
     @State private var xFlipAmount = 0.0
     @State private var yFlipAmount = 0.0
     
+    var settleButtonIsDisabled: Bool {
+        return betOffer.wagers.isEmpty
+    }
+    
     @EnvironmentObject var betting: Betting
     
     var offeredBy: Person? {
@@ -36,7 +40,7 @@ struct BetCardView: View {
             Group {
                 Text("\(offeredBy?.firstName ?? "Unknown")")
                     .fontWeight(.bold)
-                    + Text(" will pay odds of ")
+                    + Text(" offers ")
                     + Text(Currencies.format(amount: betOffer.odds))
                         .fontWeight(.bold)
                     + Text(" (\(betOffer.fractionalOdds)) if ")
@@ -44,7 +48,7 @@ struct BetCardView: View {
                         .fontWeight(.bold)
             }
             
-            Text("The maximum pot is ")
+            Text("Maximum pot - ")
                 + Text(Currencies.format(amount: betOffer.maxPot))
                     .fontWeight(.bold)
             
@@ -72,8 +76,9 @@ struct BetCardView: View {
                 HStack(spacing: 30) {
                     Spacer()
                     Button(action: self.showSettleView) {
-                        FunctionButtonView(width: 120, height: 30, text: "Settle", image: nil)
+                        Text("Settle")
                     }
+                    .disabled(settleButtonIsDisabled)
                     .actionSheet(isPresented: $showSettlement) {
                         ActionSheet(title: Text("Settle bet"), buttons: [
                             .default(Text("Bet won")) { self.betWon(id: self.betOffer.id) },
@@ -82,8 +87,11 @@ struct BetCardView: View {
                             .cancel()
                         ])
                     }
+                    
+                    Spacer()
+                    
                     Button(action: self.showAddBetView) {
-                        FunctionButtonView(width: 120, height: 30, text: "Add bet", image: nil)
+                        Text("Add bet")
                     }
                     .sheet(isPresented: $showingAddBetView) { PlaceBetView(trip: self.trip, betOffer: self.betOffer).environmentObject(self.betting)
                     }

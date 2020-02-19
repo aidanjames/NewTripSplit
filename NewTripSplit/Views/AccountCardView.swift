@@ -21,7 +21,6 @@ struct AccountCardView: View {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(Color(hex: "EFEEEE"))
                 .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 5, y: 5)
-                .shadow(color: Color(hex: "FFFFFF"), radius: 5, x: -5, y: -5)
             HStack(spacing: 8) {
                 account.wrappedAccountImage
                     .resizable()
@@ -37,9 +36,8 @@ struct AccountCardView: View {
                         Spacer()
                     }
                     HStack {
-                        
                         Button(action: { self.showingDeleteWarning.toggle() }) {
-                            NeumorphicButton(width: 80, height: 50, belowButtonText: nil, onButtonText: "Delete", onButtonImage: nil, circleShape: false)
+                            NeumorphicButton(width: 80, height: 50, belowButtonText: nil, onButtonText: "Edit", onButtonImage: nil, circleShape: false)
                         }
                         .alert(isPresented: $showingDeleteWarning) {
                             Alert(title: Text("Delete account?"), message: Text("This will delete the account and it won't come back."), primaryButton: .destructive(Text("Delete")) { self.deleteAccount() }, secondaryButton: .cancel())
@@ -54,7 +52,7 @@ struct AccountCardView: View {
                 Spacer()
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 150, idealHeight: 150, maxHeight: 150)
+        .frame(maxWidth: .infinity, minHeight: 150, idealHeight: 150, maxHeight: .infinity)
         .padding(.horizontal)
         .padding(.top, 18)
     }

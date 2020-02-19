@@ -59,10 +59,7 @@ struct AddExpenseView: View {
     }
     
     var saveButtonDisabled: Bool {
-        if ((trip.baseCurrency != selectedTransactionCurrency.rawValue) && currencyPair.exchangeRate == 0) || baseTransactionAmount == 0 || expenseName.isEmpty  {
-            return true
-        }
-        return false
+        ((trip.baseCurrency != selectedTransactionCurrency.rawValue) && currencyPair.exchangeRate == 0) || baseTransactionAmount == 0 || expenseName.isEmpty
     }
     
     var body: some View {
@@ -89,7 +86,7 @@ struct AddExpenseView: View {
                                 .default(Text("Enter rate manually")) { print("To do") },
                                 .cancel()
                             ])
-                        }
+                    }
                 }
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
                     .onAppear(perform: populateLastCurrencyUsed)
