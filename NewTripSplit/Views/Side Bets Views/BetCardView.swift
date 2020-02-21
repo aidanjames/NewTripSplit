@@ -144,6 +144,7 @@ struct BetCardView: View {
                         transaction.baseAmt = amountWon
                         transaction.exchangeRate = 0
                         transaction.trnAmt = wager.paysAmount
+                        transaction.trnCurrency = trip.wrappedBaseCurrency
                         transaction.date = Date()
                         transaction.trip = self.trip
                         
@@ -193,6 +194,7 @@ struct BetCardView: View {
                         transaction.baseAmt = wager.amountWaged
                         transaction.exchangeRate = 0
                         transaction.trnAmt = wager.amountWaged
+                        transaction.trnCurrency = trip.wrappedBaseCurrency
                         transaction.date = Date()
                         transaction.trip = self.trip
                         

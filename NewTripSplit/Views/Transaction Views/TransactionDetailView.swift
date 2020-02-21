@@ -42,11 +42,15 @@ struct TransactionDetailView: View {
                         }
                         List {
                             Section(header: Text("Transaction details")) {
-                                Text("\(self.transaction!.wrappedTitle)")
+                                Text("\(self.transaction!.wrappedTitle)").fontWeight(.bold)
                                 if !(self.transaction!.wrappedAdditionalInfo.isEmpty) {
                                     Text("\(self.transaction!.wrappedAdditionalInfo)")
                                 }
-                                Text("Amount: \(Currencies.format(amount: self.transaction!.baseAmt))")
+                                Text("Amount: \(Currencies.format(currency: self.transaction?.trnCurrency ?? "£", amount: self.transaction?.trnAmt ?? 0, withSymbol: true, withSign: true))")
+                                if self.trip.baseCurrency != self.transaction?.wrappedTrnCurrency {
+                                    Text("Currency: \(self.transaction?.trnCurrency ?? "Error") (rate \(self.transaction?.exchangeRate ?? 0))")
+                                    Text("Base amount: \(Currencies.format(currency: self.trip.baseCurrency ?? "Error", amount: self.transaction?.baseAmt ?? 0, withSymbol: true, withSign: true))")
+                                }
                                 Text("Date: \(self.transaction!.dateDisplay)")
                                 if self.transaction!.photo != nil {
                                     Button("View receipt") {
@@ -97,6 +101,7 @@ struct TransactionDetailView: View {
             
         }
     }
+
     
     func populateCenterCoordinate() {
         if transaction?.latitude != 0 && transaction?.longitude != 0 {
@@ -151,8 +156,8 @@ struct TransactionDetailView_Previews: PreviewProvider {
         let transaction = Transaction(context: moc)
         transaction.id = UUID()
         transaction.title = "Chips"
-        transaction.baseAmt = 24.34
-        transaction.exchangeRate = 0
+        transaction.baseAmt = 20.00
+        transaction.exchangeRate = 1.25432
         transaction.trnAmt = 24.34
         transaction.date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         transaction.trip = trip

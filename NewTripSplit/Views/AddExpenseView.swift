@@ -29,7 +29,7 @@ struct AddExpenseView: View {
     @State private var showingImagePicker = false
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
-    @State private var exchangeRate = 0.0
+//    @State private var exchangeRate = 0.0
     
     @State private var inputImage: UIImage?
     
@@ -173,7 +173,7 @@ struct AddExpenseView: View {
         transaction.id = UUID()
         transaction.title = expenseName
         transaction.baseAmt = baseTransactionAmount
-        transaction.exchangeRate = self.exchangeRate
+        transaction.exchangeRate = self.currencyPair.exchangeRate
         transaction.trnAmt = Double(transactionAmount) ?? 0
         transaction.trip = self.trip
         transaction.trnCurrency = selectedTransactionCurrency.rawValue
