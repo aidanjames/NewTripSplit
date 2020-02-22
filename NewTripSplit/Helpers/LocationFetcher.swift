@@ -9,9 +9,12 @@
 import CoreLocation
 
 class LocationFetcher: NSObject, CLLocationManagerDelegate {
+    
+    static let shared = LocationFetcher()
+    
     let manager = CLLocationManager()
     var lastKnownLocation: CLLocationCoordinate2D?
-    
+        
     override init() {
         super.init()
         manager.delegate = self

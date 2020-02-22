@@ -18,6 +18,7 @@ struct TripView: View {
     @State private var showingSettlementView = false
     @State private var showingMemberSummaryView = false
     @State private var showDeleteWarning = false
+    @State private var selectedMember: Person?
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     
@@ -30,13 +31,13 @@ struct TripView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
-                                Button(action: { self.printInfoAboutPerson(person: person) }) {
+                                Button(action: { self.showSummaryFor(member: person) }) {
                                     MemberCardView(person: person)
                                         .padding(.vertical)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .sheet(isPresented: self.$showingMemberSummaryView) {
-                                    Text("Placeholder for member summary view")
+                                    MemberDetailView(member: self.selectedMember ?? person, account: self.trip, moc: self.moc)
                                 }
                             }
                         }
@@ -101,18 +102,19 @@ struct TripView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
-    func printInfoAboutPerson(person: Person) {
+    func showSummaryFor(member: Person) {
         self.showingMemberSummaryView.toggle()
-        print("Person name: \(person.wrappedName)")
-        print("Person balance: \(person.localBal)")
-        print("Transactions paid for:")
-        for transaction in person.payerArray {
-            print(transaction.wrappedTitle)
-        }
-        print("Transactions beneficiary of:")
-        for transaction in person.beneficiaryArray {
-            print(transaction.wrappedTitle)
-        }
+        self.selectedMember = member
+//        print("Person name: \(person.wrappedName)")
+//        print("Person balance: \(person.localBal)")
+//        print("Transactions paid for:")
+//        for transaction in person.payerArray {
+//            print(transaction.wrappedTitle)
+//        }
+//        print("Transactions beneficiary of:")
+//        for transaction in person.beneficiaryArray {
+//            print(transaction.wrappedTitle)
+//        }
     }
     
 }

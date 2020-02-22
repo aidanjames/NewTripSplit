@@ -29,13 +29,12 @@ struct AddExpenseView: View {
     @State private var showingImagePicker = false
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
-//    @State private var exchangeRate = 0.0
     
     @State private var inputImage: UIImage?
     
     @State private var showingRateError = false
     
-    let locationFetcher = LocationFetcher()
+    let locationFetcher = LocationFetcher.shared
     
     var baseTransactionAmount: Double {
         if let trnAmount = Double(transactionAmount) {
@@ -154,6 +153,7 @@ struct AddExpenseView: View {
     func showError() {
         self.showingRateError = true
     }
+    
     
     func everyoneIsBeneficiary() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency

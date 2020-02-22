@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D03455823C0AFF00062A3E8 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */; };
+		3D0727E7240192F600022421 /* MemberDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0727E6240192F600022421 /* MemberDetailView.swift */; };
 		3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EE923E0C1910078AC75 /* AddAccountView.swift */; };
 		3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EEB23E0CA310078AC75 /* AddMemberView.swift */; };
 		3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		3D0727E6240192F600022421 /* MemberDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailView.swift; sourceTree = "<group>"; };
 		3D145EE923E0C1910078AC75 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		3D145EEB23E0CA310078AC75 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */,
 				3D98DDC123E4D01F0029D432 /* MemberCardView.swift */,
 				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
+				3D0727E6240192F600022421 /* MemberDetailView.swift */,
 			);
 			path = "Member Views";
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
 				3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
+				3D0727E7240192F600022421 /* MemberDetailView.swift in Sources */,
 				3D47A87123EB69060095655C /* SettlementView.swift in Sources */,
 				3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
