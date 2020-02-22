@@ -9,12 +9,15 @@
 import Foundation
 
 class CurrencyPair: ObservableObject {
+    
+    static let shared = CurrencyPair()
+    
     var baseCurrency: String = ""
     var foreignCurrency: String = ""
     
     @Published var error: String? // Add some error handling to the add transaction view
     @Published var exchangeRate: Double = 0.0
-    
+        
     func getExchangeRate() {
         NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
             switch result {

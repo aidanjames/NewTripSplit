@@ -16,7 +16,7 @@ struct AddExpenseView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var currencyPair = CurrencyPair()
+    @ObservedObject var currencyPair = CurrencyPair.shared
     
     @State private var expenseName = ""
     @State private var transactionAmount = ""
