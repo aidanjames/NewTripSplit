@@ -65,18 +65,6 @@ struct AccountCardView: View {
         .padding(.top, 18)
     }
     
-    func deleteAccount() {
-        
-        for member in account.sortedPeopleArray {
-            moc.delete(member)
-        }
-        
-        for transaction in account.transactionsArray {
-            moc.delete(transaction)
-        }
-        
-        moc.delete(account)
-    }
 }
 
 struct AccountCardView_Previews: PreviewProvider {

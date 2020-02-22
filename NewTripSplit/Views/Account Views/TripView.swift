@@ -17,8 +17,9 @@ struct TripView: View {
     @State private var showingAddMemberView = false
     @State private var showingSettlementView = false
     @State private var showingMemberSummaryView = false
+    @State private var showDeleteWarning = false
     @Environment(\.managedObjectContext) var moc
-    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         
@@ -74,9 +75,30 @@ struct TripView: View {
                     .shadow(radius: 5)
             }
             .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
-            
+            .navigationBarItems(trailing:
+                Button(action: { self.showDeleteWarning.toggle() }) {
+                    Image(systemName: "trash")
+                    .padding()
+                }
+                .alert(isPresented: self.$showDeleteWarning) {
+                    Alert(title: Text("Delete account?"), message: Text("This will delete the account and it won't come back."), primaryButton: .destructive(Text("Delete")) { self.deleteAccount() }, secondaryButton: .cancel())
+                }
+            )
         }
         
+    }
+    
+    func deleteAccount() {
+        for member in trip.sortedPeopleArray {
+            moc.delete(member)
+        }
+        
+        for transaction in trip.transactionsArray {
+            moc.delete(transaction)
+        }
+        
+        moc.delete(trip)
+        self.presentationMode.wrappedValue.dismiss()
     }
     
     func printInfoAboutPerson(person: Person) {
