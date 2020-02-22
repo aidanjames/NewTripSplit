@@ -25,8 +25,10 @@ struct ContentView: View {
                             Text("No trips - add one.")
                         } else {
                             ForEach(trips, id: \.id) { trip in
-                                AccountCardView(account: trip)
-                                    .padding(.horizontal)
+                                NavigationLink(destination: TripView(trip: trip)) {
+                                    AccountCardView(account: trip)
+                                    .padding(.horizontal, 5)
+                                }.buttonStyle(PlainButtonStyle())
                             }
                         }
                         Spacer()

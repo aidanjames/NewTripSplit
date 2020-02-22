@@ -13,13 +13,18 @@ struct PersonListItemView: View {
     @ObservedObject var person: Person
     var showingCheckmark: Bool
     
+    var displayFaded: Bool { showingCheckmark && !person.isSelected }
+    
     var body: some View {
         HStack {
             person.wrappedMemberImage
                 .resizable()
+                .aspectRatio(contentMode: .fill)
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
+                .opacity(displayFaded ? 0.5 : 1)
             Text(person.wrappedName)
+                .foregroundColor(displayFaded ? .secondary : .primary)
             Spacer()
             if showingCheckmark {
                 Image(systemName: self.person.isSelected ? "checkmark.circle.fill" : "circle")
@@ -27,7 +32,7 @@ struct PersonListItemView: View {
                     .foregroundColor(self.person.isSelected ? .green : .gray)
             }
         }
-    .contentShape(Rectangle())
+        .contentShape(Rectangle())
         .padding(.horizontal)
     }
 }
@@ -43,7 +48,7 @@ struct PersonListItemView_Previews: PreviewProvider {
             PersonListItemView(person: person, showingCheckmark: true)
                 .previewLayout(.sizeThatFits)
             PersonListItemView(person: person, showingCheckmark: false)
-            .previewLayout(.sizeThatFits)
+                .previewLayout(.sizeThatFits)
         }
     }
 }

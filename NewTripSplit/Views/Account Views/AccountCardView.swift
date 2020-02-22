@@ -12,7 +12,7 @@ import SwiftUI
 struct AccountCardView: View {
     
     @Environment(\.managedObjectContext) var moc
-    var account: Trip
+    @ObservedObject var account: Trip
     
     @State private var showingDeleteWarning = false
     
@@ -28,26 +28,34 @@ struct AccountCardView: View {
                     .frame(width: 100, height: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding()
-                VStack {
+                VStack(alignment: .leading) {
                     HStack {
                         Text(account.wrappedName)
                             .foregroundColor(.black)
                             .font(.title)
                         Spacer()
                     }
-                    HStack {
-                        Button(action: { self.showingDeleteWarning.toggle() }) {
-                            NeumorphicButton(width: 80, height: 50, belowButtonText: nil, onButtonText: "Edit", onButtonImage: nil, circleShape: false)
-                        }
-                        .alert(isPresented: $showingDeleteWarning) {
-                            Alert(title: Text("Delete account?"), message: Text("This will delete the account and it won't come back."), primaryButton: .destructive(Text("Delete")) { self.deleteAccount() }, secondaryButton: .cancel())
-                        }
-                        Spacer()
-                        NavigationLink(destination: TripView(trip: self.account)) {
-                            NeumorphicButton(width: 120, height: 50, belowButtonText: nil, onButtonText: "View account", onButtonImage: nil, circleShape: false)
-                        }
-                        Spacer()
+                    
+                    Group {
+                        Text("\(self.account.people?.count ?? 0) Participants")
+                        Text("\(self.account.transactionsArray.count) Transactions")
+                        Text("Total spent: \(Currencies.format(currency: self.account.baseCurrency ?? "Error", amount: self.account.transactionsArray.reduce(0) { $0 + $1.baseAmt }, withSymbol: true, withSign: true))")
                     }
+                    .foregroundColor(.secondary)
+                    
+//                    HStack {
+//                        Button(action: { self.showingDeleteWarning.toggle() }) {
+//                            NeumorphicButton(width: 80, height: 50, belowButtonText: nil, onButtonText: "Edit", onButtonImage: nil, circleShape: false)
+//                        }
+//                        .alert(isPresented: $showingDeleteWarning) {
+//                            Alert(title: Text("Delete account?"), message: Text("This will delete the account and it won't come back."), primaryButton: .destructive(Text("Delete")) { self.deleteAccount() }, secondaryButton: .cancel())
+//                        }
+//                        Spacer()
+//                        NavigationLink(destination: TripView(trip: self.account)) {
+//                            NeumorphicButton(width: 120, height: 50, belowButtonText: nil, onButtonText: "View account", onButtonImage: nil, circleShape: false)
+//                        }
+//                        Spacer()
+//                    }
                 }
                 Spacer()
             }

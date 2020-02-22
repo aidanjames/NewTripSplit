@@ -182,19 +182,11 @@
 		3D6ED07023BFF5F7004F7083 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3DA251B024018EBA005DB452 /* Account Views */,
+				3DA251AF24018C11005DB452 /* Member Views */,
 				3D81812B23DCCDEC009301BB /* Transaction Views */,
 				3D70CD8723CFAF8700701C23 /* Side Bets Views */,
-				3D57F29323BFC7D200938E11 /* ContentView.swift */,
-				3D90F9A223C3FB340065B039 /* AddExpenseView.swift */,
-				3DB1743E23C0021500010233 /* TripView.swift */,
-				3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */,
-				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
-				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
-				3D145EEB23E0CA310078AC75 /* AddMemberView.swift */,
-				3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */,
-				3D98DDC123E4D01F0029D432 /* MemberCardView.swift */,
 				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
-				3DA43D6023E605D00014F198 /* AccountCardView.swift */,
 				3D47A87023EB69060095655C /* SettlementView.swift */,
 			);
 			path = Views;
@@ -224,13 +216,37 @@
 		3D81812B23DCCDEC009301BB /* Transaction Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D90F9A223C3FB340065B039 /* AddExpenseView.swift */,
 				3DBDDF1323C929AD0012F714 /* TransactionListView.swift */,
 				3DB1743923BFFE7300010233 /* TransactionListItemView.swift */,
 				3D81812923DCC4B4009301BB /* MapView.swift */,
 				3D81812523DCA0F7009301BB /* TransactionDetailView.swift */,
 				3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */,
+				3D03455723C0AFF00062A3E8 /* BottomSheetView.swift */,
 			);
 			path = "Transaction Views";
+			sourceTree = "<group>";
+		};
+		3DA251AF24018C11005DB452 /* Member Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D145EEB23E0CA310078AC75 /* AddMemberView.swift */,
+				3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */,
+				3D98DDC123E4D01F0029D432 /* MemberCardView.swift */,
+				3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */,
+			);
+			path = "Member Views";
+			sourceTree = "<group>";
+		};
+		3DA251B024018EBA005DB452 /* Account Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D57F29323BFC7D200938E11 /* ContentView.swift */,
+				3DB1743E23C0021500010233 /* TripView.swift */,
+				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
+				3DA43D6023E605D00014F198 /* AccountCardView.swift */,
+			);
+			path = "Account Views";
 			sourceTree = "<group>";
 		};
 		3DB1743B23BFFE9B00010233 /* Helpers */ = {

@@ -152,6 +152,7 @@ struct TransactionDetailView_Previews: PreviewProvider {
         person1.photo = "person2"
         trip.addToPeople(person)
         trip.addToPeople(person1)
+        trip.baseCurrency = "GBP"
         
         let transaction = Transaction(context: moc)
         transaction.id = UUID()
@@ -159,6 +160,7 @@ struct TransactionDetailView_Previews: PreviewProvider {
         transaction.baseAmt = 20.00
         transaction.exchangeRate = 1.25432
         transaction.trnAmt = 24.34
+        transaction.trnCurrency = "EUR"
         transaction.date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         transaction.trip = trip
         transaction.paidBy = person
