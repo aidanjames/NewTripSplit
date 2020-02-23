@@ -22,7 +22,6 @@ class CurrencyPair: ObservableObject {
         NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
             switch result {
             case .success(let str):
-                print(str)
                 let decoder = JSONDecoder()
                 if let rateObject = try? decoder.decode(ExchangeRate.self, from: str) {
                     print(rateObject)

@@ -105,16 +105,6 @@ struct TripView: View {
     func showSummaryFor(member: Person) {
         self.showingMemberSummaryView.toggle()
         self.selectedMember = member
-//        print("Person name: \(person.wrappedName)")
-//        print("Person balance: \(person.localBal)")
-//        print("Transactions paid for:")
-//        for transaction in person.payerArray {
-//            print(transaction.wrappedTitle)
-//        }
-//        print("Transactions beneficiary of:")
-//        for transaction in person.beneficiaryArray {
-//            print(transaction.wrappedTitle)
-//        }
     }
     
 }

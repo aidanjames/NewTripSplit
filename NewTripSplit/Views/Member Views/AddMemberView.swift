@@ -12,7 +12,6 @@ import SwiftUI
 struct AddMemberView: View {
     
     var moc: NSManagedObjectContext
-    //    var account: Trip?
     @Binding var members: [Person]
     
     @State private var name = ""
@@ -26,11 +25,9 @@ struct AddMemberView: View {
     var body: some View {
         NavigationView {
             Form {
-                
                 Section(header: Text("Member details")) {
                     TextField("Member name", text: $name)
                 }
-                
                 Section(header: Text("Image").font(.body)) {
                     HStack {
                         if inputImage != nil {
@@ -46,7 +43,6 @@ struct AddMemberView: View {
                                 .frame(width: 80, height: 80)
                                 .clipShape(Circle())
                         }
-                        
                         Button("Change") {
                             self.showingCameraOrPhotoLibActionSheet.toggle()
                         }

@@ -35,27 +35,12 @@ struct AccountCardView: View {
                             .font(.title)
                         Spacer()
                     }
-                    
                     Group {
                         Text("\(self.account.people?.count ?? 0) Participants")
                         Text("\(self.account.transactionsArray.count) Transactions")
                         Text("Total spent: \(Currencies.format(currency: self.account.baseCurrency ?? "Error", amount: self.account.transactionsArray.reduce(0) { $0 + $1.baseAmt }, withSymbol: true, withSign: true))")
                     }
                     .foregroundColor(.secondary)
-                    
-//                    HStack {
-//                        Button(action: { self.showingDeleteWarning.toggle() }) {
-//                            NeumorphicButton(width: 80, height: 50, belowButtonText: nil, onButtonText: "Edit", onButtonImage: nil, circleShape: false)
-//                        }
-//                        .alert(isPresented: $showingDeleteWarning) {
-//                            Alert(title: Text("Delete account?"), message: Text("This will delete the account and it won't come back."), primaryButton: .destructive(Text("Delete")) { self.deleteAccount() }, secondaryButton: .cancel())
-//                        }
-//                        Spacer()
-//                        NavigationLink(destination: TripView(trip: self.account)) {
-//                            NeumorphicButton(width: 120, height: 50, belowButtonText: nil, onButtonText: "View account", onButtonImage: nil, circleShape: false)
-//                        }
-//                        Spacer()
-//                    }
                 }
                 Spacer()
             }
