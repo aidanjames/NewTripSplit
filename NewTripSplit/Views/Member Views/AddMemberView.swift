@@ -47,7 +47,7 @@ struct AddMemberView: View {
                             self.showingCameraOrPhotoLibActionSheet.toggle()
                         }
                         .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
-                            ActionSheet(title: Text("Add receipt"), buttons: [
+                            ActionSheet(title: Text("Add photo"), buttons: [
                                 .default(Text("Take a photo")) {
                                     self.useCamera = true
                                     self.showingImagePicker.toggle()

@@ -17,17 +17,56 @@ struct MemberDetailView: View {
     
     @State private var showingTransactionDetailView = false
     
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var showingCameraOrPhotoLibActionSheet = false
+    @State private var useCamera = false
+    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
             VStack {
-                member.wrappedMemberImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 250, height: 250)
-                    .clipShape(Circle())
-                    .padding()
+                ZStack {
+                    if inputImage != nil {
+                        Image(uiImage: inputImage!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 250, height: 250)
+                            .clipShape(Circle())
+                            .padding()
+                    } else {
+                        member.wrappedMemberImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 250, height: 250)
+                            .clipShape(Circle())
+                            .padding()
+                    }
+                    
+                    Image(systemName: "camera.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
+                        .offset(x: 0, y: 95)
+                        .padding()
+                        .onTapGesture { self.showingCameraOrPhotoLibActionSheet.toggle() }
+                }
+                .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                    ActionSheet(title: Text("Change photo"), buttons: [
+                        .default(Text("Take a photo")) {
+                            self.useCamera = true
+                            self.showingImagePicker.toggle()
+                        },
+                        .default(Text("Use photo album")) {
+                            self.useCamera = false
+                            self.showingImagePicker.toggle()
+                        },
+                        .cancel()
+                    ])
+                }
+                .sheet(isPresented: $showingImagePicker) {
+                    ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                }
                 Text("\(member.localBal < -0.099 ? "Owes \(member.displayLocalBal)" : member.localBal > 0.099 ? "Owed \(member.displayLocalBal)" : "All square")")
                     .font(.body)
                     .foregroundColor(.white)
@@ -66,18 +105,36 @@ struct MemberDetailView: View {
                     }
                     
                 }
-                
-                
-                
                 Spacer()
             }
             .navigationBarTitle(Text(member.wrappedName), displayMode: .inline)
-            .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
+            .navigationBarItems(trailing: Button("Done") { self.donePressed() })
         }
     }
     
     func showTransactionDetailView() {
         self.showingTransactionDetailView.toggle()
+    }
+    
+    func donePressed() {
+        if inputImage != nil {
+            // Delete old image
+            if let imageName = member.photo {
+                FileManager.default.deleteData(from: imageName)
+            }
+            // save image
+            if let inputImage = self.inputImage {
+                let imageID = UUID().uuidString
+                // Convert to data
+                if let jpegData = inputImage.jpegData(compressionQuality: 1) {
+                    // Save to device
+                    FileManager.default.writeData(jpegData, to: imageID)
+                    member.photo = imageID
+                }
+            }
+            try? self.moc.save()
+        }
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 

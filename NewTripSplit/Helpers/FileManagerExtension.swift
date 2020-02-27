@@ -13,6 +13,7 @@ extension FileManager {
     
     func fetchData<T: Codable>(from file: String) -> T? {
         let path = self.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(file)
+        print(path)
         guard let data = try? Data(contentsOf: path) else { return nil }
         guard let decodedData = try? JSONDecoder().decode(T.self, from: data) else { return nil }
         return decodedData

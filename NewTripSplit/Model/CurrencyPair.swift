@@ -17,7 +17,10 @@ class CurrencyPair: ObservableObject {
     
     @Published var error: String? // Add some error handling to the add transaction view
     @Published var exchangeRate: Double = 0.0
+    
+    private init() { }
         
+    
     func getExchangeRate() {
         NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
             switch result {
@@ -45,7 +48,6 @@ class CurrencyPair: ObservableObject {
             }
         }
     }
-    
 }
 
 struct ExchangeRate: Codable {

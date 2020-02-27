@@ -12,8 +12,8 @@ class NetworkService {
     
     static let shared = NetworkService() // Singleton
     
-    private init() {
-    }
+    private init() { }
+    
     
     func fetchData(from urlString: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         // check the URL is OK, otherwise return with a failure
@@ -21,7 +21,6 @@ class NetworkService {
             completion(.failure(.badURL))
             return
         }
-
         URLSession.shared.dataTask(with: url) { data, response, error in
             // the task has completed – push our work back to the main thread
             DispatchQueue.main.async {
