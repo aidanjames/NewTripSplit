@@ -16,11 +16,14 @@ struct MemberDetailView: View {
     var moc: NSManagedObjectContext
     
     @State private var showingTransactionDetailView = false
-    
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
+    @State private var memberName = ""
+    
+    @State private var showingDeleteMemberAlert = false
+    @State private var showingCannotDeleteMemberAlert = false
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -61,11 +64,28 @@ struct MemberDetailView: View {
                             self.useCamera = false
                             self.showingImagePicker.toggle()
                         },
+                        .default(Text("Delete image (use default)")) {
+                            self.inputImage = UIImage(named: "unknown")
+                        },
                         .cancel()
                     ])
                 }
                 .sheet(isPresented: $showingImagePicker) {
                     ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                }
+                TextField("", text: $memberName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .onAppear(perform: self.populateMemberName)
+                Button(action: { self.showingDeleteMemberAlert.toggle() }) {
+                    Text("Delete member").foregroundColor(.red)
+                }
+                .padding(.bottom)
+                .alert(isPresented: $showingDeleteMemberAlert) {
+                    Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .default(Text("Confirm"), action: {
+                        self.deleteMember()
+                    }), secondaryButton: .cancel())
                 }
                 Text("\(member.localBal < -0.099 ? "Owes \(member.displayLocalBal)" : member.localBal > 0.099 ? "Owed \(member.displayLocalBal)" : "All square")")
                     .font(.body)
@@ -103,12 +123,19 @@ struct MemberDetailView: View {
                             }
                         }
                     }
-                    
+                    .alert(isPresented: $showingCannotDeleteMemberAlert) {
+                        Alert(title: Text("Cannot delete member"), message: Text("The member cannot be deleted because they are linked to ative expenses."), dismissButton: .cancel(Text("OK")))
+                    }
                 }
                 Spacer()
             }
-            .navigationBarTitle(Text(member.wrappedName), displayMode: .inline)
-            .navigationBarItems(trailing: Button("Done") { self.donePressed() })
+            .navigationBarTitle(Text("Edit member"), displayMode: .inline)
+            .navigationBarItems(
+                leading:
+                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                trailing:
+                Button("Save") { self.saveButtonPressed() }
+            )
         }
     }
     
@@ -116,7 +143,29 @@ struct MemberDetailView: View {
         self.showingTransactionDetailView.toggle()
     }
     
-    func donePressed() {
+    func populateMemberName() {
+        memberName = member.wrappedName
+    }
+    
+    func deleteMember() {
+        guard member.payerArray.isEmpty && member.beneficiaryArray.isEmpty && member.localBal == 0 else {
+            self.showingCannotDeleteMemberAlert.toggle()
+            return
+        }
+        if let imageName = member.photo {
+            FileManager.default.deleteData(from: imageName) // Delete member image
+        }
+        account.removeFromPeople(member)
+        if self.moc.hasChanges {
+            try? self.moc.save()
+        }
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    func saveButtonPressed() {
+        if memberName != member.wrappedName {
+            member.name = memberName
+        }
         if inputImage != nil {
             // Delete old image
             if let imageName = member.photo {
@@ -132,6 +181,8 @@ struct MemberDetailView: View {
                     member.photo = imageID
                 }
             }
+        }
+        if self.moc.hasChanges {
             try? self.moc.save()
         }
         self.presentationMode.wrappedValue.dismiss()

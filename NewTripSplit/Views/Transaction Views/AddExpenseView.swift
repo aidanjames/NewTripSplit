@@ -71,9 +71,10 @@ struct AddExpenseView: View {
                         Text(currency.rawValue)
                     }
                 }
+                .onAppear(perform: setExchangeRate)
                 if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
                     Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
-                        .onAppear(perform: setExchangeRate)
+                        
                 }
                 if currencyPair.error != nil {
                     Text("Cannot fetch exchange rate")
@@ -88,7 +89,7 @@ struct AddExpenseView: View {
                     }
                 }
                 DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                    .onAppear(perform: populateLastCurrencyUsed)
+//                    .onAppear(perform: populateLastCurrencyUsed)
                 Toggle(isOn: $useCurrentLocation) {
                     // Need a check here to make sure we can access location
                     Text("Use current location")
@@ -225,25 +226,26 @@ struct AddExpenseView: View {
     func setExchangeRate() {
         currencyPair.exchangeRate = 0
         currencyPair.error = nil
+        
+        // This will pre-populate the transaction currency with the most recently used transaction
+        if firstEntry { // So we don't reset it every time we return from the currency selection screen
+            if let currency = self.trip.wrappedCurrenciesUsed.first {
+                if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
+                    self.selectedTransactionCurrency = currencyObject
+                    print("This happened")
+                }
+            }
+        }
+
         guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return }
         if let baseCurrency = trip.baseCurrency {
             let transactionCurrency = selectedTransactionCurrency.rawValue
-            
             self.currencyPair.baseCurrency = String(baseCurrency.prefix(3))
             self.currencyPair.foreignCurrency = String(transactionCurrency.prefix(3))
             self.currencyPair.getExchangeRate()
         }
     }
     
-    
-    func populateLastCurrencyUsed() {
-        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
-        if let currency = self.trip.wrappedCurrenciesUsed.first {
-            if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
-                self.selectedTransactionCurrency = currencyObject
-            }
-        }
-    }
     
 }
 

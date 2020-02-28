@@ -19,6 +19,7 @@
 		3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */; };
 		3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */; };
 		3D47A87123EB69060095655C /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47A87023EB69060095655C /* SettlementView.swift */; };
+		3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */; };
 		3D540A6823F5CF6600CEBBAF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D540A6723F5CF6600CEBBAF /* NetworkService.swift */; };
 		3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28C23BFC7D200938E11 /* AppDelegate.swift */; };
 		3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57F28E23BFC7D200938E11 /* SceneDelegate.swift */; };
@@ -67,6 +68,7 @@
 		3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptView.swift; sourceTree = "<group>"; };
 		3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		3D47A87023EB69060095655C /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
+		3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
 		3D540A6723F5CF6600CEBBAF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3D57F28923BFC7D200938E11 /* NewTripSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTripSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D57F28C23BFC7D200938E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				3DB1743E23C0021500010233 /* TripView.swift */,
 				3D145EE923E0C1910078AC75 /* AddAccountView.swift */,
 				3DA43D6023E605D00014F198 /* AccountCardView.swift */,
+				3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */,
 			);
 			path = "Account Views";
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
+				3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,
 				3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */,
