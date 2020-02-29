@@ -25,6 +25,8 @@ struct MemberDetailView: View {
     @State private var showingDeleteMemberAlert = false
     @State private var showingCannotDeleteMemberAlert = false
     
+    var saveButtonDisabled: Bool { return inputImage == nil && memberName == member.wrappedName }
+    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -135,7 +137,7 @@ struct MemberDetailView: View {
                     leading:
                     Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
                     trailing:
-                    Button("Save") { self.saveButtonPressed() }
+                    Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
                 )
 //            }
         }

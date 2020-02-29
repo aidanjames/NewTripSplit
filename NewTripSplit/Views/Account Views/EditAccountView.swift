@@ -26,6 +26,8 @@ struct EditAccountView: View {
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
     
+    var saveButtonDisabled: Bool { return inputImage == nil && accountName == account.wrappedName }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -110,7 +112,7 @@ struct EditAccountView: View {
                 leading:
                 Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") { self.saveButtonPressed() }
+                Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
             )
         }
     }

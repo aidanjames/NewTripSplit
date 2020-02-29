@@ -90,7 +90,7 @@ struct TripView: View {
                     .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
                     .padding()
                     Button(action: { self.showingEditAccountSheet.toggle() }) {
-                        Image(systemName: "ellipsis.circle.fill")
+                        Image(systemName: "ellipsis.circle")
                             .font(.title)
                     }
                     .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
