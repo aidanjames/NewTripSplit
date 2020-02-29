@@ -81,3 +81,15 @@ extension Transaction {
         lhs.wrappedDate < rhs.wrappedDate
     }
 }
+
+
+// MARK: Extension for friendly transaction paid for names
+extension Transaction {
+    func populatePaidForNames() -> String {
+        var paidForNames = [String]()
+        for person in self.paidForArray {
+            paidForNames.append(person.firstName)
+        }
+        return ListFormatter.localizedString(byJoining: paidForNames)
+    }
+}

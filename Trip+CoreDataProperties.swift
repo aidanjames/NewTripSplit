@@ -100,3 +100,46 @@ extension Trip {
     @NSManaged public func removeFromTransactions(_ values: NSSet)
 
 }
+
+// MARK: Function to calculate settlement
+extension Trip {
+    func calculateSettlement() -> [String] {
+        var returnArray = [String]()
+        guard self.sortedPeopleArray.count > 1 else {
+            returnArray.append("Only one person, no one to pay.")
+            return returnArray
+        }
+        guard self.transactions?.count ?? 0 > 0 else {
+            returnArray.append("There's no transactions for this account.")
+            return returnArray
+        }
+        var memberDictionary = [Person: Double]()
+        for member in self.sortedPeopleArray {
+            memberDictionary[member] = member.localBal
+        }
+        let filteredMemberDictionary = memberDictionary.filter( { $0.value < -0.001 || $0.value > 0.001 } )
+        var sortedMemberDictionary = filteredMemberDictionary.sorted(by: { $0.value  <  $1.value } )
+        while sortedMemberDictionary.count > 1 {
+            if let firstPerson = sortedMemberDictionary.first?.key,
+                let lastPerson = sortedMemberDictionary.last?.key {
+                if let firstPersonBalance = sortedMemberDictionary.first?.value,
+                    let lastPersonBalance = sortedMemberDictionary.last?.value {
+                    if Double(abs(firstPersonBalance)) > Double(abs(lastPersonBalance)) {
+                        returnArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName) \(Currencies.format(amount: Double(abs(lastPersonBalance))))")
+                        sortedMemberDictionary[0].value = firstPersonBalance + lastPersonBalance
+                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
+                    } else if Double(abs(firstPersonBalance)) < Double(abs(lastPersonBalance)) {
+                        returnArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName) \(Currencies.format(amount: Double(abs(firstPersonBalance))))")
+                        sortedMemberDictionary[sortedMemberDictionary.count - 1].value = lastPersonBalance + firstPersonBalance
+                        sortedMemberDictionary.remove(at: 0)
+                    } else if Double(abs(firstPersonBalance)) == Double(abs(lastPersonBalance)) {
+                        returnArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName)  \(Currencies.format(amount: Double(abs(lastPersonBalance))))")
+                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
+                        sortedMemberDictionary.remove(at: 0)
+                    }
+                }
+            }
+        }
+        return returnArray
+    }
+}

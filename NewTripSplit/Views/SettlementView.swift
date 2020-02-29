@@ -27,47 +27,9 @@ struct SettlementView: View {
                     }
                 }
             }
-            .onAppear(perform: calculateSettlement)
+            .onAppear { self.whoPaysWhoArray = self.account.calculateSettlement() }
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
-        }
-    }
-    
-    func calculateSettlement() {
-        guard account.sortedPeopleArray.count > 1 else {
-            self.whoPaysWhoArray.append("Only one person, no one to pay.")
-            return
-        }
-        guard account.transactions?.count ?? 0 > 0 else {
-            self.whoPaysWhoArray.append("There's no transactions for this account.")
-            return
-        }
-        var memberDictionary = [Person: Double]()
-        for member in account.sortedPeopleArray {
-            memberDictionary[member] = member.localBal
-        }
-        let filteredMemberDictionary = memberDictionary.filter( { $0.value < -0.001 || $0.value > 0.001 } )
-        var sortedMemberDictionary = filteredMemberDictionary.sorted(by: { $0.value  <  $1.value } )
-        while sortedMemberDictionary.count > 1 {
-            if let firstPerson = sortedMemberDictionary.first?.key,
-                let lastPerson = sortedMemberDictionary.last?.key {
-                if let firstPersonBalance = sortedMemberDictionary.first?.value,
-                    let lastPersonBalance = sortedMemberDictionary.last?.value {
-                    if Double(abs(firstPersonBalance)) > Double(abs(lastPersonBalance)) {
-                        self.whoPaysWhoArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName) \(Currencies.format(amount: Double(abs(lastPersonBalance))))")
-                        sortedMemberDictionary[0].value = firstPersonBalance + lastPersonBalance
-                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
-                    } else if Double(abs(firstPersonBalance)) < Double(abs(lastPersonBalance)) {
-                        self.whoPaysWhoArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName) \(Currencies.format(amount: Double(abs(firstPersonBalance))))")
-                        sortedMemberDictionary[sortedMemberDictionary.count - 1].value = lastPersonBalance + firstPersonBalance
-                        sortedMemberDictionary.remove(at: 0)
-                    } else if Double(abs(firstPersonBalance)) == Double(abs(lastPersonBalance)) {
-                        self.whoPaysWhoArray.append("\(firstPerson.firstName) pays \(lastPerson.firstName)  \(Currencies.format(amount: Double(abs(lastPersonBalance))))")
-                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
-                        sortedMemberDictionary.remove(at: 0)
-                    }
-                }
-            }
         }
     }
     

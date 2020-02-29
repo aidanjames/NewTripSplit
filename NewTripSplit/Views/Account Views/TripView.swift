@@ -18,6 +18,7 @@ struct TripView: View {
     @State private var showingSettlementView = false
     @State private var showingMemberSummaryView = false
     @State private var showingEditAccountSheet = false
+    @State private var showingShareSheet = false
     @State private var selectedMember: Person?
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
@@ -31,7 +32,10 @@ struct TripView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
-                                Button(action: { self.showSummaryFor(member: person) }) {
+                                Button(action: {
+                                    self.showingMemberSummaryView.toggle()
+                                    self.selectedMember = person
+                                }) {
                                     MemberCardView(person: person)
                                         .padding(.vertical)
                                 }
@@ -76,11 +80,21 @@ struct TripView: View {
             }
             .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
             .navigationBarItems(trailing:
-                Button(action: { self.showingEditAccountSheet.toggle() }) {
-                    Image(systemName: "ellipsis.circle.fill")
-                        .font(.title)
+                
+                
+                HStack {
+                    Button(action: { self.showingShareSheet.toggle() }) {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.title)
+                    }
+                    .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
+                    .padding()
+                    Button(action: { self.showingEditAccountSheet.toggle() }) {
+                        Image(systemName: "ellipsis.circle.fill")
+                            .font(.title)
+                    }
+                    .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
                 }
-                .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
                 
             )
         }
@@ -88,9 +102,24 @@ struct TripView: View {
         
     }
     
-    func showSummaryFor(member: Person) {
-        self.showingMemberSummaryView.toggle()
-        self.selectedMember = member
+
+    func itemsForShareSheet() -> [String] {
+        var array = [String]()
+        array.append("*****\(trip.wrappedName.uppercased())*****")
+        array.append("\n\n***MEMBER BALANCES***")
+        for member in trip.sortedPeopleArray {
+            array.append("\(member.wrappedName): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: member.localBal, withSymbol: true, withSign: true))")
+        }
+        array.append("\n\n***SETTLEMENT***")
+        for settlementRecord in trip.calculateSettlement() {
+            array.append(settlementRecord)
+        }
+        array.append("\n\n***TRANSACTIONS***")
+        for transaction in trip.transactionsArray {
+            array.append("\(transaction.dateDisplay) \(transaction.wrappedTitle): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: transaction.baseAmt, withSymbol: true, withSign: false)) \(trip.baseCurrency != transaction.trnCurrency ? "(\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true)) @\(String(format: "%.06f", transaction.exchangeRate)))" : "")\nPaid by \(transaction.paidBy?.wrappedName ?? "") for \(transaction.populatePaidForNames()).\n------------")
+        }
+        
+        return array
     }
     
 }

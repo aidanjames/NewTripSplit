@@ -11,14 +11,12 @@ import SwiftUI
 struct TransactionListItemView: View {
     
     @ObservedObject var transaction: Transaction
-    
-    @State private var paidForNames = [String]()
-    
+        
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(transaction.wrappedTitle)
-                Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(ListFormatter.localizedString(byJoining: paidForNames)).")
+                Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(transaction.populatePaidForNames()).")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
@@ -33,15 +31,9 @@ struct TransactionListItemView: View {
                 Spacer()
             }
         }
-        .onAppear(perform: populatePaidForNames)
+
     }
     
-    func populatePaidForNames() {
-        guard paidForNames.isEmpty else { return }
-        for person in transaction.paidForArray {
-            paidForNames.append(person.firstName)
-        }
-    }
 }
 
 
