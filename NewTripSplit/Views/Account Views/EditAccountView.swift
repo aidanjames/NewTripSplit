@@ -77,6 +77,7 @@ struct EditAccountView: View {
                 TextField("", text: $accountName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .multilineTextAlignment(.center)
+                    .frame(width: 300)
                     .padding()
                     .onAppear(perform: self.populateTripName)
                 

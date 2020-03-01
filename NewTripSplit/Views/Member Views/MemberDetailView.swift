@@ -79,6 +79,7 @@ struct MemberDetailView: View {
                     TextField("", text: $memberName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .multilineTextAlignment(.center)
+                        .frame(width: 250)
                         .padding()
                         .onAppear(perform: self.populateMemberName)
                     Button(action: { self.showingDeleteMemberAlert.toggle() }) {
