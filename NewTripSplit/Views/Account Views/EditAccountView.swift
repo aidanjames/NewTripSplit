@@ -38,14 +38,14 @@ struct EditAccountView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 250, height: 250)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .padding()
+                            .padding(.top)
                     } else {
                         account.wrappedAccountImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 250, height: 250)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .padding()
+                            .padding(.top)
                     }
                     Image(systemName: "camera.fill")
                     .font(.largeTitle)
@@ -80,11 +80,6 @@ struct EditAccountView: View {
                     .frame(width: 300)
                     .padding()
                     .onAppear(perform: self.populateTripName)
-                
-                Button(action: { self.showingDeleteAccountWarning.toggle() }) {
-                    Text("Delete account").foregroundColor(.red)
-                }
-                .padding(.bottom)
                 .alert(isPresented: $showingDeleteAccountWarning) {
                     Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this account? This is permanent and cannot be undone!"), primaryButton: .default(Text("Confirm"), action: {
                         self.deleteAccount()
@@ -113,7 +108,10 @@ struct EditAccountView: View {
                 leading:
                 Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
+                HStack {
+                    Button(action: { self.showingDeleteAccountWarning.toggle() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
+                    Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
+                }
             )
         }
     }
@@ -138,10 +136,15 @@ struct EditAccountView: View {
             }
             moc.delete(transaction)
         }
-        // TODO: Need to delete bet wagers
         
-        // TODO: Need to delete bet offers
-        
+        let betting = Betting() // Delete bets
+        for betOffer in betting.allBets.filter({ $0.tripId == self.account.wrappedId }) {
+            if let index = betting.allBets.firstIndex(where: { $0.id == betOffer.id } ) {
+                betting.allBets.remove(at: index)
+            }
+        }
+        betting.update()
+                
         if let imageName = account.image {
             FileManager.default.deleteData(from: imageName) // Delete account image
         }

@@ -87,7 +87,7 @@ struct AddAccountView: View {
             }
             .navigationBarTitle(Text("Add new account"))
             .navigationBarItems(leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { self.addAccountCancelled() },
                                 trailing:
                 Button("Save") { self.saveTrip() }.disabled(self.members.isEmpty || self.accountName.isEmpty)
             )
@@ -127,6 +127,29 @@ struct AddAccountView: View {
         }
         
         self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    func addAccountCancelled() {
+        // If there's a member, and they have an image, delete their image from device
+        guard !members.isEmpty else {
+            self.presentationMode.wrappedValue.dismiss()
+            return
+        }
+        
+        for member in members {
+            // Check that the image is not just the default
+            if let imageName = member.photo {
+                FileManager.default.deleteData(from: imageName)
+            }
+           
+            self.moc.delete(member) // Delete the member from moc
+        }
+        
+        if self.moc.hasChanges { try? self.moc.save() } // save the moc
+        
+        // Dismiss the screen
+        self.presentationMode.wrappedValue.dismiss()
+        
     }
     
     
