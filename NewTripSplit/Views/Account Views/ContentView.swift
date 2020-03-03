@@ -16,35 +16,45 @@ struct ContentView: View {
     
     @State private var showingAddTrip = false
     
+    @State private var showingDismissTestView = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 ZStack {
                     VStack {
                         if trips.isEmpty {
-                            Text("No trips - add one.")
+                            //                            Text("No trips - add one.")
+                            VStack {
+                                Image("cactus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100)
+                            }
+                            .padding()
+                            Text("Hmmm there's no accounts yet....")
+                                .foregroundColor(.secondary)
+                                .padding()
+                            Button(action: { self.showingAddTrip.toggle() }) {
+                                GreenButtonView(text: "Create account")
+                            }
+                            
                         } else {
-                            ForEach(trips, id: \.id) { trip in
-                                NavigationLink(destination: TripView(trip: trip)) {
-                                    AccountCardView(account: trip)
-                                    .padding(.horizontal, 5)
-                                }.buttonStyle(PlainButtonStyle())
+                            VStack {
+                                GreenButtonView(text: "Create account")
+                                ForEach(trips, id: \.id) { trip in
+                                    NavigationLink(destination: TripView(trip: trip)) {
+                                        AccountCardView(account: trip)
+                                            .padding(.horizontal, 5)
+                                    }.buttonStyle(PlainButtonStyle())
+                                }
                             }
                         }
                         Spacer()
                     }
                 }
                 .navigationBarTitle("Accounts")
-                .navigationBarItems(trailing:
-                    HStack {
-                        Button(action: { self.showingAddTrip.toggle() }) {
-                            Text("Add account")
-                        }
-                        .sheet(isPresented: $showingAddTrip) {
-                            AddAccountView(moc: self.moc)
-                        }
-                    }
-                )
+                .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc) }
             }
         }
     }
@@ -61,3 +71,5 @@ struct ContentView_Previews: PreviewProvider {
         return ContentView().environment(\.managedObjectContext, moc)
     }
 }
+
+

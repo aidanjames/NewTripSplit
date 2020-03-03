@@ -44,6 +44,7 @@
 		3D98DDC223E4D01F0029D432 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D98DDC123E4D01F0029D432 /* MemberCardView.swift */; };
 		3DA43D6123E605D00014F198 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA43D6023E605D00014F198 /* AccountCardView.swift */; };
 		3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */; };
+		3DA8E6D0240E9C590036B536 /* GreenButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */; };
 		3DB1739C23BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */; };
 		3DB1739D23BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739523BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift */; };
 		3DB1739E23BFD63E00DF2CE1 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1739623BFD63E00DF2CE1 /* Person+CoreDataClass.swift */; };
@@ -96,6 +97,7 @@
 		3D98DDC123E4D01F0029D432 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
 		3DA43D6023E605D00014F198 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
 		3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListItemView.swift; sourceTree = "<group>"; };
+		3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenButtonView.swift; sourceTree = "<group>"; };
 		3DB1739423BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3DB1739523BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		3DB1739623BFD63E00DF2CE1 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -188,6 +190,7 @@
 		3D6ED07023BFF5F7004F7083 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3DA8E6CE240E9C3A0036B536 /* Shared Views */,
 				3DA251B024018EBA005DB452 /* Account Views */,
 				3DA251AF24018C11005DB452 /* Member Views */,
 				3D81812B23DCCDEC009301BB /* Transaction Views */,
@@ -255,6 +258,14 @@
 				3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */,
 			);
 			path = "Account Views";
+			sourceTree = "<group>";
+		};
+		3DA8E6CE240E9C3A0036B536 /* Shared Views */ = {
+			isa = PBXGroup;
+			children = (
+				3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */,
+			);
+			path = "Shared Views";
 			sourceTree = "<group>";
 		};
 		3DB1743B23BFFE9B00010233 /* Helpers */ = {
@@ -363,6 +374,7 @@
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
 				3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
+				3DA8E6D0240E9C590036B536 /* GreenButtonView.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,
 				3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */,
 				3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */,
