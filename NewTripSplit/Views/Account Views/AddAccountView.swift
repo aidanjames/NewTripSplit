@@ -14,6 +14,7 @@ struct AddAccountView: View {
     @State private var accountName = ""
     @State private var selectedBaseCurrency = Currencies.gbp
     @State private var showingAddMemberView = false
+    @State private var showingTooManyMembersWarning = false
     @State private var showingImagePicker = false
     @State private var members = [Person]()
     @State private var inputImage: UIImage?
@@ -73,11 +74,20 @@ struct AddAccountView: View {
                     }
                 }
                 Section(header: Text("Members").font(.body)) {
-                    Button(action: { self.showingAddMemberView.toggle() }) {
+                    Button(action: {
+                        if self.members.count >= 50 {
+                           self.showingTooManyMembersWarning.toggle()
+                        } else {
+                            self.showingAddMemberView.toggle()
+                        }
+                    }) {
                         HStack {
                             Image(systemName: "person.badge.plus.fill")
                             Text("Add member")
                         }
+                    }
+                    .alert(isPresented: $showingTooManyMembersWarning) {
+                        Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
                     }
                     .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: self.moc, members: self.$members) }
                     ForEach(members, id: \.wrappedId) { member in

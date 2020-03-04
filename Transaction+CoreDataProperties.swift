@@ -85,7 +85,11 @@ extension Transaction {
 
 // MARK: Extension for friendly transaction paid for names
 extension Transaction {
-    func populatePaidForNames() -> String {
+    func populatePaidForNames(capitaliseFirstLetter: Bool = false) -> String {
+        guard trip?.sortedPeopleArray.count != self.paidForArray.count else {
+            if capitaliseFirstLetter { return "All members"}
+            return "all members"
+        }
         var paidForNames = [String]()
         for person in self.paidForArray {
             paidForNames.append(person.firstName)

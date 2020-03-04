@@ -40,7 +40,7 @@ struct TransactionDetailView: View {
                             MapView(centreCoordinate: self.$centerCoordinate, annotation: self.annotation)
                                 .frame(width: geo.size.width, height: geo.size.height * 0.3)
                         }
-                        List {
+                        Form {
                             Section(header: Text("Transaction details")) {
                                 Text("\(self.transaction!.wrappedTitle)").fontWeight(.bold)
                                 if !(self.transaction!.wrappedAdditionalInfo.isEmpty) {
@@ -66,9 +66,7 @@ struct TransactionDetailView: View {
                                 Text("\(self.transaction!.paidBy?.wrappedName ?? "")")
                             }
                             Section(header: Text("Beneficiaries")) {
-                                ForEach(self.transaction!.paidForArray, id: \.self) { person in
-                                    Text(person.wrappedName)
-                                }
+                                Text("\(self.transaction?.populatePaidForNames(capitaliseFirstLetter: true) ?? "error").")
                             }
                         }
                         Spacer()
@@ -79,6 +77,7 @@ struct TransactionDetailView: View {
                         leading:
                         Button(action: { self.showingDeleteAlert.toggle() }) {
                             Image(systemName: "trash")
+                                .foregroundColor(.red)
                                 .padding(3)
                         },
                         trailing:
@@ -101,7 +100,7 @@ struct TransactionDetailView: View {
             
         }
     }
-
+    
     
     func populateCenterCoordinate() {
         if transaction?.latitude != 0 && transaction?.longitude != 0 {

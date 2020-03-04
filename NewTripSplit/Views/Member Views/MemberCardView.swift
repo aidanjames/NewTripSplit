@@ -29,11 +29,11 @@ struct MemberCardView: View {
                 Text(person.wrappedName)
                     .foregroundColor(.black)
                     .font(.footnote)
-                Text("\(person.localBal < -0.099 ? "Owes \(person.displayLocalBal)" : person.localBal > 0.099 ? "Owed \(person.displayLocalBal)" : "All square")")
+                Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal)" : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal)" : "All square")")
                     .font(.caption)
                     .foregroundColor(.white)
                     .padding(5)
-                    .background(person.localBal < -0.099 ? Color.red : person.localBal > 0.099 ? Color.green : Color.blue)
+                    .background(person.localBal < -0.0099 ? Color.red : person.localBal > 0.0099 ? Color.green : Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .opacity(50)
             }

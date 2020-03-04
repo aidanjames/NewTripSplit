@@ -81,7 +81,7 @@ struct EditAccountView: View {
                     .padding()
                     .onAppear(perform: self.populateTripName)
                 .alert(isPresented: $showingDeleteAccountWarning) {
-                    Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this account? This is permanent and cannot be undone!"), primaryButton: .default(Text("Confirm"), action: {
+                    Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this account? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
                         self.deleteAccount()
                     }), secondaryButton: .cancel())
                 }

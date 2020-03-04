@@ -81,7 +81,7 @@ struct MemberDetailView: View {
                     .frame(width: 250)
                     .onAppear(perform: self.populateMemberName)
                     .alert(isPresented: $showingDeleteMemberAlert) {
-                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .default(Text("Confirm"), action: {
+                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
                             self.deleteMember()
                         }), secondaryButton: .cancel())
                 }
@@ -89,7 +89,7 @@ struct MemberDetailView: View {
                     .font(.body)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(member.localBal < -0.099 ? Color.red : member.localBal > 0.099 ? Color.green : Color.blue)
+                    .background(member.localBal < -0.0099 ? Color.red : member.localBal > 0.0099 ? Color.green : Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .opacity(50)
                 List {

@@ -15,6 +15,7 @@ struct TripView: View {
     @State private var bottomSheetIsOpen = false
     @State private var showingAddExpenseView = false
     @State private var showingAddMemberView = false
+    @State private var showingTooManyMembersWarning = false
     @State private var showingSettlementView = false
     @State private var showingMemberSummaryView = false
     @State private var showingEditAccountSheet = false
@@ -66,13 +67,28 @@ struct TripView: View {
                         .sheet(isPresented: self.$showingSettlementView) {
                             SettlementView(moc: self.moc, account: self.trip)
                         }
-                        Button(action: { self.showingAddMemberView.toggle() }) {
+                        Button(action: {
+                            if self.trip.sortedPeopleArray.count >= 50 {
+                               self.showingTooManyMembersWarning.toggle()
+                            } else {
+                                self.showingAddMemberView.toggle()
+                            }
+                        }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Add member", onButtonImage: "person.badge.plus")
                         }
+                        .alert(isPresented: self.$showingTooManyMembersWarning) {
+                                Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
+                            }
                         .sheet(isPresented: self.$showingAddMemberView) {
                             AddMemberToTripView(moc: self.moc, account: self.trip)
                         }
                     }
+//                    Button(action: {
+//                        self.createMockData()
+//                    }) {
+//                        GreenButtonView(text: "Generate mock data")
+//                    }
+//                    .padding()
                     Spacer()
                 }
                 TransactionListView(bottomSheetIsOpen: self.$bottomSheetIsOpen, geoSize: geo.size, moc: self.moc, trip: self.trip)
@@ -100,6 +116,17 @@ struct TripView: View {
         }
         
         
+    }
+    
+    // DELETE THIS
+    func createMockData() {
+        for i in 1...50 {
+            let newPerson = Person(context: self.moc)
+            newPerson.name = "David Mills\(i)"
+            newPerson.id = UUID()
+            newPerson.trip = self.trip
+        }
+        if self.moc.hasChanges { try? self.moc.save() }
     }
     
 

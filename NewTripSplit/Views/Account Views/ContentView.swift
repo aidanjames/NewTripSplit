@@ -15,16 +15,13 @@ struct ContentView: View {
     ]) var trips: FetchedResults<Trip>
     
     @State private var showingAddTrip = false
-    
-    @State private var showingDismissTestView = false
-    
+        
     var body: some View {
         NavigationView {
             ScrollView {
                 ZStack {
                     VStack {
                         if trips.isEmpty {
-                            //                            Text("No trips - add one.")
                             VStack {
                                 Image("cactus")
                                     .resizable()
@@ -32,16 +29,21 @@ struct ContentView: View {
                                     .frame(width: 100)
                             }
                             .padding()
+                            .padding(.top)
                             Text("Hmmm there's no accounts yet....")
                                 .foregroundColor(.secondary)
                                 .padding()
+                                .padding(.bottom)
                             Button(action: { self.showingAddTrip.toggle() }) {
                                 GreenButtonView(text: "Create account")
                             }
-                            
+                            .padding(.top)
                         } else {
                             VStack {
-                                GreenButtonView(text: "Create account")
+                                Button(action: { self.showingAddTrip.toggle() }) {
+                                    GreenButtonView(text: "Create account")
+                                }
+                                .padding(.top)
                                 ForEach(trips, id: \.id) { trip in
                                     NavigationLink(destination: TripView(trip: trip)) {
                                         AccountCardView(account: trip)
@@ -64,10 +66,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let trip = Trip(context: moc)
-        trip.id = UUID()
-        trip.name = "Preview trip"
-        trip.image = "trip"
+//        let trip = Trip(context: moc)
+//        trip.id = UUID()
+//        trip.name = "Preview trip"
+//        trip.image = "trip"
         return ContentView().environment(\.managedObjectContext, moc)
     }
 }
