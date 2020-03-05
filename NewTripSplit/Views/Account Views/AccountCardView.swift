@@ -32,7 +32,10 @@ struct AccountCardView: View {
                     HStack {
                         Text(account.wrappedName)
                             .foregroundColor(.black)
-                            .font(.title)
+                            .font(.system(size: 30))
+                            .fontWeight(.bold)
+                            .minimumScaleFactor(0.4)
+                            .lineLimit(2)
                         Spacer()
                     }
                     Group {
@@ -57,7 +60,7 @@ struct AccountCardView_Previews: PreviewProvider {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let trip = Trip(context: moc)
         trip.id = UUID()
-        trip.name = "Preview trip"
+        trip.name = "This trip"
         trip.image = "trip"
         let person = Person(context: moc)
         person.id = UUID()

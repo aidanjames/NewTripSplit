@@ -55,6 +55,7 @@
 		3DB1743F23C0021500010233 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743E23C0021500010233 /* TripView.swift */; };
 		3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1323C929AD0012F714 /* TransactionListView.swift */; };
 		3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975023C3C02F003042F0 /* ColorExtension.swift */; };
+		3DF0846A241036450022C414 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF08469241036450022C414 /* Category.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		3DB1743E23C0021500010233 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		3DBDDF1323C929AD0012F714 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
 		3DD0975023C3C02F003042F0 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		3DF08469241036450022C414 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 				3DB1739923BFD63E00DF2CE1 /* Trip+CoreDataProperties.swift */,
 				3D6ED07123BFFA2D004F7083 /* Currencies.swift */,
 				3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */,
+				3DF08469241036450022C414 /* Category.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				3D57F28F23BFC7D200938E11 /* SceneDelegate.swift in Sources */,
 				3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */,
 				3D81812823DCAE34009301BB /* LocationFetcher.swift in Sources */,
+				3DF0846A241036450022C414 /* Category.swift in Sources */,
 				3D7D0BEA23D0B373005F1DAA /* Betting.swift in Sources */,
 				3D70CD8923CFAFA500701C23 /* SideBetsSummaryView.swift in Sources */,
 				3D70CD9123CFB3CA00701C23 /* BetCardView.swift in Sources */,

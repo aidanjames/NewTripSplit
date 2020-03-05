@@ -64,56 +64,64 @@ struct AddExpenseView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Transaction description", text: $expenseName)
-                TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
-                Picker("Transaction currency", selection: $selectedTransactionCurrency) {
-                    ForEach(Currencies.allCases, id: \.self) { currency in
-                        Text(currency.rawValue)
+                Group {
+                    TextField("Transaction description", text: $expenseName)
+                    TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
+                    Picker("Transaction currency", selection: $selectedTransactionCurrency) {
+                        ForEach(Currencies.allCases, id: \.self) { currency in
+                            Text(currency.rawValue)
+                        }
+                    }
+                    .onAppear(perform: setExchangeRate)
+                    if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
+                        Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
+                    }
+                    if currencyPair.error != nil {
+                        Text("Cannot fetch exchange rate")
+                            .foregroundColor(.red)
+                            .onAppear(perform: showError)
+                            .actionSheet(isPresented: $showingRateError) {
+                                ActionSheet(title: Text("Failed to get exchange rate"), buttons: [
+                                    .default(Text("Try again")) { self.setExchangeRate() },
+                                    .default(Text("Enter rate manually")) { print("To do") },
+                                    .cancel()
+                                ])
+                        }
+                    }
+                    HStack {
+                        Text("Category: General")
+                        Spacer()
+                        Button("Change") {}
+                    }
+                    DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
+                    //                    .onAppear(perform: populateLastCurrencyUsed)
+                    Toggle(isOn: $useCurrentLocation) {
+                        // Need a check here to make sure we can access location
+                        Text("Use current location")
+                    }
+                    .onAppear(perform: fetchLocation)
+                    Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
+                        self.showingCameraOrPhotoLibActionSheet.toggle()
+                    }
+                    .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                        ActionSheet(title: Text("Add receipt"), buttons: [
+                            .default(Text("Take a photo")) {
+                                self.useCamera = true
+                                self.showingImagePicker.toggle()
+                            },
+                            .default(Text("Use photo album")) {
+                                self.useCamera = false
+                                self.showingImagePicker.toggle()
+                            },
+                            .cancel()
+                        ])
+                    }
+                    .sheet(isPresented: $showingImagePicker) {
+                        ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                     }
                 }
-                .onAppear(perform: setExchangeRate)
-                if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
-                    Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
-                        
-                }
-                if currencyPair.error != nil {
-                    Text("Cannot fetch exchange rate")
-                        .foregroundColor(.red)
-                        .onAppear(perform: showError)
-                        .actionSheet(isPresented: $showingRateError) {
-                            ActionSheet(title: Text("Failed to get exchange rate"), buttons: [
-                                .default(Text("Try again")) { self.setExchangeRate() },
-                                .default(Text("Enter rate manually")) { print("To do") },
-                                .cancel()
-                            ])
-                    }
-                }
-                DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-//                    .onAppear(perform: populateLastCurrencyUsed)
-                Toggle(isOn: $useCurrentLocation) {
-                    // Need a check here to make sure we can access location
-                    Text("Use current location")
-                }
-                .onAppear(perform: fetchLocation)
-                Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
-                    self.showingCameraOrPhotoLibActionSheet.toggle()
-                }
-                .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
-                    ActionSheet(title: Text("Add receipt"), buttons: [
-                        .default(Text("Take a photo")) {
-                            self.useCamera = true
-                            self.showingImagePicker.toggle()
-                        },
-                        .default(Text("Use photo album")) {
-                            self.useCamera = false
-                            self.showingImagePicker.toggle()
-                        },
-                        .cancel()
-                    ])
-                }
-                .sheet(isPresented: $showingImagePicker) {
-                    ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
-                }
+                
+
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
@@ -236,7 +244,7 @@ struct AddExpenseView: View {
                 }
             }
         }
-
+        
         guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return }
         if let baseCurrency = trip.baseCurrency {
             let transactionCurrency = selectedTransactionCurrency.rawValue
