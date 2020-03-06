@@ -22,7 +22,6 @@ struct AddExpenseView: View {
     @State private var transactionAmount = ""
     @State private var selectedTransactionCurrency = Currencies.gbp
     @State private var firstEntry = true
-    @State private var paidForSelected = 0
     @State private var transactionDate = Date()
     @State private var paidBySelection = 0
     @State private var useCurrentLocation = true
@@ -94,7 +93,6 @@ struct AddExpenseView: View {
                         Button("Change") {}
                     }
                     DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                    //                    .onAppear(perform: populateLastCurrencyUsed)
                     Toggle(isOn: $useCurrentLocation) {
                         // Need a check here to make sure we can access location
                         Text("Use current location")

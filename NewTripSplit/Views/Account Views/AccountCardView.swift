@@ -32,9 +32,8 @@ struct AccountCardView: View {
                     HStack {
                         Text(account.wrappedName)
                             .foregroundColor(.black)
-                            .font(.system(size: 30))
+                            .font(.system(size: 25))
                             .fontWeight(.bold)
-                            .minimumScaleFactor(0.4)
                             .lineLimit(2)
                         Spacer()
                     }

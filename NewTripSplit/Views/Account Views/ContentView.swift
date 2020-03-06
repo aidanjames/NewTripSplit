@@ -66,10 +66,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        let trip = Trip(context: moc)
-//        trip.id = UUID()
-//        trip.name = "Preview trip"
-//        trip.image = "trip"
+        let trip = Trip(context: moc)
+        trip.id = UUID()
+        trip.name = "Preview trip"
+        trip.image = "trip"
         return ContentView().environment(\.managedObjectContext, moc)
     }
 }
