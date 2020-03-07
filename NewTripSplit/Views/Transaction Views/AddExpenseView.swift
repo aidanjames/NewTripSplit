@@ -119,7 +119,7 @@ struct AddExpenseView: View {
                     }
                 }
                 
-
+                
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {

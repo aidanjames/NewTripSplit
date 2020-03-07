@@ -140,7 +140,8 @@ struct BetCardView: View {
                         // Create the Dr transaction
                         let transaction = Transaction(context: self.moc)
                         transaction.id = UUID()
-                        transaction.title = "Side bet won: \(bet.condition)"
+                        transaction.title = "Side bet won"
+                        transaction.additionalInfo = "\(punter.firstName) bet \(Currencies.format(amount: wager.amountWaged)) on \"\(bet.condition)\" at odds of \(Currencies.format(amount: wager.odds.odds)) offered by \(loser.firstName)."
                         transaction.baseAmt = amountWon
                         transaction.exchangeRate = 0
                         transaction.trnAmt = wager.paysAmount
@@ -190,7 +191,8 @@ struct BetCardView: View {
                         // Create the Dr transaction
                         let transaction = Transaction(context: self.moc)
                         transaction.id = UUID()
-                        transaction.title = "Side bet lost: \(bet.condition)"
+                        transaction.title = "Side bet lost"
+                        transaction.additionalInfo = "\(punter.firstName) bet \(Currencies.format(amount: wager.amountWaged)) on \"\(bet.condition)\" at odds of \(Currencies.format(amount: wager.odds.odds)) offered by \(winner.firstName)."
                         transaction.baseAmt = wager.amountWaged
                         transaction.exchangeRate = 0
                         transaction.trnAmt = wager.amountWaged

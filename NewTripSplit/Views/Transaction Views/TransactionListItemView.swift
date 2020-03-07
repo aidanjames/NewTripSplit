@@ -16,9 +16,16 @@ struct TransactionListItemView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(transaction.wrappedTitle)
-                Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(transaction.populatePaidForNames()).")
+                if transaction.additionalInfo == nil {
+                    Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(transaction.populatePaidForNames()).")
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                } else {
+                    Text(transaction.additionalInfo!)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                }
+                
             }
             Spacer()
             VStack(alignment: .trailing) {

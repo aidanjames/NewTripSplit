@@ -31,6 +31,9 @@ struct NewOddsView: View {
                     }
                 }
                 
+                Section(header: Text("This bet will pay out if...")) {
+                    TextField("Condition", text: $condition)
+                }
                 
                 Section(header: Text("Odds offered")) {
                     TextField("Amount (decimal)", text: $oddsOffered).keyboardType(.decimalPad)
@@ -41,9 +44,6 @@ struct NewOddsView: View {
                     TextField("Amount prepared to lose", text: $maxPot).keyboardType(.decimalPad)
                 }
                 
-                Section(header: Text("This bet will pay out if...")) {
-                    TextField("Condition", text: $condition)
-                }
             }
             .navigationBarTitle("New odds")
             .navigationBarItems(
