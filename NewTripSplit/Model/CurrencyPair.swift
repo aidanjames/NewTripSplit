@@ -48,6 +48,14 @@ class CurrencyPair: ObservableObject {
             }
         }
     }
+    
+    
+    func manuallySetExchangeRate(_ rate: String) {
+        if let rate = Double(rate) {
+            self.exchangeRate = rate
+            self.error = nil
+        }
+    }
 }
 
 struct ExchangeRate: Codable {

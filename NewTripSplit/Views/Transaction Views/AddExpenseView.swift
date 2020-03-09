@@ -32,6 +32,9 @@ struct AddExpenseView: View {
     @State private var inputImage: UIImage?
     
     @State private var showingRateError = false
+    @State private var showingManualRateInputField = false
+    @State private var manualExchangeRate = ""
+    var manualExchRateButtonDisabled: Bool { Double(manualExchangeRate) == nil }
     
     let locationFetcher = LocationFetcher.shared
     
@@ -75,16 +78,26 @@ struct AddExpenseView: View {
                     if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
                         Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
                     }
-                    if currencyPair.error != nil {
+                    if currencyPair.error != nil && !showingManualRateInputField {
                         Text("Cannot fetch exchange rate")
                             .foregroundColor(.red)
                             .onAppear(perform: showError)
                             .actionSheet(isPresented: $showingRateError) {
                                 ActionSheet(title: Text("Failed to get exchange rate"), buttons: [
                                     .default(Text("Try again")) { self.setExchangeRate() },
-                                    .default(Text("Enter rate manually")) { print("To do") },
+                                    .default(Text("Enter rate manually")) { self.showingManualRateInputField = true },
                                     .cancel()
                                 ])
+                        }
+                    }
+                    if showingManualRateInputField {
+                        HStack {
+                            TextField("Enter exchange rate", text: $manualExchangeRate).keyboardType(.decimalPad)
+                            Button("Apply") {
+                                self.currencyPair.manuallySetExchangeRate(self.manualExchangeRate)
+                                self.showingManualRateInputField = false
+                                self.manualExchangeRate = ""
+                            }.disabled(manualExchRateButtonDisabled)
                         }
                     }
                     HStack {
