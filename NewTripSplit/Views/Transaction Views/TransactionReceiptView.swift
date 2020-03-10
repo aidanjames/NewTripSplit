@@ -20,8 +20,8 @@ struct TransactionReceiptView: View {
                     if self.image != nil {
                         self.image!
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: geo.size.width, height: geo.size.height * 0.7)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geo.size.width)
                     } else {
                         Text("No image")
                     }
