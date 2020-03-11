@@ -58,4 +58,21 @@ public enum Currencies: String, CaseIterable {
         return String(format: "\(sign)\(symbol)%.02f", abs(amount))
         
     }
+    
+    static func symbol(for currency: String) -> String {
+        switch currency {
+        case "GBP - British pound", "GBP":
+            return "£"
+        case "EUR - Euro", "EUR":
+            return "€"
+        case "HKD - HK dollar", "HKD":
+            return "HK$"
+        case "DKK - Danish kroner", "DKK":
+            return "Kr"
+        case "INR - Indian rupee", "INR":
+            return "₹"
+        default:
+            return "$"
+        }
+    }
 }

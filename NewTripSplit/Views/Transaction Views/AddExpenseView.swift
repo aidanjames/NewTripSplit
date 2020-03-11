@@ -68,7 +68,10 @@ struct AddExpenseView: View {
             Form {
                 Group {
                     TextField("Transaction description", text: $expenseName)
-                    TextField("Transaction amount in \(selectedTransactionCurrency.rawValue)", text: $transactionAmount).keyboardType(.decimalPad)
+                    HStack {
+                        Text("\(Currencies.symbol(for: selectedTransactionCurrency.rawValue))")
+                        TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
+                    }
                     Picker("Transaction currency", selection: $selectedTransactionCurrency) {
                         ForEach(Currencies.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
