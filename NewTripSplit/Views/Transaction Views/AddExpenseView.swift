@@ -103,11 +103,6 @@ struct AddExpenseView: View {
                             }.disabled(manualExchRateButtonDisabled)
                         }
                     }
-                    HStack {
-                        Text("Category: General")
-                        Spacer()
-                        Button("Change") {}
-                    }
                     DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
                     Toggle(isOn: $useCurrentLocation) {
                         // Need a check here to make sure we can access location
