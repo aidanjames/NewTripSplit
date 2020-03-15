@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import CoreLocation
 import SwiftUI
 
 struct AddExpenseView: View {
@@ -36,7 +37,7 @@ struct AddExpenseView: View {
     @State private var manualExchangeRate = ""
     var manualExchRateButtonDisabled: Bool { Double(manualExchangeRate) == nil }
     
-    let locationFetcher = LocationFetcher.shared
+    @ObservedObject var locationFetcher = LocationFetcher.shared
     
     var baseTransactionAmount: Double {
         if let trnAmount = Double(transactionAmount) {
@@ -104,11 +105,14 @@ struct AddExpenseView: View {
                         }
                     }
                     DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                    Toggle(isOn: $useCurrentLocation) {
-                        // Need a check here to make sure we can access location
-                        Text("Use current location")
-                    }
-                    .onAppear(perform: fetchLocation)
+                    
+                        Toggle(isOn: $useCurrentLocation) {
+                            // Need a check here to make sure we can access location
+                            Text("Use current location")
+                        }
+                        .onAppear(perform: fetchLocation)
+                    
+                    
                     Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
                         self.showingCameraOrPhotoLibActionSheet.toggle()
                     }
@@ -163,7 +167,8 @@ struct AddExpenseView: View {
     
     
     func fetchLocation() {
-        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
+//        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
+        self.useCurrentLocation = self.locationFetcher.hasPermission
         self.locationFetcher.start()
     }
     

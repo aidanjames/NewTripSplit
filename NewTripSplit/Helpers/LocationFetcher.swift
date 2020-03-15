@@ -8,12 +8,13 @@
 
 import CoreLocation
 
-class LocationFetcher: NSObject, CLLocationManagerDelegate {
+class LocationFetcher: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     static let shared = LocationFetcher()
     
     let manager = CLLocationManager()
     var lastKnownLocation: CLLocationCoordinate2D?
+    @Published var hasPermission: Bool = true
         
     override init() {
         super.init()
@@ -28,4 +29,14 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastKnownLocation = locations.first?.coordinate
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("Authorisation status changed to \(status.rawValue)")
+        if status.rawValue < 3 {
+            self.hasPermission = false
+            print("Changed hasPermission to false")
+        }
+    }
+    
+    
 }
