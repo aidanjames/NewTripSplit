@@ -34,7 +34,8 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate, ObservableObject {
         print("Authorisation status changed to \(status.rawValue)")
         if status.rawValue < 3 {
             self.hasPermission = false
-            print("Changed hasPermission to false")
+        } else {
+            self.hasPermission = true
         }
     }
     

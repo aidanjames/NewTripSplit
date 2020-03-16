@@ -105,14 +105,11 @@ struct AddExpenseView: View {
                         }
                     }
                     DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
-                    
+                    if locationFetcher.hasPermission { // Only show if we have permission to use location
                         Toggle(isOn: $useCurrentLocation) {
-                            // Need a check here to make sure we can access location
                             Text("Use current location")
                         }
-                        .onAppear(perform: fetchLocation)
-                    
-                    
+                    }
                     Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
                         self.showingCameraOrPhotoLibActionSheet.toggle()
                     }
@@ -133,8 +130,6 @@ struct AddExpenseView: View {
                         ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                     }
                 }
-                
-                
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
@@ -162,13 +157,13 @@ struct AddExpenseView: View {
                 trailing:
                 Button("Save") { self.saveExpense() }.disabled(self.saveButtonDisabled)
             )
+            .onAppear(perform: fetchLocation)
         }
     }
     
     
     func fetchLocation() {
-//        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
-        self.useCurrentLocation = self.locationFetcher.hasPermission
+        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         self.locationFetcher.start()
     }
     
