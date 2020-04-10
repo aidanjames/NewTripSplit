@@ -190,16 +190,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		3D59FE0724408ADD00A415D3 /* Settlement Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D47A87023EB69060095655C /* SettlementView.swift */,
+			);
+			path = "Settlement Views";
+			sourceTree = "<group>";
+		};
 		3D6ED07023BFF5F7004F7083 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3DA8E6CE240E9C3A0036B536 /* Shared Views */,
 				3DA251B024018EBA005DB452 /* Account Views */,
+				3D59FE0724408ADD00A415D3 /* Settlement Views */,
+				3DA8E6CE240E9C3A0036B536 /* Shared Views */,
 				3DA251AF24018C11005DB452 /* Member Views */,
 				3D81812B23DCCDEC009301BB /* Transaction Views */,
 				3D70CD8723CFAF8700701C23 /* Side Bets Views */,
-				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
-				3D47A87023EB69060095655C /* SettlementView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -267,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */,
+				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
 			);
 			path = "Shared Views";
 			sourceTree = "<group>";

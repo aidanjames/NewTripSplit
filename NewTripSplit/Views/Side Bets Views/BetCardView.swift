@@ -68,7 +68,7 @@ struct BetCardView: View {
                 .padding()
                 .foregroundColor(.white)
                 .font(.footnote)
-                .background(betOffer.betStatus == BetStatus.active ? Color.green : Color.secondary)
+                .background(betOffer.betStatus == BetStatus.active ? Color.orange : Color.secondary)
                 .clipShape(RoundedRectangle(cornerRadius: 6))
                 
             }

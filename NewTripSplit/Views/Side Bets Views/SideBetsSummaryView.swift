@@ -24,23 +24,19 @@ struct SideBetsSummaryView: View {
     var body: some View {
         ScrollView {
             VStack {
+                GreenButtonView(text: "Add odds") { self.presentAddOddsSheet() }
+                    .sheet(isPresented: $showingAddOdds) {
+                        NewOddsView(trip: self.trip).environmentObject(self.betting)
+                }
+                .padding(.vertical, 20)
                 if filteredOdds.isEmpty {
                     Text("No bets ☹️")
-                        .padding()
                 }
                 ForEach(filteredOdds) { odds in
                     BetCardView(trip: self.trip, betOffer: odds, moc: self.moc).environmentObject(self.betting)
                         .padding(.vertical, 5)
                 }
                 .navigationBarTitle("Side Bets")
-                .navigationBarItems(trailing:
-                    Button("Add odds") {
-                        self.presentAddOddsSheet()
-                    }
-                    .sheet(isPresented: $showingAddOdds) {
-                        NewOddsView(trip: self.trip).environmentObject(self.betting)
-                    }
-                )
                 Spacer()
             }
             .alert(isPresented: $showingError) {

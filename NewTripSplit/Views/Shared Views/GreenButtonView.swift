@@ -11,26 +11,29 @@ import SwiftUI
 struct GreenButtonView: View {
     
     var text: String
+    var action: () -> Void
     
     var body: some View {
-        HStack{
-            Spacer()
-            Text(text)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-            Spacer()
+        Button(action: action) {
+            HStack{
+                Spacer()
+                Text(text)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                Spacer()
+            }
+            .padding()
+            .foregroundColor(Color.white)
+            .background(Color.green)
+            .cornerRadius(8)
+            .padding(.horizontal)
         }
-        .padding()
-        .foregroundColor(Color.white)
-        .background(Color.green)
-        .cornerRadius(8)
-        .padding(.horizontal)
     }
 }
 
 struct GreenButtonView_Previews: PreviewProvider {
     static var previews: some View {
         let text = "Create account"
-        return GreenButtonView(text: text)
+        return GreenButtonView(text: text) { }
     }
 }

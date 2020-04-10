@@ -15,7 +15,7 @@ struct ContentView: View {
     ]) var trips: FetchedResults<Trip>
     
     @State private var showingAddTrip = false
-        
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -34,16 +34,12 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                                 .padding()
                                 .padding(.bottom)
-                            Button(action: { self.showingAddTrip.toggle() }) {
-                                GreenButtonView(text: "Create account")
-                            }
-                            .padding(.top)
+                            GreenButtonView(text: "Create account") { self.showingAddTrip.toggle() }
+                                .padding(.top)
                         } else {
                             VStack {
-                                Button(action: { self.showingAddTrip.toggle() }) {
-                                    GreenButtonView(text: "Create account")
-                                }
-                                .padding(.top)
+                                GreenButtonView(text: "Create account") { self.showingAddTrip.toggle() }
+                                    .padding(.top)
                                 ForEach(trips, id: \.id) { trip in
                                     NavigationLink(destination: TripView(trip: trip)) {
                                         AccountCardView(account: trip)
