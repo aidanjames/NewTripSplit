@@ -15,6 +15,7 @@ struct NeumorphicButton: View {
     var belowButtonText: String?
     var onButtonText: String?
     var onButtonImage: String?
+    var image: Image?
     var circleShape: Bool = true
     
     var body: some View {
@@ -37,6 +38,11 @@ struct NeumorphicButton: View {
                         .font(.largeTitle)
                 } else if onButtonText != nil {
                     Text(onButtonText!)
+                } else if image != nil {
+                    image!
+                    .resizable()
+                    .scaledToFit()
+                        .frame(height: 55)
                 }
             }
             .frame(width: width, height: height)
@@ -50,6 +56,9 @@ struct NeumorphicButton: View {
 
 struct NeumorphicButton_Previews: PreviewProvider {
     static var previews: some View {
-        NeumorphicButton(width: 100, height: 100, belowButtonText: "New transaction", onButtonImage: "plus")
+        VStack {
+            NeumorphicButton(width: 100, height: 100, belowButtonText: "New transaction", onButtonImage: "plus")
+            NeumorphicButton(width: 80, height: 80, belowButtonText: "Side bets", image: Image("cardsLARGE"))
+        }
     }
 }

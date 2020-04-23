@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "unknown.jpg",
       "scale" : "1x"
     },
     {
@@ -9,13 +10,12 @@
       "scale" : "2x"
     },
     {
-      "filename" : "profile-color-filled@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "xcode"
   }
 }

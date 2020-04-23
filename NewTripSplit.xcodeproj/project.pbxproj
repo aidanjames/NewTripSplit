@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,10 @@
 		3D57F29623BFC7D300938E11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29523BFC7D300938E11 /* Assets.xcassets */; };
 		3D57F29923BFC7D300938E11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29823BFC7D300938E11 /* Preview Assets.xcassets */; };
 		3D57F29C23BFC7D300938E11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29A23BFC7D300938E11 /* LaunchScreen.storyboard */; };
+		3D5D3C872452134B003635E6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5D3C862452134B003635E6 /* Lottie */; };
+		3D5D3C8A2452140B003635E6 /* Payment-animated-illustrationOLD.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */; };
+		3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8B24521450003635E6 /* LottieView.swift */; };
+		3D5D3C8E2452181E003635E6 /* Payment-animated-illustration.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */; };
 		3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6ED07123BFFA2D004F7083 /* Currencies.swift */; };
 		3D70CD8923CFAFA500701C23 /* SideBetsSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70CD8823CFAFA500701C23 /* SideBetsSummaryView.swift */; };
 		3D70CD8B23CFB00100701C23 /* NewOddsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70CD8A23CFB00100701C23 /* NewOddsView.swift */; };
@@ -83,6 +87,9 @@
 		3D57F29823BFC7D300938E11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3D57F29B23BFC7D300938E11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D57F29D23BFC7D300938E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustrationOLD.json"; sourceTree = "<group>"; };
+		3D5D3C8B24521450003635E6 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustration.json"; sourceTree = "<group>"; };
 		3D6ED07123BFFA2D004F7083 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
 		3D70CD8823CFAFA500701C23 /* SideBetsSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetsSummaryView.swift; sourceTree = "<group>"; };
 		3D70CD8A23CFB00100701C23 /* NewOddsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOddsView.swift; sourceTree = "<group>"; };
@@ -117,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D5D3C872452134B003635E6 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +168,7 @@
 				3D57F29A23BFC7D300938E11 /* LaunchScreen.storyboard */,
 				3D57F29D23BFC7D300938E11 /* Info.plist */,
 				3D57F29723BFC7D300938E11 /* Preview Content */,
+				3D5D3C8824521395003635E6 /* LottieFiles */,
 			);
 			path = NewTripSplit;
 			sourceTree = "<group>";
@@ -196,6 +205,15 @@
 				3D47A87023EB69060095655C /* SettlementView.swift */,
 			);
 			path = "Settlement Views";
+			sourceTree = "<group>";
+		};
+		3D5D3C8824521395003635E6 /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */,
+				3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */,
+			);
+			path = LottieFiles;
 			sourceTree = "<group>";
 		};
 		3D6ED07023BFF5F7004F7083 /* Views */ = {
@@ -275,6 +293,7 @@
 			children = (
 				3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */,
 				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
+				3D5D3C8B24521450003635E6 /* LottieView.swift */,
 			);
 			path = "Shared Views";
 			sourceTree = "<group>";
@@ -308,6 +327,9 @@
 			dependencies = (
 			);
 			name = NewTripSplit;
+			packageProductDependencies = (
+				3D5D3C862452134B003635E6 /* Lottie */,
+			);
 			productName = NewTripSplit;
 			productReference = 3D57F28923BFC7D200938E11 /* NewTripSplit.app */;
 			productType = "com.apple.product-type.application";
@@ -336,6 +358,9 @@
 				Base,
 			);
 			mainGroup = 3D57F28023BFC7D200938E11;
+			packageReferences = (
+				3D5D3C852452134B003635E6 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 3D57F28A23BFC7D200938E11 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -352,7 +377,9 @@
 			files = (
 				3D57F29C23BFC7D300938E11 /* LaunchScreen.storyboard in Resources */,
 				3D57F29923BFC7D300938E11 /* Preview Assets.xcassets in Resources */,
+				3D5D3C8E2452181E003635E6 /* Payment-animated-illustration.json in Resources */,
 				3D57F29623BFC7D300938E11 /* Assets.xcassets in Resources */,
+				3D5D3C8A2452140B003635E6 /* Payment-animated-illustrationOLD.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +400,7 @@
 				3DB1739D23BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift in Sources */,
 				3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */,
 				3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */,
+				3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */,
 				3DB1739F23BFD63E00DF2CE1 /* Person+CoreDataProperties.swift in Sources */,
 				3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */,
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
@@ -459,6 +487,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -519,6 +548,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -604,6 +634,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3D5D3C852452134B003635E6 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3D5D3C862452134B003635E6 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5D3C852452134B003635E6 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3D57F29023BFC7D200938E11 /* NewTripSplit.xcdatamodeld */ = {

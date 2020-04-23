@@ -56,8 +56,10 @@ struct TripView: View {
                             AddExpenseView(moc: self.moc, trip: self.trip)
                         }
                         NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", onButtonImage: "hand.raised")
+//                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", onButtonImage: "hand.raised")
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image("cardsLARGE"))
                         }
+//                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.top, 20)
                     HStack {
