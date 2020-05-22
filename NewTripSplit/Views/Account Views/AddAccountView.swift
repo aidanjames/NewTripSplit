@@ -76,7 +76,7 @@ struct AddAccountView: View {
                 Section(header: Text("Members").font(.body)) {
                     Button(action: {
                         if self.members.count >= 50 {
-                           self.showingTooManyMembersWarning.toggle()
+                            self.showingTooManyMembersWarning.toggle()
                         } else {
                             self.showingAddMemberView.toggle()
                         }
@@ -151,7 +151,7 @@ struct AddAccountView: View {
             if let imageName = member.photo {
                 FileManager.default.deleteData(from: imageName)
             }
-           
+            
             self.moc.delete(member) // Delete the member from moc
         }
         

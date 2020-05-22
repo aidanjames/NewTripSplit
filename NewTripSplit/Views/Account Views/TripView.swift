@@ -56,10 +56,8 @@ struct TripView: View {
                             AddExpenseView(moc: self.moc, trip: self.trip)
                         }
                         NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-//                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", onButtonImage: "hand.raised")
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image("cardsLARGE"))
                         }
-//                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.top, 20)
                     HStack {
@@ -71,7 +69,7 @@ struct TripView: View {
                         }
                         Button(action: {
                             if self.trip.sortedPeopleArray.count >= 50 {
-                               self.showingTooManyMembersWarning.toggle()
+                                self.showingTooManyMembersWarning.toggle()
                             } else {
                                 self.showingAddMemberView.toggle()
                             }
@@ -79,18 +77,18 @@ struct TripView: View {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Add member", onButtonImage: "person.badge.plus")
                         }
                         .alert(isPresented: self.$showingTooManyMembersWarning) {
-                                Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
-                            }
+                            Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
+                        }
                         .sheet(isPresented: self.$showingAddMemberView) {
                             AddMemberToTripView(moc: self.moc, account: self.trip)
                         }
                     }
-//                    Button(action: {
-//                        self.createMockData()
-//                    }) {
-//                        GreenButtonView(text: "Generate mock data")
-//                    }
-//                    .padding()
+                    //                    Button(action: {
+                    //                        self.createMockData()
+                    //                    }) {
+                    //                        GreenButtonView(text: "Generate mock data")
+                    //                    }
+                    //                    .padding()
                     Spacer()
                 }
                 TransactionListView(bottomSheetIsOpen: self.$bottomSheetIsOpen, geoSize: geo.size, moc: self.moc, trip: self.trip)
@@ -131,7 +129,7 @@ struct TripView: View {
         if self.moc.hasChanges { try? self.moc.save() }
     }
     
-
+    
     func itemsForShareSheet() -> [String] {
         var array = [String]()
         array.append("*****\(trip.wrappedName.uppercased())*****")
