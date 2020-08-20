@@ -16,11 +16,13 @@ struct AccountCardView: View {
     
     @State private var showingDeleteWarning = false
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(Color(hex: "EFEEEE"))
-                .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 5, y: 5)
+                .foregroundColor(Color(.secondarySystemBackground))
+                .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 5, x: 5, y: 5)
             HStack(spacing: 8) {
                 account.wrappedAccountImage
                     .resizable()
@@ -31,7 +33,6 @@ struct AccountCardView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text(account.wrappedName)
-                            .foregroundColor(.black)
                             .font(.system(size: 25))
                             .fontWeight(.bold)
                             .lineLimit(2)

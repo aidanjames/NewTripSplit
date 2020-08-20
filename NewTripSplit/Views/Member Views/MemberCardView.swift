@@ -12,30 +12,30 @@ struct MemberCardView: View {
     
     @ObservedObject var person: Person
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(Color(.secondarySystemBackground))
-                .shadow(color: Color(hex: "D1CDC7"), radius: 5, x: 5, y: 5)
+                .shadow(color: Color("shadow").opacity(colorScheme == .dark ? 0 : 1), radius: 5, x: 5, y: 5)
             VStack(spacing: 8) {
-                ZStack {
-                    person.wrappedMemberImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 75, height: 75)
-                        .clipShape(Circle())
-                }
+                person.wrappedMemberImage
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 75, height: 75)
+                    .clipShape(Circle())
                 Text(person.wrappedName)
-                    .foregroundColor(.black)
                     .font(.footnote)
-                Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal)" : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal)" : "All square")")
-                    .font(.caption)
-                    .foregroundColor(.white)
-                    .padding(5)
-                    .background(person.localBal < -0.0099 ? Color.red : person.localBal > 0.0099 ? Color.green : Color.blue)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .opacity(50)
+                HStack {
+                    Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal) " : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal) " : "Owes 100.23")")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(person.localBal < -0.0099 ? Color.red : person.localBal > 0.0099 ? Color.green : Color.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                }
             }
         }
         .frame(width: 150, height: 150)
@@ -52,6 +52,6 @@ struct MemberCardView_Previews: PreviewProvider {
         person.name = "Jason Bale"
         person.photo = "person1"
         return MemberCardView(person: person)
-//            .previewLayout(.sizeThatFits)
+        //            .previewLayout(.sizeThatFits)
     }
 }

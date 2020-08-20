@@ -28,7 +28,7 @@ struct TripView: View {
         
         GeometryReader { geo in
             ZStack {
-                Color(hex: "EFEEEE")
+                Color("offWhite")
                 VStack {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {

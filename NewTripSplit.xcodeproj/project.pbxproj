@@ -33,6 +33,7 @@
 		3D5D3C8A2452140B003635E6 /* Payment-animated-illustrationOLD.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */; };
 		3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8B24521450003635E6 /* LottieView.swift */; };
 		3D5D3C8E2452181E003635E6 /* Payment-animated-illustration.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */; };
+		3D698B7724EEFC51001047CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D698B7624EEFC51001047CA /* Constants.swift */; };
 		3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6ED07123BFFA2D004F7083 /* Currencies.swift */; };
 		3D70CD8923CFAFA500701C23 /* SideBetsSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70CD8823CFAFA500701C23 /* SideBetsSummaryView.swift */; };
 		3D70CD8B23CFB00100701C23 /* NewOddsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70CD8A23CFB00100701C23 /* NewOddsView.swift */; };
@@ -90,6 +91,7 @@
 		3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustrationOLD.json"; sourceTree = "<group>"; };
 		3D5D3C8B24521450003635E6 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustration.json"; sourceTree = "<group>"; };
+		3D698B7624EEFC51001047CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D6ED07123BFFA2D004F7083 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
 		3D70CD8823CFAFA500701C23 /* SideBetsSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetsSummaryView.swift; sourceTree = "<group>"; };
 		3D70CD8A23CFB00100701C23 /* NewOddsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOddsView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				3D81812723DCAE34009301BB /* LocationFetcher.swift */,
 				3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */,
 				3D4EADDA240ACCFD00C5DF63 /* ShareSheet.swift */,
+				3D698B7624EEFC51001047CA /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -341,7 +344,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Aidan Pendlebury";
 				TargetAttributes = {
 					3D57F28823BFC7D200938E11 = {
@@ -413,6 +416,7 @@
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
 				3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
+				3D698B7724EEFC51001047CA /* Constants.swift in Sources */,
 				3DA8E6D0240E9C590036B536 /* GreenButtonView.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,
 				3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */,
@@ -480,6 +484,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -505,7 +510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -541,6 +546,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -560,7 +566,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -579,7 +585,7 @@
 				DEVELOPMENT_TEAM = 9RHBZ7GZXD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NewTripSplit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -600,7 +606,7 @@
 				DEVELOPMENT_TEAM = 9RHBZ7GZXD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NewTripSplit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -18,21 +18,23 @@ struct NeumorphicButton: View {
     var image: Image?
     var circleShape: Bool = true
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack {
             ZStack {
                 if circleShape {
                     Circle()
-                    .foregroundColor(Color(hex: "EFEEEE"))
-                    .shadow(color: Color(hex: "D1CDC7"), radius: 4, x: 4, y: 4)
-                    .shadow(color: Color(hex: "FFFFFF"), radius: 4, x: -4, y: -4)
+                        .foregroundColor(Color(.secondarySystemBackground))
+                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
+                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
                 } else {
                     RoundedRectangle(cornerRadius: 16)
-                    .foregroundColor(Color(hex: "EFEEEE"))
-                    .shadow(color: Color(hex: "D1CDC7"), radius: 4, x: 4, y: 4)
-                    .shadow(color: Color(hex: "FFFFFF"), radius: 4, x: -4, y: -4)
+                        .foregroundColor(Color(.secondarySystemBackground))
+                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
+                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
                 }
-                    
+                
                 if onButtonImage != nil {
                     Image(systemName: onButtonImage!)
                         .font(.largeTitle)
@@ -40,8 +42,8 @@ struct NeumorphicButton: View {
                     Text(onButtonText!)
                 } else if image != nil {
                     image!
-                    .resizable()
-                    .scaledToFit()
+                        .resizable()
+                        .scaledToFit()
                         .frame(height: 55)
                 }
             }
