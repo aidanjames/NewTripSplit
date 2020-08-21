@@ -19,6 +19,8 @@ struct TripView: View {
     @State private var showingSettlementView = false
     @State private var showingMemberSummaryView = false
     @State private var showingEditAccountSheet = false
+    @State private var showingShareActionSheet = false
+    @State private var shareItems: ShareItems = .leaderboard
     @State private var showingShareSheet = false
     @State private var selectedMember: Person?
     @Environment(\.managedObjectContext) var moc
@@ -83,12 +85,6 @@ struct TripView: View {
                             AddMemberToTripView(moc: self.moc, account: self.trip)
                         }
                     }
-                    //                    Button(action: {
-                    //                        self.createMockData()
-                    //                    }) {
-                    //                        GreenButtonView(text: "Generate mock data")
-                    //                    }
-                    //                    .padding()
                     Spacer()
                 }
                 TransactionListView(bottomSheetIsOpen: self.$bottomSheetIsOpen, geoSize: geo.size, moc: self.moc, trip: self.trip)
@@ -96,59 +92,77 @@ struct TripView: View {
             }
             .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
             .navigationBarItems(trailing:
-                
-                
-                HStack {
-                    Button(action: { self.showingShareSheet.toggle() }) {
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.title)
-                    }
-                    .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
-                    .padding()
-                    Button(action: { self.showingEditAccountSheet.toggle() }) {
-                        Image(systemName: "ellipsis.circle")
-                            .font(.title)
-                    }
-                    .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
-                }
-                
+                                    
+                                    
+                                    HStack {
+                                        Button(action: { self.showingShareActionSheet.toggle() }) {
+                                            Image(systemName: "square.and.arrow.up")
+                                                .font(.title)
+                                        }
+                                        .actionSheet(isPresented: $showingShareActionSheet, content: {
+                                            ActionSheet(title: Text("Share trip info"), message: nil, buttons: [
+                                                .default(Text("Leaderboard")) {
+                                                    shareItems = .leaderboard
+                                                    showingShareSheet.toggle()
+                                                },
+                                                .default(Text("Settlement")) {
+                                                    shareItems = .settlement
+                                                    showingShareSheet.toggle()
+                                                },
+                                                .default(Text("Transactions")) {
+                                                    shareItems = .transactions
+                                                    showingShareSheet.toggle()
+                                                },
+                                                .cancel()
+                                            ])
+                                        })
+                                        .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
+                                        .padding()
+                                        Button(action: { self.showingEditAccountSheet.toggle() }) {
+                                            Image(systemName: "ellipsis.circle")
+                                                .font(.title)
+                                        }
+                                        .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
+                                    }
+                                
             )
         }
         
         
     }
     
-    // DELETE THIS
-    func createMockData() {
-        for i in 1...50 {
-            let newPerson = Person(context: self.moc)
-            newPerson.name = "David Mills\(i)"
-            newPerson.id = UUID()
-            newPerson.trip = self.trip
-        }
-        if self.moc.hasChanges { try? self.moc.save() }
-    }
-    
     
     func itemsForShareSheet() -> [String] {
         var array = [String]()
         array.append("*****\(trip.wrappedName.uppercased())*****")
-        array.append("\n\n***MEMBER BALANCES***")
-        for member in trip.sortedPeopleArray {
-            array.append("\(member.wrappedName): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: member.localBal, withSymbol: true, withSign: true))")
-        }
-        array.append("\n\n***SETTLEMENT***")
-        for settlementRecord in trip.calculateSettlement() {
-            array.append(settlementRecord)
-        }
-        array.append("\n\n***TRANSACTIONS***")
-        for transaction in trip.transactionsArray {
-            array.append("\(transaction.dateDisplay) \(transaction.wrappedTitle): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: transaction.baseAmt, withSymbol: true, withSign: false)) \(trip.baseCurrency != transaction.trnCurrency ? "(\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true)) @\(String(format: "%.06f", transaction.exchangeRate)))" : "")\nPaid by \(transaction.paidBy?.wrappedName ?? "") for \(transaction.populatePaidForNames()).\n------------")
+        
+        if shareItems == .leaderboard {
+            array.append("\n\n***MEMBER BALANCES***")
+            for member in trip.sortedPeopleArray {
+                array.append("\(member.wrappedName): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: member.localBal, withSymbol: true, withSign: true))")
+            }
         }
         
+        if shareItems == .settlement {
+            array.append("\n\n***SETTLEMENT***")
+            for settlementRecord in trip.calculateSettlement() {
+                array.append(settlementRecord)
+            }
+        }
+        
+        if shareItems == .transactions {
+            array.append("\n\n***TRANSACTIONS***")
+            for transaction in trip.transactionsArray {
+                array.append("\(transaction.dateDisplay) \(transaction.wrappedTitle): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: transaction.baseAmt, withSymbol: true, withSign: false)) \(trip.baseCurrency != transaction.trnCurrency ? "(\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true)) @\(String(format: "%.06f", transaction.exchangeRate)))" : "")\nPaid by \(transaction.paidBy?.wrappedName ?? "") for \(transaction.populatePaidForNames()).\n------------")
+            }
+        }
         return array
     }
     
+}
+
+enum ShareItems {
+    case leaderboard, settlement, transactions
 }
 
 struct TripView_Previews: PreviewProvider {
