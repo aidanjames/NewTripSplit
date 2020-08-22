@@ -113,6 +113,10 @@ struct TripView: View {
                                                     shareItems = .transactions
                                                     showingShareSheet.toggle()
                                                 },
+                                                .default(Text("Full bhuna")) {
+                                                    shareItems = .all
+                                                    showingShareSheet.toggle()
+                                                },
                                                 .cancel()
                                             ])
                                         })
@@ -135,22 +139,22 @@ struct TripView: View {
     func itemsForShareSheet() -> [String] {
         var array = [String]()
         array.append("*****\(trip.wrappedName.uppercased())*****")
-        
-        if shareItems == .leaderboard {
+
+        if shareItems == .leaderboard || shareItems == .all {
             array.append("\n\n***MEMBER BALANCES***")
             for member in trip.sortedPeopleArray {
                 array.append("\(member.wrappedName): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: member.localBal, withSymbol: true, withSign: true))")
             }
         }
         
-        if shareItems == .settlement {
+        if shareItems == .settlement || shareItems == .all  {
             array.append("\n\n***SETTLEMENT***")
             for settlementRecord in trip.calculateSettlement() {
                 array.append(settlementRecord)
             }
         }
         
-        if shareItems == .transactions {
+        if shareItems == .transactions || shareItems == .all  {
             array.append("\n\n***TRANSACTIONS***")
             for transaction in trip.transactionsArray {
                 array.append("\(transaction.dateDisplay) \(transaction.wrappedTitle): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: transaction.baseAmt, withSymbol: true, withSign: false)) \(trip.baseCurrency != transaction.trnCurrency ? "(\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true)) @\(String(format: "%.06f", transaction.exchangeRate)))" : "")\nPaid by \(transaction.paidBy?.wrappedName ?? "") for \(transaction.populatePaidForNames()).\n------------")
@@ -162,7 +166,7 @@ struct TripView: View {
 }
 
 enum ShareItems {
-    case leaderboard, settlement, transactions
+    case leaderboard, settlement, transactions, all
 }
 
 struct TripView_Previews: PreviewProvider {

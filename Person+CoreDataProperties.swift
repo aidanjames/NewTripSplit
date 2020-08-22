@@ -19,8 +19,6 @@ extension Person {
 
     @NSManaged public var id: UUID?
     @NSManaged public var localBal: Double
-    
-    
     @NSManaged public var name: String?
     @NSManaged public var photo: String?
     @NSManaged public var beneficiary: NSSet?

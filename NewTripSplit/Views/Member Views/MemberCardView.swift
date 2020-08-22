@@ -29,7 +29,7 @@ struct MemberCardView: View {
                 Text(person.wrappedName)
                     .font(.footnote)
                 HStack {
-                    Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal) " : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal) " : "Owes 100.23")")
+                    Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal) " : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal) " : "All square")")
                         .font(.caption)
                         .foregroundColor(.white)
                         .padding(5)
@@ -52,6 +52,5 @@ struct MemberCardView_Previews: PreviewProvider {
         person.name = "Jason Bale"
         person.photo = "person1"
         return MemberCardView(person: person)
-        //            .previewLayout(.sizeThatFits)
     }
 }

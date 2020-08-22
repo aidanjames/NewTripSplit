@@ -21,11 +21,11 @@ struct MemberDetailView: View {
     @State private var showingCameraOrPhotoLibActionSheet = false
     @State private var useCamera = false
     @State private var memberName = ""
-    
+    @State private var showingEditNameField = false
     @State private var showingDeleteMemberAlert = false
     @State private var showingCannotDeleteMemberAlert = false
     
-    var saveButtonDisabled: Bool { return inputImage == nil && memberName == member.wrappedName }
+    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -75,16 +75,27 @@ struct MemberDetailView: View {
                 .sheet(isPresented: $showingImagePicker) {
                     ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
                 }
-                TextField("", text: $memberName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .multilineTextAlignment(.center)
-                    .frame(width: 250)
-                    .onAppear(perform: self.populateMemberName)
-                    .alert(isPresented: $showingDeleteMemberAlert) {
-                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
-                            self.deleteMember()
-                        }), secondaryButton: .cancel())
+                
+                if !showingEditNameField {
+                    HStack {
+                        Text("\(member.wrappedName)")
+                        Button("Edit") {
+                            memberName = member.wrappedName
+                            withAnimation {
+                                showingEditNameField.toggle()
+                            }
+                        }
+                    }.padding()
                 }
+                
+                if showingEditNameField {
+                    TextField("", text: $memberName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .multilineTextAlignment(.center)
+                        .frame(width: 250)
+                        
+                }
+
                 Text("\(member.localBal < -0.099 ? "Owes \(member.displayLocalBal)" : member.localBal > 0.099 ? "Owed \(member.displayLocalBal)" : "All square")")
                     .font(.body)
                     .foregroundColor(.white)
@@ -92,6 +103,11 @@ struct MemberDetailView: View {
                     .background(member.localBal < -0.0099 ? Color.red : member.localBal > 0.0099 ? Color.green : Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .opacity(50)
+                    .alert(isPresented: $showingDeleteMemberAlert) {
+                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
+                            self.deleteMember()
+                        }), secondaryButton: .cancel())
+                }
                 List {
                     Section(header: Text("Paid for:")) {
                         if member.payerArray.isEmpty {
@@ -152,15 +168,7 @@ struct MemberDetailView: View {
         self.showingTransactionDetailView.toggle()
     }
     
-    func populateMemberName() {
-        memberName = member.wrappedName
-    }
-    
     func deleteMember() {
-//        guard member.payerArray.isEmpty && member.beneficiaryArray.isEmpty && member.localBal == 0 else {
-//            self.showingCannotDeleteMemberAlert.toggle()
-//            return
-//        }
         if let imageName = member.photo {
             FileManager.default.deleteData(from: imageName) // Delete member image
         }
