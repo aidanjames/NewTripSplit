@@ -13,6 +13,7 @@
 		3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EEB23E0CA310078AC75 /* AddMemberView.swift */; };
 		3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */; };
 		3D16979723D5B31D002F9E4E /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */; };
+		3D1D131924F259A500568968 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D131824F259A500568968 /* LeaderboardView.swift */; };
 		3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */; };
 		3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */; };
 		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
@@ -70,6 +71,7 @@
 		3D145EEB23E0CA310078AC75 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
+		3D1D131824F259A500568968 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicButton.swift; sourceTree = "<group>"; };
 		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				3D47A87023EB69060095655C /* SettlementView.swift */,
+				3D1D131824F259A500568968 /* LeaderboardView.swift */,
 			);
 			path = "Settlement Views";
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				3D70CD9123CFB3CA00701C23 /* BetCardView.swift in Sources */,
 				3D98DDC223E4D01F0029D432 /* MemberCardView.swift in Sources */,
 				3DB1743F23C0021500010233 /* TripView.swift in Sources */,
+				3D1D131924F259A500568968 /* LeaderboardView.swift in Sources */,
 				3D70CD9D23CFB7D900701C23 /* Odds.swift in Sources */,
 				3D16979723D5B31D002F9E4E /* FileManagerExtension.swift in Sources */,
 				3D4EADDB240ACCFD00C5DF63 /* ShareSheet.swift in Sources */,

@@ -23,6 +23,7 @@ struct TripView: View {
     @State private var shareItems: ShareItems = .leaderboard
     @State private var showingShareSheet = false
     @State private var selectedMember: Person?
+    @State private var showingLeaderboard = false
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     
@@ -32,6 +33,14 @@ struct TripView: View {
             ZStack {
                 Color("offWhite")
                 VStack {
+                    
+                    Button("Show leaderboard") {
+                        showingLeaderboard.toggle()
+                    }
+                    .sheet(isPresented: $showingLeaderboard) {
+                        LeaderboardView()
+                    }
+                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
