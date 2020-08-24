@@ -74,6 +74,7 @@ struct AddMemberToTripView: View {
                 trailing:
                 Button("Add to account") { self.saveMember() })
         }
+        .accentColor(.green)
     }
     
     func saveMember() {

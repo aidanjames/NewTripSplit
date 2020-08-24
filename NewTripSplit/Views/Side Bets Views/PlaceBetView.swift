@@ -96,6 +96,7 @@ struct PlaceBetView: View {
             .navigationBarTitle("Add bet")
             .navigationBarItems(leading: Button("Cancel") { self.presentationMode.wrappedValue.dismiss() }, trailing: Button("Save bet") { self.saveBet()}.disabled(potExceeded))
         }
+        .accentColor(.green)
 //        .onTapGesture { UIApplication.shared.endEditing() }
     }
     

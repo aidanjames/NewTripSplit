@@ -159,6 +159,7 @@ struct AddExpenseView: View {
             )
             .onAppear(perform: fetchLocation)
         }
+        .accentColor(.green)
     }
     
     

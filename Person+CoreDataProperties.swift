@@ -58,6 +58,10 @@ extension Person {
         return String(format: "%.02f", abs(localBal))
     }
     
+    public var displayLocalBalWithSign: String {
+        return String(format: "%.02f", localBal)
+    }
+    
     public var wrappedMemberImage: Image {
         if let imageName = photo {
             if let imageData: Data = FileManager.default.fetchData(from: imageName) {

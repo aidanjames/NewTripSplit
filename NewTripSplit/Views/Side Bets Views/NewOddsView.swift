@@ -52,7 +52,7 @@ struct NewOddsView: View {
                 Button("Save") { self.saveOdds() }
             )
         }
-
+        .accentColor(.green)
     }
     
     func saveOdds() {

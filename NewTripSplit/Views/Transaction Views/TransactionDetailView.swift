@@ -56,7 +56,6 @@ struct TransactionDetailView: View {
                                     Button("View receipt") {
                                         self.receiptViewShowing.toggle()
                                     }
-                                    .foregroundColor(.blue)
                                     .sheet(isPresented: self.$receiptViewShowing) {
                                         TransactionReceiptView(transaction: self.transaction!)
                                     }
@@ -97,8 +96,8 @@ struct TransactionDetailView: View {
                     
                 }
             }
-            
         }
+        .accentColor(.green)
     }
     
     

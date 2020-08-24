@@ -18,6 +18,7 @@ struct MemberCardView: View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.green, lineWidth: 1)
                 .foregroundColor(Color(.secondarySystemBackground))
                 .shadow(color: Color("shadow").opacity(colorScheme == .dark ? 0 : 1), radius: 5, x: 5, y: 5)
             VStack(spacing: 8) {

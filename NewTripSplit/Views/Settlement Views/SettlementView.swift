@@ -33,6 +33,7 @@ struct SettlementView: View {
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
         }
+        .accentColor(.green)
     }
     
 }

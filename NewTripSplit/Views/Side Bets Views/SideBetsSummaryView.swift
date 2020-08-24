@@ -43,6 +43,7 @@ struct SideBetsSummaryView: View {
                 Alert(title: Text("Opps!"), message: Text("You can't add any odds as there are not enough members for the account \(trip.wrappedName)"), dismissButton: .cancel())
             }
         }
+        .accentColor(.green)
         .environmentObject(betting)
     }
     

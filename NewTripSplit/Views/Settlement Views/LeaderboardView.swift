@@ -10,27 +10,29 @@ import SwiftUI
 
 struct LeaderboardView: View {
     
-    let members = TempTripObject().members
+    let members: [Person]
     
-    var min: Double { members.map{$0.balance}.min() ?? 0 }
-    var max: Double { members.map{$0.balance}.max() ?? 0 }
+    var min: Double { members.map{$0.localBal}.min() ?? 0 }
+    var max: Double { members.map{$0.localBal}.max() ?? 0 }
     
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack {
-            ForEach(members) {
-                Text("\($0.name), bal: \($0.balance)")
+        VStack(alignment: .leading) {
+            ForEach(members, id: \.self) {
+                Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")
+                    .foregroundColor($0.localBal < 0 ? .red : .green)
             }
         }
+        .accentColor(.green)
     }
 }
 
-struct LeaderboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        LeaderboardView()
-    }
-}
+//struct LeaderboardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LeaderboardView()
+//    }
+//}
 
 // DELETE THESE TWO STRUCTS WHEN THE SORTED ARRAY IS PLUGGED INTO THE MEMBERS VAR
 struct TempMemberObject: Identifiable {

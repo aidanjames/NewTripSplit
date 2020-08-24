@@ -154,6 +154,7 @@ struct MemberDetailView: View {
                 }
             )
         }
+        .accentColor(.green)
     }
     
     func deleteMemberInitialCheck() {

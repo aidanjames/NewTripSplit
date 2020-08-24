@@ -25,6 +25,7 @@ struct NeumorphicButton: View {
             ZStack {
                 if circleShape {
                     Circle()
+                        .stroke(Color.green, lineWidth: 1)
                         .foregroundColor(Color(.secondarySystemBackground))
                         .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
                         .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
@@ -52,7 +53,7 @@ struct NeumorphicButton: View {
                 Text(belowButtonText!)
             }
         }
-        .foregroundColor(.blue)
+        .foregroundColor(.green)
     }
 }
 

@@ -37,8 +37,9 @@ struct TripView: View {
                     Button("Show leaderboard") {
                         showingLeaderboard.toggle()
                     }
+                    .padding(.top)
                     .sheet(isPresented: $showingLeaderboard) {
-                        LeaderboardView()
+                        LeaderboardView(members: trip.sortedPeopleArray)
                     }
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -67,7 +68,7 @@ struct TripView: View {
                             AddExpenseView(moc: self.moc, trip: self.trip)
                         }
                         NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image("cardsLARGE"))
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image(systemName: "dollarsign.circle.fill"))
                         }
                     }
                     .padding(.top, 20)
@@ -99,16 +100,15 @@ struct TripView: View {
                 TransactionListView(bottomSheetIsOpen: self.$bottomSheetIsOpen, geoSize: geo.size, moc: self.moc, trip: self.trip)
                     .shadow(radius: 5)
             }
+            .accentColor(.green)
             .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
             .navigationBarItems(trailing:
-                                    
-                                    
                                     HStack {
                                         Button(action: { self.showingShareActionSheet.toggle() }) {
                                             Image(systemName: "square.and.arrow.up")
                                                 .font(.title)
                                         }
-                                        .actionSheet(isPresented: $showingShareActionSheet, content: {
+                                        .actionSheet(isPresented: $showingShareActionSheet) {
                                             ActionSheet(title: Text("Share trip info"), message: nil, buttons: [
                                                 .default(Text("Leaderboard")) {
                                                     shareItems = .leaderboard
@@ -128,7 +128,7 @@ struct TripView: View {
                                                 },
                                                 .cancel()
                                             ])
-                                        })
+                                        }
                                         .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
                                         .padding()
                                         Button(action: { self.showingEditAccountSheet.toggle() }) {
@@ -137,6 +137,7 @@ struct TripView: View {
                                         }
                                         .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
                                     }
+                                    .foregroundColor(.green)
                                 
             )
         }
@@ -148,7 +149,7 @@ struct TripView: View {
     func itemsForShareSheet() -> [String] {
         var array = [String]()
         array.append("*****\(trip.wrappedName.uppercased())*****")
-
+        
         if shareItems == .leaderboard || shareItems == .all {
             array.append("\n\n***MEMBER BALANCES***")
             for member in trip.sortedPeopleArray {

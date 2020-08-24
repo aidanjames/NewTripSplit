@@ -55,6 +55,7 @@ struct ContentView: View {
                 .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc) }
             }
         }
+        .accentColor(.green)
     }
 }
 
