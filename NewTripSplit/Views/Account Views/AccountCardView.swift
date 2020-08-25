@@ -21,6 +21,7 @@ struct AccountCardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.green, lineWidth: 1)
                 .foregroundColor(Color(.secondarySystemBackground))
                 .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 5, x: 5, y: 5)
             HStack(spacing: 8) {

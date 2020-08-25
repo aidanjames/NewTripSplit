@@ -23,21 +23,18 @@ struct SideBetsSummaryView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 10) {
                 GreenButtonView(text: "Add odds") { self.presentAddOddsSheet() }
                     .sheet(isPresented: $showingAddOdds) {
                         NewOddsView(trip: self.trip).environmentObject(self.betting)
                 }
-                .padding(.vertical, 20)
                 if filteredOdds.isEmpty {
                     Text("No bets ☹️")
                 }
                 ForEach(filteredOdds) { odds in
                     BetCardView(trip: self.trip, betOffer: odds, moc: self.moc).environmentObject(self.betting)
-                        .padding(.vertical, 5)
                 }
                 .navigationBarTitle("Side Bets")
-                Spacer()
             }
             .alert(isPresented: $showingError) {
                 Alert(title: Text("Opps!"), message: Text("You can't add any odds as there are not enough members for the account \(trip.wrappedName)"), dismissButton: .cancel())

@@ -31,7 +31,6 @@ struct BetCardView: View {
     }
     
     var body: some View {
-        
         VStack(alignment: .leading, spacing: 10) {
             Text("\(betOffer.betStatus.rawValue)")
                 .foregroundColor(betOffer.betStatus == BetStatus.active ? .green : .gray)
@@ -42,15 +41,15 @@ struct BetCardView: View {
                     .fontWeight(.bold)
                     + Text(" offers ")
                     + Text(Currencies.format(amount: betOffer.odds))
-                        .fontWeight(.bold)
+                    .fontWeight(.bold)
                     + Text(" (\(betOffer.fractionalOdds)) if ")
                     + Text(betOffer.condition)
-                        .fontWeight(.bold)
+                    .fontWeight(.bold)
             }
             
             Text("Maximum pot - ")
                 + Text(Currencies.format(amount: betOffer.maxPot))
-                    .fontWeight(.bold)
+                .fontWeight(.bold)
             
             if betOffer.wagers.isEmpty {
                 Text("No one has placed a bet on these odds.")
@@ -60,7 +59,6 @@ struct BetCardView: View {
                     VStack(alignment: .leading) {
                         ForEach(betOffer.wagers) { wager in
                             Text("\(self.trip.sortedPeopleArray.first(where: { $0.id == wager.wagedById })?.firstName ?? "Unknown") has bet \(Currencies.format(amount: wager.amountWaged)) (pays \(Currencies.format(amount: wager.paysAmount)))")
-                            
                         }
                     }
                     Spacer()
@@ -100,13 +98,14 @@ struct BetCardView: View {
             }
             
         }
+        .frame(minHeight: 200)
         .padding()
         .background(Color(.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(radius: 5, x: 4, y: 4)
         .padding(.horizontal)
-            .rotation3DEffect(.degrees(self.xFlipAmount), axis: (x: 1, y: 0, z: 0)) // If bet wins
-            .rotation3DEffect(.degrees(self.yFlipAmount), axis: (x: 0, y: 1, z: 0)) // If bet loses
+        .rotation3DEffect(.degrees(self.xFlipAmount), axis: (x: 1, y: 0, z: 0)) // If bet wins
+        .rotation3DEffect(.degrees(self.yFlipAmount), axis: (x: 0, y: 1, z: 0)) // If bet loses
         
     }
     
