@@ -18,21 +18,28 @@ struct LeaderboardView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(members, id: \.self) {
-                Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")
-                    .foregroundColor($0.localBal < 0 ? .red : .green)
+        NavigationView {
+            Form {
+                Section(header: Text("")) {
+                    ForEach(members, id: \.self) {
+                        Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")
+                            .foregroundColor($0.localBal < 0 ? .red : .green)
+                    }
+                }
             }
+            .navigationBarTitle(Text("Leaderboard"))
+            .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
         }
+        
         .accentColor(.green)
     }
 }
 
-//struct LeaderboardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LeaderboardView()
-//    }
-//}
+struct LeaderboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        LeaderboardView(members: [])
+    }
+}
 
 // DELETE THESE TWO STRUCTS WHEN THE SORTED ARRAY IS PLUGGED INTO THE MEMBERS VAR
 struct TempMemberObject: Identifiable {
