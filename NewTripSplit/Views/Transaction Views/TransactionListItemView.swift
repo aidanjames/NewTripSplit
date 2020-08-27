@@ -15,7 +15,29 @@ struct TransactionListItemView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(transaction.wrappedTitle)
+                
+                HStack {
+                    Text(transaction.wrappedTitle)
+                    
+                    
+                    if let _ = transaction.photo {
+                        Image(systemName: "paperclip")
+                            .font(.caption)
+                            .foregroundColor(.green)
+                            .opacity(0.5)
+                    }
+                    
+                    if transaction.latitude != 0 && transaction.longitude != 0 {
+                        Image(systemName: "mappin")
+                            .font(.caption)
+                            .foregroundColor(.green)
+                            .opacity(0.5)
+                    }
+                    
+                }
+                
+
+                
                 if transaction.additionalInfo == nil {
                     Text("Paid by \(transaction.paidBy?.firstName ?? "Unknown") for \(transaction.populatePaidForNames()).")
                     .font(.footnote)
@@ -29,7 +51,7 @@ struct TransactionListItemView: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text("\(Currencies.format(currency: transaction.trip?.baseCurrency ?? "Error", amount: transaction.baseAmt, withSymbol: true, withSign: true))")
+                    Text("\(Currencies.format(currency: transaction.trip?.baseCurrency ?? "Error", amount: transaction.baseAmt, withSymbol: true, withSign: true))")
                 if transaction.baseAmt != transaction.trnAmt { // Foreign transaction
                     Text("\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true))")
                         .font(.caption)

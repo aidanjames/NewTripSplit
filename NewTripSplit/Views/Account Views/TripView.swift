@@ -41,7 +41,6 @@ struct TripView: View {
                     .sheet(isPresented: $showingLeaderboard) {
                         LeaderboardView(members: trip.sortedPeopleArray)
                     }
-                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
@@ -59,7 +58,6 @@ struct TripView: View {
                             }
                         }
                     }
-                    
                     HStack {
                         Button(action: { self.showingAddExpenseView.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Transaction", onButtonImage: "plus")

@@ -30,7 +30,6 @@ struct LeaderboardView: View {
             .navigationBarTitle(Text("Leaderboard"))
             .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
         }
-        
         .accentColor(.green)
     }
 }
