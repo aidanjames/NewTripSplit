@@ -37,6 +37,10 @@ struct AddExpenseView: View {
     @State private var manualExchangeRate = ""
     var manualExchRateButtonDisabled: Bool { Double(manualExchangeRate) == nil }
     
+    // Confirm paid by...
+    @State private var showingPaidByConfirmationAlert = false
+    
+    
     @ObservedObject var locationFetcher = LocationFetcher.shared
     
     var baseTransactionAmount: Double {
