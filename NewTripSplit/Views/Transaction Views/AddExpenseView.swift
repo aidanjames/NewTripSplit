@@ -39,6 +39,7 @@ struct AddExpenseView: View {
     
     // Confirm paid by...
     @State private var showingPaidByConfirmationAlert = false
+    @State private var paidByConfirmed = false
     
     
     @ObservedObject var locationFetcher = LocationFetcher.shared
@@ -140,6 +141,13 @@ struct AddExpenseView: View {
                             Text(self.trip.sortedPeopleArray[$0].wrappedName)
                         }
                     }
+//                    .alert(isPresented: $showingPaidByConfirmationAlert) {
+//                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
+//                            paidByConfirmed = true
+//                            saveExpense()
+//                        }), secondaryButton: .cancel())
+//                }
+
                 }
                 Section(header: Text("Paid for:")) {
                     List {
@@ -189,6 +197,7 @@ struct AddExpenseView: View {
     
     func saveExpense() {
         
+//        if !paidByConfirmed { showingPaidByConfirmationAlert = true }
         guard !expenseName.isEmpty, !paidFor.isEmpty, baseTransactionAmount > 0 else { return }
         
         // Create the transaction
