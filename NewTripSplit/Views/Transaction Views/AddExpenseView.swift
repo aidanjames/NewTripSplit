@@ -141,12 +141,13 @@ struct AddExpenseView: View {
                             Text(self.trip.sortedPeopleArray[$0].wrappedName)
                         }
                     }
-//                    .alert(isPresented: $showingPaidByConfirmationAlert) {
-//                        Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
-//                            paidByConfirmed = true
-//                            saveExpense()
-//                        }), secondaryButton: .cancel())
-//                }
+                    .alert(isPresented: $showingPaidByConfirmationAlert) {
+                        Alert(title: Text("Confirm paid by"), message: Text("Was this transaction paid by \(trip.sortedPeopleArray[paidBySelection].wrappedName)?"), primaryButton: .destructive(Text("Confirm"), action: {
+                            paidByConfirmed = true
+                            showingPaidByConfirmationAlert = false
+                            saveExpense()
+                        }), secondaryButton: .cancel())
+                }
 
                 }
                 Section(header: Text("Paid for:")) {
@@ -167,7 +168,14 @@ struct AddExpenseView: View {
                 leading:
                 Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") { self.saveExpense() }.disabled(self.saveButtonDisabled)
+                Button("Save") {
+                    if !paidByConfirmed {
+                        showingPaidByConfirmationAlert = true
+                    } else {
+                        saveExpense()
+                    }
+                }
+                .disabled(self.saveButtonDisabled)
             )
             .onAppear(perform: fetchLocation)
         }
