@@ -142,7 +142,7 @@ struct AddExpenseView: View {
                         }
                     }
                     .alert(isPresented: $showingPaidByConfirmationAlert) {
-                        Alert(title: Text("Confirm paid by"), message: Text("Was this transaction paid by \(trip.sortedPeopleArray[paidBySelection].wrappedName)?"), primaryButton: .destructive(Text("Confirm"), action: {
+                        Alert(title: Text("Confirm transaction details"), message: Text("Transaction for \(transactionAmount) was paid by \(trip.sortedPeopleArray[paidBySelection].wrappedName)?"), primaryButton: .destructive(Text("Confirm"), action: {
                             paidByConfirmed = true
                             showingPaidByConfirmationAlert = false
                             saveExpense()
@@ -205,7 +205,6 @@ struct AddExpenseView: View {
     
     func saveExpense() {
         
-//        if !paidByConfirmed { showingPaidByConfirmationAlert = true }
         guard !expenseName.isEmpty, !paidFor.isEmpty, baseTransactionAmount > 0 else { return }
         
         // Create the transaction
