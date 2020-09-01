@@ -44,23 +44,23 @@ struct AddMemberView: View {
                                 .clipShape(Circle())
                         }
                         Button("Change") {
-                            self.showingCameraOrPhotoLibActionSheet.toggle()
+                            showingCameraOrPhotoLibActionSheet.toggle()
                         }
-                        .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                        .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                             ActionSheet(title: Text("Add photo"), buttons: [
                                 .default(Text("Take a photo")) {
-                                    self.useCamera = true
-                                    self.showingImagePicker.toggle()
+                                    useCamera = true
+                                    showingImagePicker.toggle()
                                 },
                                 .default(Text("Use photo album")) {
-                                    self.useCamera = false
-                                    self.showingImagePicker.toggle()
+                                    useCamera = false
+                                    showingImagePicker.toggle()
                                 },
                                 .cancel()
                             ])
                         }
                         .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                            ImagePicker(image: $inputImage, useCamera: useCamera)
                         }
                     }
                 }
@@ -68,22 +68,22 @@ struct AddMemberView: View {
             .navigationBarTitle(Text("New member"))
             .navigationBarItems(
                 leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Add to account") { self.saveMember() })
+                Button("Add to account") { saveMember() })
         }
         .accentColor(.green)
     }
     
     func saveMember() {
         guard name.count > 0 else { return }
-        let member = Person(context: self.moc)
+        let member = Person(context: moc)
         member.id = UUID()
-        member.name = self.name
+        member.name = name
         member.isSelected = true
         
         // Convert to data
-        if let inputImage = self.inputImage {
+        if let inputImage = inputImage {
             let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
                 // Save to device
@@ -91,11 +91,11 @@ struct AddMemberView: View {
                 member.photo = imageID
             }
         }
-        self.members.append(member)
+        members.append(member)
           
         // Fixes an issue with attempting to update state whilst it is being rendered.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.presentationMode.wrappedValue.dismiss()
+            presentationMode.wrappedValue.dismiss()
         }
         
     }

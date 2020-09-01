@@ -27,9 +27,9 @@ struct PersonListItemView: View {
                 .foregroundColor(displayFaded ? .secondary : .primary)
             Spacer()
             if showingCheckmark {
-                Image(systemName: self.person.isSelected ? "checkmark.circle.fill" : "circle")
+                Image(systemName: person.isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(self.person.isSelected ? .green : .gray)
+                    .foregroundColor(person.isSelected ? .green : .gray)
             }
         }
         .contentShape(Rectangle())

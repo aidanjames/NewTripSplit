@@ -34,11 +34,11 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                                 .padding()
                                 .padding(.bottom)
-                            GreenButtonView(text: "Create account") { self.showingAddTrip.toggle() }
+                            GreenButtonView(text: "Create account") { showingAddTrip.toggle() }
                                 .padding(.top)
                         } else {
                             VStack {
-                                GreenButtonView(text: "Create account") { self.showingAddTrip.toggle() }
+                                GreenButtonView(text: "Create account") { showingAddTrip.toggle() }
                                     .padding(.top)
                                 ForEach(trips, id: \.id) { trip in
                                     NavigationLink(destination: TripView(trip: trip)) {
@@ -52,7 +52,7 @@ struct ContentView: View {
                     }
                 }
                 .navigationBarTitle("Accounts")
-                .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: self.moc) }
+                .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: moc) }
             }
         }
         .accentColor(.green)

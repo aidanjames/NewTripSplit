@@ -52,32 +52,32 @@ struct AddAccountView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                         }
                         Button("Change") {
-                            self.showingCameraOrPhotoLibActionSheet.toggle()
+                            showingCameraOrPhotoLibActionSheet.toggle()
                         }
-                        .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                        .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                             ActionSheet(title: Text("Add receipt"), buttons: [
                                 .default(Text("Take a photo")) {
-                                    self.useCamera = true
-                                    self.showingImagePicker.toggle()
+                                    useCamera = true
+                                    showingImagePicker.toggle()
                                 },
                                 .default(Text("Use photo album")) {
-                                    self.useCamera = false
-                                    self.showingImagePicker.toggle()
+                                    useCamera = false
+                                    showingImagePicker.toggle()
                                 },
                                 .cancel()
                             ])
                         }
                         .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                            ImagePicker(image: $inputImage, useCamera: useCamera)
                         }
                     }
                 }
                 Section(header: Text("Members").font(.body)) {
                     Button(action: {
-                        if self.members.count >= 50 {
-                            self.showingTooManyMembersWarning.toggle()
+                        if members.count >= 50 {
+                            showingTooManyMembersWarning.toggle()
                         } else {
-                            self.showingAddMemberView.toggle()
+                            showingAddMemberView.toggle()
                         }
                     }) {
                         HStack {
@@ -86,9 +86,9 @@ struct AddAccountView: View {
                         }
                     }
                     .alert(isPresented: $showingTooManyMembersWarning) {
-                        Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
+                        Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { showingAddMemberView.toggle() }), secondaryButton: .cancel())
                     }
-                    .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: self.moc, members: self.$members) }
+                    .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: moc, members: $members) }
                     ForEach(members, id: \.wrappedId) { member in
                         PersonListItemView(person: member, showingCheckmark: false)
                     }
@@ -96,24 +96,24 @@ struct AddAccountView: View {
             }
             .navigationBarTitle(Text("Add new account"))
             .navigationBarItems(leading:
-                Button("Cancel") { self.addAccountCancelled() },
+                Button("Cancel") { addAccountCancelled() },
                                 trailing:
-                Button("Save") { self.saveTrip() }.disabled(self.members.isEmpty || self.accountName.isEmpty)
+                Button("Save") { saveTrip() }.disabled(members.isEmpty || accountName.isEmpty)
             )
         }
     }
     
     func saveTrip() {
-        guard self.accountName.count != 0 else { return } // white spaces
-        guard self.members.count != 0 else { return }
+        guard accountName.count != 0 else { return } // white spaces
+        guard members.count != 0 else { return }
         
-        let account = Trip(context: self.moc)
+        let account = Trip(context: moc)
         account.id = UUID()
         account.dateCreated = Date()
-        account.name = self.accountName
+        account.name = accountName
         
         // Convert to data
-        if let inputImage = self.inputImage {
+        if let inputImage = inputImage {
             let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
                 // Save to device
@@ -130,18 +130,18 @@ struct AddAccountView: View {
         }
         
         do {
-            try self.moc.save()
+            try moc.save()
         } catch {
             print(error.localizedDescription)
         }
         
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
     
     func addAccountCancelled() {
         // If there's a member, and they have an image, delete their image from device
         guard !members.isEmpty else {
-            self.presentationMode.wrappedValue.dismiss()
+            presentationMode.wrappedValue.dismiss()
             return
         }
         
@@ -151,13 +151,13 @@ struct AddAccountView: View {
                 FileManager.default.deleteData(from: imageName)
             }
             
-            self.moc.delete(member) // Delete the member from moc
+            moc.delete(member) // Delete the member from moc
         }
         
-        if self.moc.hasChanges { try? self.moc.save() } // save the moc
+        if moc.hasChanges { try? moc.save() } // save the moc
         
         // Dismiss the screen
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
         
     }
     

@@ -34,75 +34,81 @@ struct TripView: View {
                 Color("offWhite")
                 VStack {
                     
-                    Button("Show leaderboard") {
-                        showingLeaderboard.toggle()
-                    }
-                    .padding(.top)
-                    .sheet(isPresented: $showingLeaderboard) {
-                        LeaderboardView(members: trip.sortedPeopleArray)
-                    }
+//                    Button("Show leaderboard") {
+//                        showingLeaderboard.toggle()
+//                    }
+//                    .padding(.top)
+//                    .sheet(isPresented: $showingLeaderboard) {
+//                        LeaderboardView(members: trip.sortedPeopleArray)
+//                    }
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
-                            ForEach(self.trip.sortedPeopleArray, id: \.id) { person in
+                            ForEach(trip.sortedPeopleArray, id: \.id) { person in
                                 Button(action: {
-                                    self.showingMemberSummaryView.toggle()
-                                    self.selectedMember = person
+                                    showingMemberSummaryView.toggle()
+                                    selectedMember = person
                                 }) {
                                     MemberCardView(person: person)
                                         .padding(.vertical)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .sheet(isPresented: self.$showingMemberSummaryView) {
-                                    MemberDetailView(member: self.selectedMember ?? person, account: self.trip, moc: self.moc)
+                                .sheet(isPresented: $showingMemberSummaryView) {
+                                    MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)
                                 }
                             }
                         }
                     }
                     HStack {
-                        Button(action: { self.showingAddExpenseView.toggle() }) {
+                        Button(action: { showingAddExpenseView.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Transaction", onButtonImage: "plus")
                         }
-                        .sheet(isPresented: self.$showingAddExpenseView) {
-                            AddExpenseView(moc: self.moc, trip: self.trip)
+                        .sheet(isPresented: $showingAddExpenseView) {
+                            AddExpenseView(moc: moc, trip: trip)
                         }
-                        NavigationLink(destination: SideBetsSummaryView(trip: self.trip)) {
-                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image(systemName: "dollarsign.circle.fill"))
+//                        NavigationLink(destination: SideBetsSummaryView(trip: trip)) {
+//                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image(systemName: "dollarsign.circle.fill"))
+//                        }
+                        Button(action: { showingLeaderboard.toggle() }) {
+                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Leaderboard", onButtonImage: "list.number")
+                        }
+                        .sheet(isPresented: $showingLeaderboard) {
+                            LeaderboardView(members: trip.sortedPeopleArray)
                         }
                     }
                     .padding(.top, 20)
                     HStack {
-                        Button(action: { self.showingSettlementView.toggle() }) {
+                        Button(action: { showingSettlementView.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Settlement", onButtonImage: "equal")
                         }
-                        .sheet(isPresented: self.$showingSettlementView) {
-                            SettlementView(moc: self.moc, account: self.trip)
+                        .sheet(isPresented: $showingSettlementView) {
+                            SettlementView(moc: moc, account: trip)
                         }
                         Button(action: {
-                            if self.trip.sortedPeopleArray.count >= 50 {
-                                self.showingTooManyMembersWarning.toggle()
+                            if trip.sortedPeopleArray.count >= 50 {
+                                showingTooManyMembersWarning.toggle()
                             } else {
-                                self.showingAddMemberView.toggle()
+                                showingAddMemberView.toggle()
                             }
                         }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Add member", onButtonImage: "person.badge.plus")
                         }
-                        .alert(isPresented: self.$showingTooManyMembersWarning) {
-                            Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { self.showingAddMemberView.toggle() }), secondaryButton: .cancel())
+                        .alert(isPresented: $showingTooManyMembersWarning) {
+                            Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { showingAddMemberView.toggle() }), secondaryButton: .cancel())
                         }
-                        .sheet(isPresented: self.$showingAddMemberView) {
-                            AddMemberToTripView(moc: self.moc, account: self.trip)
+                        .sheet(isPresented: $showingAddMemberView) {
+                            AddMemberToTripView(moc: moc, account: trip)
                         }
                     }
                     Spacer()
                 }
-                TransactionListView(bottomSheetIsOpen: self.$bottomSheetIsOpen, geoSize: geo.size, moc: self.moc, trip: self.trip)
+                TransactionListView(bottomSheetIsOpen: $bottomSheetIsOpen, geoSize: geo.size, moc: moc, trip: trip)
                     .shadow(radius: 5)
             }
             .accentColor(.green)
-            .navigationBarTitle("\(self.trip.wrappedName)", displayMode: .inline)
+            .navigationBarTitle("\(trip.wrappedName)", displayMode: .inline)
             .navigationBarItems(trailing:
                                     HStack {
-                                        Button(action: { self.showingShareActionSheet.toggle() }) {
+                                        Button(action: { showingShareActionSheet.toggle() }) {
                                             Image(systemName: "square.and.arrow.up")
                                                 .font(.title)
                                         }
@@ -127,13 +133,13 @@ struct TripView: View {
                                                 .cancel()
                                             ])
                                         }
-                                        .sheet(isPresented: self.$showingShareSheet) { ShareSheet(activityItems: self.itemsForShareSheet()) }
+                                        .sheet(isPresented: $showingShareSheet) { ShareSheet(activityItems: itemsForShareSheet()) }
                                         .padding()
-                                        Button(action: { self.showingEditAccountSheet.toggle() }) {
+                                        Button(action: { showingEditAccountSheet.toggle() }) {
                                             Image(systemName: "ellipsis.circle")
                                                 .font(.title)
                                         }
-                                        .sheet(isPresented: self.$showingEditAccountSheet) { EditAccountView(moc: self.moc, account: self.trip) }
+                                        .sheet(isPresented: $showingEditAccountSheet) { EditAccountView(moc: moc, account: trip) }
                                     }
                                     .foregroundColor(.green)
                                 

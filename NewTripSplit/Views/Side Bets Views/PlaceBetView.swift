@@ -63,8 +63,8 @@ struct PlaceBetView: View {
             Form {
                 Section(header: Text("Bet details")) {
                     Picker(selection: $selectedBetter, label: Text("Punter")) {
-                        ForEach(0..<self.potentialPunters.count) {
-                            Text(self.potentialPunters[$0].wrappedName)
+                        ForEach(0..<potentialPunters.count) {
+                            Text(potentialPunters[$0].wrappedName)
                         }
                     }
                     TextField("Amount to bet", text: $betAmount).keyboardType(.decimalPad)
@@ -94,7 +94,7 @@ struct PlaceBetView: View {
 
             }
             .navigationBarTitle("Add bet")
-            .navigationBarItems(leading: Button("Cancel") { self.presentationMode.wrappedValue.dismiss() }, trailing: Button("Save bet") { self.saveBet()}.disabled(potExceeded))
+            .navigationBarItems(leading: Button("Cancel") { presentationMode.wrappedValue.dismiss() }, trailing: Button("Save bet") { saveBet()}.disabled(potExceeded))
         }
         .accentColor(.green)
 //        .onTapGesture { UIApplication.shared.endEditing() }
@@ -103,7 +103,7 @@ struct PlaceBetView: View {
     func saveBet() {
         guard let amount = Double(betAmount) else { return }
 
-        let newBet = Wager(wagedById: self.potentialPunters[selectedBetter].wrappedId, amountWaged: amount, odds: betOffer)
+        let newBet = Wager(wagedById: potentialPunters[selectedBetter].wrappedId, amountWaged: amount, odds: betOffer)
         
         // Find offer in existing betting.allBets array...
         if let index = betting.allBets.firstIndex(where: { $0.id == betOffer.id }) {
@@ -113,7 +113,7 @@ struct PlaceBetView: View {
         // Save all bets
         betting.update()
         
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

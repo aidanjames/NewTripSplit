@@ -29,9 +29,9 @@ struct SettlementView: View {
                     }
                 }
             }
-            .onAppear { self.whoPaysWhoArray = self.account.calculateSettlement() }
+            .onAppear { whoPaysWhoArray = account.calculateSettlement() }
             .navigationBarTitle(Text("Settlement"))
-            .navigationBarItems(trailing: Button("Done") { self.presentationMode.wrappedValue.dismiss() })
+            .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() })
         }
         .accentColor(.green)
     }

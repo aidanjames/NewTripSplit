@@ -54,26 +54,26 @@ struct MemberDetailView: View {
                         .foregroundColor(.blue)
                         .offset(x: 0, y: 95)
                         .padding()
-                        .onTapGesture { self.showingCameraOrPhotoLibActionSheet.toggle() }
+                        .onTapGesture { showingCameraOrPhotoLibActionSheet.toggle() }
                 }
-                .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                     ActionSheet(title: Text("Change photo"), buttons: [
                         .default(Text("Take a photo")) {
-                            self.useCamera = true
-                            self.showingImagePicker.toggle()
+                            useCamera = true
+                            showingImagePicker.toggle()
                         },
                         .default(Text("Use photo album")) {
-                            self.useCamera = false
-                            self.showingImagePicker.toggle()
+                            useCamera = false
+                            showingImagePicker.toggle()
                         },
                         .default(Text("Delete image (use default)")) {
-                            self.inputImage = UIImage(named: "unknown")
+                            inputImage = UIImage(named: "unknown")
                         },
                         .cancel()
                     ])
                 }
                 .sheet(isPresented: $showingImagePicker) {
-                    ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                    ImagePicker(image: $inputImage, useCamera: useCamera)
                 }
                 
                 if !showingEditNameField {
@@ -105,7 +105,7 @@ struct MemberDetailView: View {
                     .opacity(50)
                     .alert(isPresented: $showingDeleteMemberAlert) {
                         Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
-                            self.deleteMember()
+                            deleteMember()
                         }), secondaryButton: .cancel())
                 }
                 List {
@@ -114,11 +114,11 @@ struct MemberDetailView: View {
                             Text("Nothing!")
                         } else {
                             ForEach(member.payerArray, id: \.self) { transaction in
-                                Button(action: self.showTransactionDetailView) {
+                                Button(action: showTransactionDetailView) {
                                     TransactionListItemView(transaction: transaction)
                                 }
-                                .sheet(isPresented: self.$showingTransactionDetailView) {
-                                    TransactionDetailView(transaction: transaction, trip: self.account, moc: self.moc)
+                                .sheet(isPresented: $showingTransactionDetailView) {
+                                    TransactionDetailView(transaction: transaction, trip: account, moc: moc)
                                 }
                             }
                         }
@@ -128,11 +128,11 @@ struct MemberDetailView: View {
                             Text("Nothing!")
                         } else {
                             ForEach(member.beneficiaryArray, id: \.self) { transaction in
-                                Button(action: self.showTransactionDetailView) {
+                                Button(action: showTransactionDetailView) {
                                     TransactionListItemView(transaction: transaction)
                                 }
-                                .sheet(isPresented: self.$showingTransactionDetailView) {
-                                    TransactionDetailView(transaction: transaction, trip: self.account, moc: self.moc)
+                                .sheet(isPresented: $showingTransactionDetailView) {
+                                    TransactionDetailView(transaction: transaction, trip: account, moc: moc)
                                 }
                             }
                         }
@@ -146,11 +146,11 @@ struct MemberDetailView: View {
             .navigationBarTitle(Text("Edit member"), displayMode: .inline)
             .navigationBarItems(
                 leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
                 HStack {
-                    Button(action: { self.deleteMemberInitialCheck() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
-                    Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
+                    Button(action: { deleteMemberInitialCheck() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
+                    Button("Save") { saveButtonPressed() }.disabled(saveButtonDisabled)
                 }
             )
         }
@@ -159,14 +159,14 @@ struct MemberDetailView: View {
     
     func deleteMemberInitialCheck() {
         guard member.payerArray.isEmpty && member.beneficiaryArray.isEmpty else {
-            self.showingCannotDeleteMemberAlert.toggle()
+            showingCannotDeleteMemberAlert.toggle()
             return
         }
-        self.showingDeleteMemberAlert.toggle()
+        showingDeleteMemberAlert.toggle()
     }
     
     func showTransactionDetailView() {
-        self.showingTransactionDetailView.toggle()
+        showingTransactionDetailView.toggle()
     }
     
     func deleteMember() {
@@ -174,10 +174,10 @@ struct MemberDetailView: View {
             FileManager.default.deleteData(from: imageName) // Delete member image
         }
         account.removeFromPeople(member)
-        if self.moc.hasChanges {
-            try? self.moc.save()
+        if moc.hasChanges {
+            try? moc.save()
         }
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
     
     func saveButtonPressed() {
@@ -190,7 +190,7 @@ struct MemberDetailView: View {
                 FileManager.default.deleteData(from: imageName)
             }
             // save image
-            if let inputImage = self.inputImage {
+            if let inputImage = inputImage {
                 let imageID = UUID().uuidString
                 // Convert to data
                 if let jpegData = inputImage.jpegData(compressionQuality: 1) {
@@ -200,10 +200,10 @@ struct MemberDetailView: View {
                 }
             }
         }
-        if self.moc.hasChanges {
-            try? self.moc.save()
+        if moc.hasChanges {
+            try? moc.save()
         }
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

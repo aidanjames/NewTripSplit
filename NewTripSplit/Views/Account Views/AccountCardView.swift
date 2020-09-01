@@ -40,9 +40,9 @@ struct AccountCardView: View {
                         Spacer()
                     }
                     Group {
-                        Text("\(self.account.people?.count ?? 0) Participants")
-                        Text("\(self.account.transactionsArray.count) Transactions")
-                        Text("Total spent: \(Currencies.format(currency: self.account.baseCurrency ?? "Error", amount: self.account.transactionsArray.reduce(0) { $0 + $1.baseAmt }, withSymbol: true, withSign: true))")
+                        Text("\(account.people?.count ?? 0) Participants")
+                        Text("\(account.transactionsArray.count) Transactions")
+                        Text("Total spent: \(Currencies.format(currency: account.baseCurrency ?? "Error", amount: account.transactionsArray.reduce(0) { $0 + $1.baseAmt }, withSymbol: true, withSign: true))")
                     }
                     .foregroundColor(.secondary)
                 }

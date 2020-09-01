@@ -18,21 +18,21 @@ struct SideBetsSummaryView: View {
     @ObservedObject var betting = Betting()
     
     var filteredOdds: [Odds] {
-        return betting.allBets.filter { $0.tripId == self.trip.wrappedId }
+        return betting.allBets.filter { $0.tripId == trip.wrappedId }
     }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
-                GreenButtonView(text: "Add odds") { self.presentAddOddsSheet() }
+                GreenButtonView(text: "Add odds") { presentAddOddsSheet() }
                     .sheet(isPresented: $showingAddOdds) {
-                        NewOddsView(trip: self.trip).environmentObject(self.betting)
+                        NewOddsView(trip: trip).environmentObject(betting)
                 }
                 if filteredOdds.isEmpty {
                     Text("No bets ☹️")
                 }
                 ForEach(filteredOdds) { odds in
-                    BetCardView(trip: self.trip, betOffer: odds, moc: self.moc).environmentObject(self.betting)
+                    BetCardView(trip: trip, betOffer: odds, moc: moc).environmentObject(betting)
                 }
                 .navigationBarTitle("Side Bets")
             }
@@ -46,10 +46,10 @@ struct SideBetsSummaryView: View {
     
     func presentAddOddsSheet() {
         guard trip.sortedPeopleArray.count > 1 else {
-            self.showingError.toggle()
+            showingError.toggle()
             return
         }
-        self.showingAddOdds.toggle()
+        showingAddOdds.toggle()
     }
     
 }

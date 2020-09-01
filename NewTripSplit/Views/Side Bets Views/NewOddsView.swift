@@ -26,7 +26,7 @@ struct NewOddsView: View {
                 Section {
                     Picker(selection: $selectedPerson, label: Text("Offered by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
-                            Text(self.trip.sortedPeopleArray[$0].wrappedName)
+                            Text(trip.sortedPeopleArray[$0].wrappedName)
                         }
                     }
                 }
@@ -47,9 +47,9 @@ struct NewOddsView: View {
             }
             .navigationBarTitle("New odds")
             .navigationBarItems(
-                leading: Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                leading: Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") { self.saveOdds() }
+                Button("Save") { saveOdds() }
             )
         }
         .accentColor(.green)
@@ -59,10 +59,10 @@ struct NewOddsView: View {
         guard let amount = Double(oddsOffered) else { return } // add validation
         guard let maxPot = Double(maxPot) else { return } // add validation
 
-        let newOdds = Odds(tripId: self.trip.wrappedId, offeredById: self.trip.sortedPeopleArray[selectedPerson].wrappedId, condition: self.condition, odds: amount, maxPot: maxPot)
+        let newOdds = Odds(tripId: trip.wrappedId, offeredById: trip.sortedPeopleArray[selectedPerson].wrappedId, condition: condition, odds: amount, maxPot: maxPot)
 
-        self.betting.add(newOdds)
-        self.presentationMode.wrappedValue.dismiss()
+        betting.add(newOdds)
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

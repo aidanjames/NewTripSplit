@@ -46,23 +46,23 @@ struct AddMemberToTripView: View {
                                 .clipShape(Circle())
                         }
                         Button("Change") {
-                            self.showingCameraOrPhotoLibActionSheet.toggle()
+                            showingCameraOrPhotoLibActionSheet.toggle()
                         }
-                        .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                        .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                             ActionSheet(title: Text("Add receipt"), buttons: [
                                 .default(Text("Take a photo")) {
-                                    self.useCamera = true
-                                    self.showingImagePicker.toggle()
+                                    useCamera = true
+                                    showingImagePicker.toggle()
                                 },
                                 .default(Text("Use photo album")) {
-                                    self.useCamera = false
-                                    self.showingImagePicker.toggle()
+                                    useCamera = false
+                                    showingImagePicker.toggle()
                                 },
                                 .cancel()
                             ])
                         }
                         .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                            ImagePicker(image: $inputImage, useCamera: useCamera)
                         }
                     }
                 }
@@ -70,22 +70,22 @@ struct AddMemberToTripView: View {
             .navigationBarTitle(Text("New member"))
             .navigationBarItems(
                 leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Add to account") { self.saveMember() })
+                Button("Add to account") { saveMember() })
         }
         .accentColor(.green)
     }
     
     func saveMember() {
         guard name.count > 0 else { return }
-        let member = Person(context: self.moc)
+        let member = Person(context: moc)
         member.id = UUID()
-        member.name = self.name
+        member.name = name
         member.isSelected = true
         
         // Convert to data
-        if let inputImage = self.inputImage {
+        if let inputImage = inputImage {
             let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
                 // Save to device
@@ -94,11 +94,11 @@ struct AddMemberToTripView: View {
             }
         }
         
-        member.trip = self.account
+        member.trip = account
         account.addToPeople(member)
-        try? self.moc.save()
+        try? moc.save()
         
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
         
     }
     

@@ -52,25 +52,25 @@ struct EditAccountView: View {
                     .foregroundColor(.blue)
                     .offset(x: 0, y: 95)
                     .padding()
-                    .onTapGesture { self.showingCameraOrPhotoLibActionSheet.toggle() }
-                    .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                    .onTapGesture { showingCameraOrPhotoLibActionSheet.toggle() }
+                    .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                         ActionSheet(title: Text("Change photo"), buttons: [
                             .default(Text("Take a photo")) {
-                                self.useCamera = true
-                                self.showingImagePicker.toggle()
+                                useCamera = true
+                                showingImagePicker.toggle()
                             },
                             .default(Text("Use photo album")) {
-                                self.useCamera = false
-                                self.showingImagePicker.toggle()
+                                useCamera = false
+                                showingImagePicker.toggle()
                             },
                             .default(Text("Delete image (use default)")) {
-                                self.inputImage = UIImage(named: self.account.wrappedBaseCurrency.prefix(3).lowercased())
+                                inputImage = UIImage(named: account.wrappedBaseCurrency.prefix(3).lowercased())
                             },
                             .cancel()
                         ])
                     }
                     .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                        ImagePicker(image: $inputImage, useCamera: useCamera)
                     }
                 }
                 
@@ -79,21 +79,21 @@ struct EditAccountView: View {
                     .multilineTextAlignment(.center)
                     .frame(width: 300)
                     .padding()
-                    .onAppear(perform: self.populateTripName)
+                    .onAppear(perform: populateTripName)
                 .alert(isPresented: $showingDeleteAccountWarning) {
                     Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this account? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
-                        self.deleteAccount()
+                        deleteAccount()
                     }), secondaryButton: .cancel())
                 }
 
-                Button(action: { self.showingAddMemberView.toggle() }) {
+                Button(action: { showingAddMemberView.toggle() }) {
                     HStack {
                         Image(systemName: "person.badge.plus.fill")
                         Text("Add member")
                         Spacer()
                     }.padding(.leading)
                 }
-                .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: self.moc, members: self.$tempMembers) }
+                .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: moc, members: $tempMembers) }
                 List {
                     ForEach(account.sortedPeopleArray, id: \.self) { member in
                         PersonListItemView(person: member, showingCheckmark: false)
@@ -106,18 +106,18 @@ struct EditAccountView: View {
             .navigationBarTitle(Text("Edit account"), displayMode: .inline)
             .navigationBarItems(
                 leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
                 HStack {
-                    Button(action: { self.showingDeleteAccountWarning.toggle() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
-                    Button("Save") { self.saveButtonPressed() }.disabled(saveButtonDisabled)
+                    Button(action: { showingDeleteAccountWarning.toggle() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
+                    Button("Save") { saveButtonPressed() }.disabled(saveButtonDisabled)
                 }
             )
         }
     }
     
     func populateTripName() {
-        self.accountName = account.wrappedName
+        accountName = account.wrappedName
     }
     
     
@@ -138,7 +138,7 @@ struct EditAccountView: View {
         }
         
         let betting = Betting() // Delete bets
-        for betOffer in betting.allBets.filter({ $0.tripId == self.account.wrappedId }) {
+        for betOffer in betting.allBets.filter({ $0.tripId == account.wrappedId }) {
             if let index = betting.allBets.firstIndex(where: { $0.id == betOffer.id } ) {
                 betting.allBets.remove(at: index)
             }
@@ -151,11 +151,11 @@ struct EditAccountView: View {
         
         moc.delete(account)
         
-        if self.moc.hasChanges {
-            try? self.moc.save()
+        if moc.hasChanges {
+            try? moc.save()
         }
         
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
     
     func saveButtonPressed() {
@@ -173,7 +173,7 @@ struct EditAccountView: View {
                 FileManager.default.deleteData(from: imageName)
             }
             // save image
-            if let inputImage = self.inputImage {
+            if let inputImage = inputImage {
                 let imageID = UUID().uuidString
                 // Convert to data
                 if let jpegData = inputImage.jpegData(compressionQuality: 1) {
@@ -183,11 +183,11 @@ struct EditAccountView: View {
                 }
             }
         }
-        if self.moc.hasChanges {
-            try? self.moc.save()
+        if moc.hasChanges {
+            try? moc.save()
         }
        
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

@@ -31,32 +31,32 @@ struct TransactionListView: View {
     
     var body: some View {
         
-        BottomSheetView(isOpen: self.$bottomSheetIsOpen, maxHeight: geoSize.height) {
-            if self.trip.transactionsArray.isEmpty {
+        BottomSheetView(isOpen: $bottomSheetIsOpen, maxHeight: geoSize.height) {
+            if trip.transactionsArray.isEmpty {
                 Text("No expenses to display")
             }
             List {
                 ForEach(dates, id: \.self) { date in
                     Section(header: Text(date)) {
-                        ForEach(self.trip.transactionsArray.filter { $0.dateDisplay == date }.sorted(by: >), id: \.self) { transaction in
-                            Button(action: self.showTransactionDetailView) {
+                        ForEach(trip.transactionsArray.filter { $0.dateDisplay == date }.sorted(by: >), id: \.self) { transaction in
+                            Button(action: showTransactionDetailView) {
                                 TransactionListItemView(transaction: transaction)
                             }
-                            .sheet(isPresented: self.$showingTransactionDetailView) {
-                                TransactionDetailView(transaction: transaction, trip: self.trip, moc: self.moc)
+                            .sheet(isPresented: $showingTransactionDetailView) {
+                                TransactionDetailView(transaction: transaction, trip: trip, moc: moc)
                             }
                         }
                     }
                 }
-                Spacer(minLength: CGFloat(self.trip.transactionsArray.count * 10))
+                Spacer(minLength: CGFloat(trip.transactionsArray.count * 10))
             }
-            .colorMultiply(self.colorScheme == .dark ? .white : Color(.secondarySystemBackground))
-            .disabled(!self.bottomSheetIsOpen)
+            .colorMultiply(colorScheme == .dark ? .white : Color(.secondarySystemBackground))
+            .disabled(!bottomSheetIsOpen)
         }
     }
     
     func showTransactionDetailView() {
-        self.showingTransactionDetailView.toggle()
+        showingTransactionDetailView.toggle()
     }
 }
 

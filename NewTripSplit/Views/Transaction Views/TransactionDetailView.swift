@@ -36,59 +36,59 @@ struct TransactionDetailView: View {
             if transaction != nil {
                 GeometryReader { geo in
                     VStack(spacing: 0) {
-                        if self.annotation.coordinate.longitude != 0 && self.annotation.coordinate.latitude != 0 {
-                            MapView(centreCoordinate: self.$centerCoordinate, annotation: self.annotation)
+                        if annotation.coordinate.longitude != 0 && annotation.coordinate.latitude != 0 {
+                            MapView(centreCoordinate: $centerCoordinate, annotation: annotation)
                                 .frame(width: geo.size.width, height: geo.size.height * 0.3)
                         }
                         Form {
                             Section(header: Text("Transaction details")) {
-                                Text("\(self.transaction!.wrappedTitle)").fontWeight(.bold)
-                                if !(self.transaction!.wrappedAdditionalInfo.isEmpty) {
-                                    Text("\(self.transaction!.wrappedAdditionalInfo)")
+                                Text("\(transaction!.wrappedTitle)").fontWeight(.bold)
+                                if !(transaction!.wrappedAdditionalInfo.isEmpty) {
+                                    Text("\(transaction!.wrappedAdditionalInfo)")
                                 }
-                                Text("Amount: \(Currencies.format(currency: self.transaction?.trnCurrency ?? "£", amount: self.transaction?.trnAmt ?? 0, withSymbol: true, withSign: true))")
-                                if self.trip.baseCurrency != self.transaction?.wrappedTrnCurrency {
-                                    Text("Currency: \(self.transaction?.trnCurrency ?? "Error") (rate \(self.transaction?.exchangeRate ?? 0))")
-                                    Text("Base amount: \(Currencies.format(currency: self.trip.baseCurrency ?? "Error", amount: self.transaction?.baseAmt ?? 0, withSymbol: true, withSign: true))")
+                                Text("Amount: \(Currencies.format(currency: transaction?.trnCurrency ?? "£", amount: transaction?.trnAmt ?? 0, withSymbol: true, withSign: true))")
+                                if trip.baseCurrency != transaction?.wrappedTrnCurrency {
+                                    Text("Currency: \(transaction?.trnCurrency ?? "Error") (rate \(transaction?.exchangeRate ?? 0))")
+                                    Text("Base amount: \(Currencies.format(currency: trip.baseCurrency ?? "Error", amount: transaction?.baseAmt ?? 0, withSymbol: true, withSign: true))")
                                 }
-                                Text("Date: \(self.transaction!.dateDisplay)")
-                                if self.transaction!.photo != nil {
+                                Text("Date: \(transaction!.dateDisplay)")
+                                if transaction!.photo != nil {
                                     Button("View receipt") {
-                                        self.receiptViewShowing.toggle()
+                                        receiptViewShowing.toggle()
                                     }
-                                    .sheet(isPresented: self.$receiptViewShowing) {
-                                        TransactionReceiptView(transaction: self.transaction!)
+                                    .sheet(isPresented: $receiptViewShowing) {
+                                        TransactionReceiptView(transaction: transaction!)
                                     }
                                 }
                             }
                             Section(header: Text("Paid by")) {
-                                Text("\(self.transaction!.paidBy?.wrappedName ?? "")")
+                                Text("\(transaction!.paidBy?.wrappedName ?? "")")
                             }
                             Section(header: Text("Beneficiaries")) {
-                                Text("\(self.transaction?.populatePaidForNames(capitaliseFirstLetter: true) ?? "error").")
+                                Text("\(transaction?.populatePaidForNames(capitaliseFirstLetter: true) ?? "error").")
                             }
                         }
                         Spacer()
                     }
-                    .onAppear(perform: self.populateCenterCoordinate)
-                    .navigationBarTitle("\(self.transaction?.wrappedTitle ?? "Unknown")", displayMode: .inline)
+                    .onAppear(perform: populateCenterCoordinate)
+                    .navigationBarTitle("\(transaction?.wrappedTitle ?? "Unknown")", displayMode: .inline)
                     .navigationBarItems(
                         leading:
-                        Button(action: { self.showingDeleteAlert.toggle() }) {
+                        Button(action: { showingDeleteAlert.toggle() }) {
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
                                 .padding(3)
                         },
                         trailing:
-                        Button("Done") { self.presentationMode.wrappedValue.dismiss() }
+                        Button("Done") { presentationMode.wrappedValue.dismiss() }
                     )
-                        .alert(isPresented: self.$showingDeleteAlert) {
+                        .alert(isPresented: $showingDeleteAlert) {
                             Alert(title: Text("Delete transaction?"), message: Text("Are you sure you want to delete this transaction. All members balances will be updated."), primaryButton: .destructive(Text("Delete transaction")) {
-                                self.presentationMode.wrappedValue.dismiss()
+                                presentationMode.wrappedValue.dismiss()
                                 
                                 // This is a hack because the screen won't dismiss whilst I'm deleting the transaction.
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.deleteTransaction()
+                                    deleteTransaction()
                                 }
                                 
                                 }, secondaryButton: .cancel())
@@ -103,7 +103,7 @@ struct TransactionDetailView: View {
     
     func populateCenterCoordinate() {
         if transaction?.latitude != 0 && transaction?.longitude != 0 {
-            self.centerCoordinate = CLLocationCoordinate2D(latitude: transaction?.latitude ?? 0, longitude: transaction?.longitude ?? 0)
+            centerCoordinate = CLLocationCoordinate2D(latitude: transaction?.latitude ?? 0, longitude: transaction?.longitude ?? 0)
         }
     }
     
@@ -127,7 +127,7 @@ struct TransactionDetailView: View {
             
             // Delete the transaction
             moc.delete(transaction)
-            try? self.moc.save()
+            try? moc.save()
         }
         
     }

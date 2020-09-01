@@ -58,7 +58,7 @@ struct BetCardView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         ForEach(betOffer.wagers) { wager in
-                            Text("\(self.trip.sortedPeopleArray.first(where: { $0.id == wager.wagedById })?.firstName ?? "Unknown") has bet \(Currencies.format(amount: wager.amountWaged)) (pays \(Currencies.format(amount: wager.paysAmount)))")
+                            Text("\(trip.sortedPeopleArray.first(where: { $0.id == wager.wagedById })?.firstName ?? "Unknown") has bet \(Currencies.format(amount: wager.amountWaged)) (pays \(Currencies.format(amount: wager.paysAmount)))")
                         }
                     }
                     Spacer()
@@ -73,25 +73,25 @@ struct BetCardView: View {
             if betOffer.betStatus == BetStatus.active {
                 HStack(spacing: 30) {
                     Spacer()
-                    Button(action: self.showSettleView) {
+                    Button(action: showSettleView) {
                         Text("Settle")
                     }
                     .disabled(settleButtonIsDisabled)
                     .actionSheet(isPresented: $showSettlement) {
                         ActionSheet(title: Text("Settle bet"), buttons: [
-                            .default(Text("Bet won")) { self.betWon(id: self.betOffer.id) },
-                            .default(Text("Bet lost")) { self.betLost(id: self.betOffer.id) },
-                            .default(Text("Remove bet")) { self.betCancelled(id: self.betOffer.id) },
+                            .default(Text("Bet won")) { betWon(id: betOffer.id) },
+                            .default(Text("Bet lost")) { betLost(id: betOffer.id) },
+                            .default(Text("Remove bet")) { betCancelled(id: betOffer.id) },
                             .cancel()
                         ])
                     }
                     
                     Spacer()
                     
-                    Button(action: self.showAddBetView) {
+                    Button(action: showAddBetView) {
                         Text("Add bet")
                     }
-                    .sheet(isPresented: $showingAddBetView) { PlaceBetView(trip: self.trip, betOffer: self.betOffer).environmentObject(self.betting)
+                    .sheet(isPresented: $showingAddBetView) { PlaceBetView(trip: trip, betOffer: betOffer).environmentObject(betting)
                     }
                     Spacer()
                 }
@@ -104,17 +104,17 @@ struct BetCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(radius: 5, x: 4, y: 4)
         .padding(.horizontal)
-        .rotation3DEffect(.degrees(self.xFlipAmount), axis: (x: 1, y: 0, z: 0)) // If bet wins
-        .rotation3DEffect(.degrees(self.yFlipAmount), axis: (x: 0, y: 1, z: 0)) // If bet loses
+        .rotation3DEffect(.degrees(xFlipAmount), axis: (x: 1, y: 0, z: 0)) // If bet wins
+        .rotation3DEffect(.degrees(yFlipAmount), axis: (x: 0, y: 1, z: 0)) // If bet loses
         
     }
     
     func showSettleView() {
-        self.showSettlement.toggle()
+        showSettlement.toggle()
     }
     
     func showAddBetView() {
-        self.showingAddBetView.toggle()
+        showingAddBetView.toggle()
     }
     
     
@@ -137,7 +137,7 @@ struct BetCardView: View {
                         let amountWon = wager.paysAmount
                         
                         // Create the Dr transaction
-                        let transaction = Transaction(context: self.moc)
+                        let transaction = Transaction(context: moc)
                         transaction.id = UUID()
                         transaction.title = "Side bet won"
                         transaction.additionalInfo = "\(punter.firstName) bet \(Currencies.format(amount: wager.amountWaged)) on \"\(bet.condition)\" at odds of \(Currencies.format(amount: wager.odds.odds)) offered by \(loser.firstName)."
@@ -146,7 +146,7 @@ struct BetCardView: View {
                         transaction.trnAmt = wager.paysAmount
                         transaction.trnCurrency = trip.wrappedBaseCurrency
                         transaction.date = Date()
-                        transaction.trip = self.trip
+                        transaction.trip = trip
                         
                         // In this case the person who 'won' the bet is marked as 'Paid by'. It's a bit of an odd case as they've not paid anything but we need a way to balance the books.
                         transaction.paidBy = punter
@@ -156,14 +156,14 @@ struct BetCardView: View {
                         transaction.addToPaidFor(loser)
                         loser.localBal -= amountWon
                         
-                        try? self.moc.save()
+                        try? moc.save()
                         
                     }
                 }
                 withAnimation {
-                    self.xFlipAmount = 360
+                    xFlipAmount = 360
                 }
-                self.xFlipAmount = 0
+                xFlipAmount = 0
                 
             }
         }
@@ -188,7 +188,7 @@ struct BetCardView: View {
                         let punter = trip.sortedPeopleArray[punterIndex]
                         
                         // Create the Dr transaction
-                        let transaction = Transaction(context: self.moc)
+                        let transaction = Transaction(context: moc)
                         transaction.id = UUID()
                         transaction.title = "Side bet lost"
                         transaction.additionalInfo = "\(punter.firstName) bet \(Currencies.format(amount: wager.amountWaged)) on \"\(bet.condition)\" at odds of \(Currencies.format(amount: wager.odds.odds)) offered by \(winner.firstName)."
@@ -197,7 +197,7 @@ struct BetCardView: View {
                         transaction.trnAmt = wager.amountWaged
                         transaction.trnCurrency = trip.wrappedBaseCurrency
                         transaction.date = Date()
-                        transaction.trip = self.trip
+                        transaction.trip = trip
                         
                         // See notes in betWon()... it's a bit backwards but makes sense if you think about it.
                         transaction.paidBy = winner
@@ -207,14 +207,14 @@ struct BetCardView: View {
                         transaction.addToPaidFor(punter)
                         punter.localBal -= wager.amountWaged
                         
-                        try? self.moc.save()
+                        try? moc.save()
                         
                     }
                 }
                 withAnimation {
-                    self.yFlipAmount = 360
+                    yFlipAmount = 360
                 }
-                self.yFlipAmount = 0
+                yFlipAmount = 0
             }
         }
         

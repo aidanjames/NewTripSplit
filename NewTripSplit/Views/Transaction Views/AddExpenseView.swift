@@ -93,8 +93,8 @@ struct AddExpenseView: View {
                             .onAppear(perform: showError)
                             .actionSheet(isPresented: $showingRateError) {
                                 ActionSheet(title: Text("Failed to get exchange rate"), buttons: [
-                                    .default(Text("Try again")) { self.setExchangeRate() },
-                                    .default(Text("Enter rate manually")) { self.showingManualRateInputField = true },
+                                    .default(Text("Try again")) { setExchangeRate() },
+                                    .default(Text("Enter rate manually")) { showingManualRateInputField = true },
                                     .cancel()
                                 ])
                         }
@@ -103,9 +103,9 @@ struct AddExpenseView: View {
                         HStack {
                             TextField("Enter exchange rate", text: $manualExchangeRate).keyboardType(.decimalPad)
                             Button("Apply") {
-                                self.currencyPair.manuallySetExchangeRate(self.manualExchangeRate)
-                                self.showingManualRateInputField = false
-                                self.manualExchangeRate = ""
+                                currencyPair.manuallySetExchangeRate(manualExchangeRate)
+                                showingManualRateInputField = false
+                                manualExchangeRate = ""
                             }.disabled(manualExchRateButtonDisabled)
                         }
                     }
@@ -116,33 +116,33 @@ struct AddExpenseView: View {
                         }
                     }
                     Button(inputImage == nil ? "Add receipt" : "Replace receipt") {
-                        self.showingCameraOrPhotoLibActionSheet.toggle()
+                        showingCameraOrPhotoLibActionSheet.toggle()
                     }
-                    .actionSheet(isPresented: self.$showingCameraOrPhotoLibActionSheet) {
+                    .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                         ActionSheet(title: Text("Add receipt"), buttons: [
                             .default(Text("Take a photo")) {
-                                self.useCamera = true
-                                self.showingImagePicker.toggle()
+                                useCamera = true
+                                showingImagePicker.toggle()
                             },
                             .default(Text("Use photo album")) {
-                                self.useCamera = false
-                                self.showingImagePicker.toggle()
+                                useCamera = false
+                                showingImagePicker.toggle()
                             },
                             .cancel()
                         ])
                     }
                     .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: self.$inputImage, useCamera: self.useCamera)
+                        ImagePicker(image: $inputImage, useCamera: useCamera)
                     }
                 }
                 Section {
                     Picker(selection: $paidBySelection, label: Text("Paid by")) {
                         ForEach(0..<trip.sortedPeopleArray.count) {
-                            Text(self.trip.sortedPeopleArray[$0].wrappedName)
+                            Text(trip.sortedPeopleArray[$0].wrappedName)
                         }
                     }
                     .alert(isPresented: $showingPaidByConfirmationAlert) {
-                        Alert(title: Text("Confirm transaction details"), message: Text("Transaction for \(transactionAmount) was paid by \(trip.sortedPeopleArray[paidBySelection].wrappedName)?"), primaryButton: .destructive(Text("Confirm"), action: {
+                        Alert(title: Text("Confirm transaction"), message: Text("Transaction for \(Currencies.symbol(for: selectedTransactionCurrency.rawValue))\(transactionAmount) was paid by \(trip.sortedPeopleArray[paidBySelection].wrappedName) for \(paidFor.count) \(paidFor.count == 1 ? "person" : "people"). Is this correct?"), primaryButton: .destructive(Text("Confirm"), action: {
                             paidByConfirmed = true
                             showingPaidByConfirmationAlert = false
                             saveExpense()
@@ -166,7 +166,7 @@ struct AddExpenseView: View {
             .navigationBarTitle("Add transaction")
             .navigationBarItems(
                 leading:
-                Button("Cancel") { self.presentationMode.wrappedValue.dismiss() },
+                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
                 Button("Save") {
                     if !paidByConfirmed {
@@ -175,7 +175,7 @@ struct AddExpenseView: View {
                         saveExpense()
                     }
                 }
-                .disabled(self.saveButtonDisabled)
+                .disabled(saveButtonDisabled)
             )
             .onAppear(perform: fetchLocation)
         }
@@ -185,12 +185,12 @@ struct AddExpenseView: View {
     
     func fetchLocation() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
-        self.locationFetcher.start()
+        locationFetcher.start()
     }
     
     
     func showError() {
-        self.showingRateError = true
+        showingRateError = true
     }
     
     
@@ -208,13 +208,13 @@ struct AddExpenseView: View {
         guard !expenseName.isEmpty, !paidFor.isEmpty, baseTransactionAmount > 0 else { return }
         
         // Create the transaction
-        let transaction = Transaction(context: self.moc)
+        let transaction = Transaction(context: moc)
         transaction.id = UUID()
         transaction.title = expenseName
         transaction.baseAmt = baseTransactionAmount
-        transaction.exchangeRate = self.currencyPair.exchangeRate
+        transaction.exchangeRate = currencyPair.exchangeRate
         transaction.trnAmt = Double(transactionAmount) ?? 0
-        transaction.trip = self.trip
+        transaction.trip = trip
         transaction.trnCurrency = selectedTransactionCurrency.rawValue
         
         // To allow the transaction currency to be pre-populated with the most recently used currency on the next transaction
@@ -223,8 +223,8 @@ struct AddExpenseView: View {
         }
         
         // Increase the balance of the person paying
-        transaction.paidBy = self.trip.sortedPeopleArray[paidBySelection]
-        self.trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
+        transaction.paidBy = trip.sortedPeopleArray[paidBySelection]
+        trip.sortedPeopleArray[paidBySelection].localBal += baseTransactionAmount
         
         // Reduce the balance of each beneficiary
         for person in paidFor {
@@ -234,7 +234,7 @@ struct AddExpenseView: View {
         
         // TODO: What if we don't have permission to get location?
         if useCurrentLocation {
-            if let location = self.locationFetcher.lastKnownLocation {
+            if let location = locationFetcher.lastKnownLocation {
                 transaction.longitude = location.longitude
                 transaction.latitude = location.latitude
             }
@@ -247,7 +247,7 @@ struct AddExpenseView: View {
         transaction.date = transactionDate
         
         // If we have a receipt image...
-        if let inputImage = self.inputImage {
+        if let inputImage = inputImage {
             let imageID = UUID().uuidString
             if let jpegData = inputImage.jpegData(compressionQuality: 1) {
                 // Save data to device
@@ -256,8 +256,8 @@ struct AddExpenseView: View {
             }
         }
         
-        try? self.moc.save()
-        self.presentationMode.wrappedValue.dismiss()
+        try? moc.save()
+        presentationMode.wrappedValue.dismiss()
     }
     
     
@@ -267,9 +267,9 @@ struct AddExpenseView: View {
         
         // This will pre-populate the transaction currency with the most recently used transaction
         if firstEntry { // So we don't reset it every time we return from the currency selection screen
-            if let currency = self.trip.wrappedCurrenciesUsed.first {
+            if let currency = trip.wrappedCurrenciesUsed.first {
                 if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
-                    self.selectedTransactionCurrency = currencyObject
+                    selectedTransactionCurrency = currencyObject
                     print("This happened")
                 }
             }
@@ -278,9 +278,9 @@ struct AddExpenseView: View {
         guard trip.baseCurrency != selectedTransactionCurrency.rawValue else { return }
         if let baseCurrency = trip.baseCurrency {
             let transactionCurrency = selectedTransactionCurrency.rawValue
-            self.currencyPair.baseCurrency = String(baseCurrency.prefix(3))
-            self.currencyPair.foreignCurrency = String(transactionCurrency.prefix(3))
-            self.currencyPair.getExchangeRate()
+            currencyPair.baseCurrency = String(baseCurrency.prefix(3))
+            currencyPair.foreignCurrency = String(transactionCurrency.prefix(3))
+            currencyPair.getExchangeRate()
         }
     }
     

@@ -28,7 +28,7 @@ struct BottomSheetView<Content: View>: View {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
         self.content = content()
-        self._isOpen = isOpen
+        _isOpen = isOpen
     }
     
     private var offset: CGFloat {
@@ -50,23 +50,23 @@ struct BottomSheetView<Content: View>: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                self.indicator.padding()
-                self.content
+                indicator.padding()
+                content
             }
-            .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
+            .frame(width: geometry.size.width, height: maxHeight, alignment: .top)
             .background(Color(.secondarySystemBackground))
             .cornerRadius(Constants.radius)
-            .offset(y: max(self.offset + self.translation, 0))
+            .offset(y: max(offset + translation, 0))
             .animation(.interactiveSpring())
             .gesture(
-                DragGesture().updating(self.$translation) { value, state, _ in
+                DragGesture().updating($translation) { value, state, _ in
                     state = value.translation.height
                 }.onEnded { value in
-                    let snapDistance = self.maxHeight * Constants.snapRatio
+                    let snapDistance = maxHeight * Constants.snapRatio
                     guard abs(value.translation.height) > snapDistance else {
                         return
                     }
-                    self.isOpen = value.translation.height < 0
+                    isOpen = value.translation.height < 0
                 }
             )
         }
