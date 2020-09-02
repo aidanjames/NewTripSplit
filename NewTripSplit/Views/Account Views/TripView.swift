@@ -33,14 +33,6 @@ struct TripView: View {
             ZStack {
                 Color("offWhite")
                 VStack {
-                    
-//                    Button("Show leaderboard") {
-//                        showingLeaderboard.toggle()
-//                    }
-//                    .padding(.top)
-//                    .sheet(isPresented: $showingLeaderboard) {
-//                        LeaderboardView(members: trip.sortedPeopleArray)
-//                    }
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(trip.sortedPeopleArray, id: \.id) { person in
@@ -65,9 +57,9 @@ struct TripView: View {
                         .sheet(isPresented: $showingAddExpenseView) {
                             AddExpenseView(moc: moc, trip: trip)
                         }
-//                        NavigationLink(destination: SideBetsSummaryView(trip: trip)) {
-//                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image(systemName: "dollarsign.circle.fill"))
-//                        }
+                        //                        NavigationLink(destination: SideBetsSummaryView(trip: trip)) {
+                        //                            NeumorphicButton(width: 150, height: 80, belowButtonText: "Side bets", image: Image(systemName: "dollarsign.circle.fill"))
+                        //                        }
                         Button(action: { showingLeaderboard.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Leaderboard", onButtonImage: "list.number")
                         }
@@ -81,7 +73,8 @@ struct TripView: View {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Settlement", onButtonImage: "equal")
                         }
                         .sheet(isPresented: $showingSettlementView) {
-                            SettlementView(moc: moc, account: trip)
+//                            SettlementView(moc: moc, account: trip)
+                            SettlementRecordsView(moc: moc, account: trip)
                         }
                         Button(action: {
                             if trip.sortedPeopleArray.count >= 50 {

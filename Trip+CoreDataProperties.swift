@@ -142,4 +142,81 @@ extension Trip {
         }
         return returnArray
     }
+    
+    
+    func calculateSettlement2() -> [SettlementRecord] {
+        
+        // Create the empty return array
+        var returnArray = [SettlementRecord]()
+        
+        // Get out of here if there's only one person in the account
+        guard self.sortedPeopleArray.count > 1 else {
+            return returnArray
+        }
+        
+        // Get out of here if there's no transactions
+        guard self.transactions?.count ?? 0 > 0 else {
+            return returnArray
+        }
+        
+        // Create a dictionary of all members, with the person as Key and their balance as the value
+        var memberDictionary = [Person: Double]()
+        for member in self.sortedPeopleArray {
+            memberDictionary[member] = member.localBal
+        }
+        
+        // Get rid of memers with no balance (or almost no balance to cover for precision issues)
+        let filteredMemberDictionary = memberDictionary.filter( { $0.value < -0.001 || $0.value > 0.001 } )
+        
+        // Sort the members by their balance, people with most debt first.
+        var sortedMemberDictionary = filteredMemberDictionary.sorted(by: { $0.value  <  $1.value } )
+        
+        while sortedMemberDictionary.count > 1 {
+            
+            // Get the first person (owes the most) and last person (owed the most)
+            if let firstPerson = sortedMemberDictionary.first?.key,
+                let lastPerson = sortedMemberDictionary.last?.key {
+                
+                // Get the respective balance of the first and last person
+                if let firstPersonBalance = sortedMemberDictionary.first?.value,
+                    let lastPersonBalance = sortedMemberDictionary.last?.value {
+                    
+                    // If the first person owes more than the last person is owed, the first person pays all the money owed to the last person.
+                    if Double(abs(firstPersonBalance)) > Double(abs(lastPersonBalance)) {
+                        if abs(lastPerson.localBal) > 0.01 {
+                            // Write a record to the return array accordingly
+                            returnArray.append(SettlementRecord(from: firstPerson, to: lastPerson, amount: lastPersonBalance))
+                            // Reduce the first person's balance by the amount of the last person's balance
+                            sortedMemberDictionary[0].value = firstPersonBalance + lastPersonBalance
+                        }
+
+                        // Remove the last person from the dictionary (as their balance will be settled in full)
+                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
+                        
+                    // If the first person owes less than what the last person is owed, the first person pays their entire debt to the last person
+                    } else if Double(abs(firstPersonBalance)) < Double(abs(lastPersonBalance)) {
+                        if abs(firstPerson.localBal) > 0.01 {
+                            // Write a record to the return array accordingly
+                            returnArray.append(SettlementRecord(from: firstPerson, to: lastPerson, amount: firstPersonBalance))
+                            // Reduce the last person's balance by the amount of the first person's balance
+                            sortedMemberDictionary[sortedMemberDictionary.count - 1].value = lastPersonBalance + firstPersonBalance
+                        }
+                        // Remove the first person from the dictionary (as their balance is settled in full)
+                        sortedMemberDictionary.remove(at: 0)
+                        
+                    // If the first person's balance is the same as the last person's balance, the first person pays the last person their full balance
+                    } else if Double(abs(firstPersonBalance)) == Double(abs(lastPersonBalance)) {
+                        // Write a record to the return array accordingly
+                        returnArray.append(SettlementRecord(from: firstPerson, to: lastPerson, amount: firstPerson.localBal))
+                        // Remove the last person from the dictionary (as their balance will be settled in full)
+                        sortedMemberDictionary.remove(at: sortedMemberDictionary.count - 1)
+                        // Remove the first person from the dictionary (as their balance will be settled in full)
+                        sortedMemberDictionary.remove(at: 0)
+                    }
+                }
+            }
+        }
+        return returnArray
+    }
+    
 }

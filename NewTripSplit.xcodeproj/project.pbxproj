@@ -13,6 +13,7 @@
 		3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EEB23E0CA310078AC75 /* AddMemberView.swift */; };
 		3D145EEE23E0CEFE0078AC75 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */; };
 		3D16979723D5B31D002F9E4E /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */; };
+		3D17B71024FFB19500F12B4F /* SettlementRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D17B70F24FFB19500F12B4F /* SettlementRecordsView.swift */; };
 		3D1D131924F259A500568968 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D131824F259A500568968 /* LeaderboardView.swift */; };
 		3D28A13023DA1AAF00C542B3 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */; };
 		3D30BBDC23E4D3BE005A8244 /* NeumorphicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */; };
@@ -30,6 +31,7 @@
 		3D57F29623BFC7D300938E11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29523BFC7D300938E11 /* Assets.xcassets */; };
 		3D57F29923BFC7D300938E11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29823BFC7D300938E11 /* Preview Assets.xcassets */; };
 		3D57F29C23BFC7D300938E11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29A23BFC7D300938E11 /* LaunchScreen.storyboard */; };
+		3D5B9E9724FFE794007BBCFA /* SettlementRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */; };
 		3D5D3C872452134B003635E6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5D3C862452134B003635E6 /* Lottie */; };
 		3D5D3C8A2452140B003635E6 /* Payment-animated-illustrationOLD.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */; };
 		3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8B24521450003635E6 /* LottieView.swift */; };
@@ -71,6 +73,7 @@
 		3D145EEB23E0CA310078AC75 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		3D16979623D5B31D002F9E4E /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
+		3D17B70F24FFB19500F12B4F /* SettlementRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementRecordsView.swift; sourceTree = "<group>"; };
 		3D1D131824F259A500568968 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		3D28A12F23DA1AAF00C542B3 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicButton.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 		3D57F29823BFC7D300938E11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3D57F29B23BFC7D300938E11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D57F29D23BFC7D300938E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementRecord.swift; sourceTree = "<group>"; };
 		3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustrationOLD.json"; sourceTree = "<group>"; };
 		3D5D3C8B24521450003635E6 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustration.json"; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 				3D6ED07123BFFA2D004F7083 /* Currencies.swift */,
 				3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */,
 				3DF08469241036450022C414 /* Category.swift */,
+				3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 			children = (
 				3D47A87023EB69060095655C /* SettlementView.swift */,
 				3D1D131824F259A500568968 /* LeaderboardView.swift */,
+				3D17B70F24FFB19500F12B4F /* SettlementRecordsView.swift */,
 			);
 			path = "Settlement Views";
 			sourceTree = "<group>";
@@ -416,7 +422,9 @@
 				3D47A87123EB69060095655C /* SettlementView.swift in Sources */,
 				3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
+				3D5B9E9724FFE794007BBCFA /* SettlementRecord.swift in Sources */,
 				3D81812623DCA0F7009301BB /* TransactionDetailView.swift in Sources */,
+				3D17B71024FFB19500F12B4F /* SettlementRecordsView.swift in Sources */,
 				3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
 				3D698B7724EEFC51001047CA /* Constants.swift in Sources */,
