@@ -20,10 +20,8 @@ struct SettlementView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                LottieView()
-                    .frame(height: 150)
-                List {
+            Form {
+                Section(header: Text("")) {
                     ForEach(whoPaysWhoArray, id: \.self) { record in
                         Text(record)
                     }
