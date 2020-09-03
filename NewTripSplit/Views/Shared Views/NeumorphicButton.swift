@@ -27,13 +27,13 @@ struct NeumorphicButton: View {
                     Circle()
                         .stroke(Color.green, lineWidth: 1)
                         .foregroundColor(Color(.secondarySystemBackground))
-                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
-                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
+//                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
+//                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
                 } else {
                     RoundedRectangle(cornerRadius: 16)
                         .foregroundColor(Color(.secondarySystemBackground))
-                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
-                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
+//                        .shadow(color: Color(hex: "D1CDC7").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: 4, y: 4)
+//                        .shadow(color: Color(hex: "FFFFFF").opacity(colorScheme == .dark ? 0 : 1), radius: 4, x: -4, y: -4)
                 }
                 
                 if onButtonImage != nil {

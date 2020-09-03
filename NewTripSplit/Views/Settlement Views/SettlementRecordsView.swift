@@ -15,6 +15,7 @@ struct SettlementRecordsView: View {
     var account: Trip
     
     @State private var settlementData: [SettlementRecord] = []
+    @State private var showingPostTransactionAlert = false
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -27,10 +28,22 @@ struct SettlementRecordsView: View {
                             Group {
                                 Text("\(record.from.wrappedName)").bold().strikethrough(record.paid)
                                     + Text(" pays ").strikethrough(record.paid)
-                                        + Text("\(record.to.wrappedName): ").bold().strikethrough(record.paid)
-                                        + Text("\(String(format: "%.02f", (abs(record.amount))))").bold().strikethrough(record.paid)
-                                    
+                                    + Text("\(record.to.wrappedName): ").bold().strikethrough(record.paid)
+                                    + Text("\(String(format: "%.02f", (abs(record.amount))))").bold().strikethrough(record.paid)
+                                
                             }.foregroundColor(record.paid ? .secondary : .primary)
+                            .alert(isPresented: $showingPostTransactionAlert) {
+                                Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(record.amount)))) from \(record.from.wrappedName) to \(record.to.wrappedName)"), primaryButton: .destructive(Text("Live dangerously"), action: {
+                                    // TODO: Post transaction
+                                    // There's a bug here where it is not recognising the correct record.
+                                    print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
+                                    if let index = settlementData.firstIndex(where: { $0.id == record.id }) {
+                                        settlementData[index].paid = true
+                                    }
+                                    showingPostTransactionAlert = false
+                                }), secondaryButton: .cancel())
+                            }
+                            
                             Spacer()
                             
                             if !record.paid {
@@ -41,11 +54,12 @@ struct SettlementRecordsView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .onTapGesture {
                                         // TODO: POST THE TRANSACTION!!!...
+                                        showingPostTransactionAlert = true
+                                        print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
                                         
-                                        if let index = settlementData.firstIndex(where: { $0.id == record.id }) {
-                                            settlementData[index].paid = true
-                                        }
                                     }
+                                    
+
                                 
                             } else {
                                 Text("Settled 🙂")
@@ -59,6 +73,7 @@ struct SettlementRecordsView: View {
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() })
             .onAppear { settlementData = account.calculateSettlement2() }
+            
         }
         .accentColor(.green)
     }
