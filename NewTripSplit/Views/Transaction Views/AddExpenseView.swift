@@ -97,7 +97,7 @@ struct AddExpenseView: View {
                                     .default(Text("Enter rate manually")) { showingManualRateInputField = true },
                                     .cancel()
                                 ])
-                        }
+                            }
                     }
                     if showingManualRateInputField {
                         HStack {
@@ -147,8 +147,8 @@ struct AddExpenseView: View {
                             showingPaidByConfirmationAlert = false
                             saveExpense()
                         }), secondaryButton: .cancel())
-                }
-
+                    }
+                    
                 }
                 Section(header: Text("Paid for:")) {
                     List {
@@ -161,23 +161,27 @@ struct AddExpenseView: View {
                         }
                     }
                 }
-                .onAppear(perform: everyoneIsBeneficiary)
+                //                .onAppear(perform: everyoneIsBeneficiary)
             }
             .navigationBarTitle("Add transaction")
             .navigationBarItems(
                 leading:
-                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
+                    Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
-                Button("Save") {
-                    if !paidByConfirmed {
-                        showingPaidByConfirmationAlert = true
-                    } else {
-                        saveExpense()
+                    Button("Save") {
+                        if !paidByConfirmed {
+                            showingPaidByConfirmationAlert = true
+                        } else {
+                            saveExpense()
+                        }
                     }
-                }
-                .disabled(saveButtonDisabled)
+                    .disabled(saveButtonDisabled)
             )
-            .onAppear(perform: fetchLocation)
+            .onAppear {
+                fetchLocation()
+                everyoneIsBeneficiary()
+            }
+            
         }
         .accentColor(.green)
     }
