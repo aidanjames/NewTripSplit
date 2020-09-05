@@ -17,6 +17,12 @@ struct SettlementRecordsView: View {
     @State private var settlementData: [SettlementRecord] = []
     @State private var showingPostTransactionAlert = false
     
+    // Adding these to get around the bug where the wrong record is being sent to the alert screen on selecting the settle button
+    @State private var settleRecordId: UUID?
+    @State private var payingFrom: Person?
+    @State private var payingTo: Person?
+    @State private var amount: Double?
+    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -33,15 +39,18 @@ struct SettlementRecordsView: View {
                                 
                             }.foregroundColor(record.paid ? .secondary : .primary)
                             .alert(isPresented: $showingPostTransactionAlert) {
-                                Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(record.amount)))) from \(record.from.wrappedName) to \(record.to.wrappedName)"), primaryButton: .destructive(Text("Live dangerously"), action: {
+                                // There's a bug here where it is not recognising the correct record so I'm temporarily saving the record in context using @State variables.
+                                Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(amount != nil ? amount! : 0)))) from \(payingFrom?.wrappedName ?? "Error") to \(payingTo?.wrappedName ?? "Error")"), primaryButton: .destructive(Text("Live dangerously"), action: {
                                     // TODO: Post transaction
-                                    // There's a bug here where it is not recognising the correct record.
+                                    saveExpense()
+                                    
                                     print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
-                                    if let index = settlementData.firstIndex(where: { $0.id == record.id }) {
+                                    if let index = settlementData.firstIndex(where: { $0.id == settleRecordId }) {
                                         settlementData[index].paid = true
                                     }
                                     showingPostTransactionAlert = false
                                 }), secondaryButton: .cancel())
+                                
                             }
                             
                             Spacer()
@@ -54,12 +63,16 @@ struct SettlementRecordsView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .onTapGesture {
                                         // TODO: POST THE TRANSACTION!!!...
+                                        settleRecordId = record.id
+                                        payingFrom = record.from
+                                        payingTo = record.to
+                                        amount = record.amount
                                         showingPostTransactionAlert = true
                                         print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
                                         
                                     }
-                                    
-
+                                
+                                
                                 
                             } else {
                                 Text("Settled 🙂")
@@ -77,6 +90,39 @@ struct SettlementRecordsView: View {
         }
         .accentColor(.green)
     }
+    
+    
+    func saveExpense() {
+        
+        guard payingFrom != nil, payingTo != nil, amount != nil else { return }
+        
+        // Create the transaction
+        let transaction = Transaction(context: moc)
+        transaction.id = UUID()
+        transaction.title = "Settlement from \(payingFrom!.wrappedName) to \(payingTo!.wrappedName)"
+        transaction.baseAmt = amount!
+        transaction.trnAmt = amount!
+        transaction.trip = account
+        transaction.trnCurrency = account.baseCurrency
+        transaction.date = Date()
+
+        
+        // Increase the balance of the person paying
+        transaction.paidBy = payingFrom!
+        if let payingFrom = account.sortedPeopleArray.firstIndex(where: { $0.id == payingFrom?.id }) {
+            account.sortedPeopleArray[payingFrom].localBal -= amount!
+        }
+                
+        // Reduce the balance of beneficiary
+        transaction.addToPaidFor(payingTo!)
+        if let payingTo = account.sortedPeopleArray.firstIndex(where: { $0.id == payingTo?.id }) {
+            account.sortedPeopleArray[payingTo].localBal += amount!
+        }
+        
+        try? moc.save()
+//        presentationMode.wrappedValue.dismiss()
+    }
+
     
     
 }
