@@ -66,7 +66,7 @@ struct SettlementRecordsView: View {
                                         settleRecordId = record.id
                                         payingFrom = record.from
                                         payingTo = record.to
-                                        amount = record.amount
+                                        amount = abs(record.amount)
                                         showingPostTransactionAlert = true
                                         print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
                                         
@@ -100,6 +100,7 @@ struct SettlementRecordsView: View {
         let transaction = Transaction(context: moc)
         transaction.id = UUID()
         transaction.title = "Settlement from \(payingFrom!.wrappedName) to \(payingTo!.wrappedName)"
+        transaction.additionalInfo = "Settlement transaction."
         transaction.baseAmt = amount!
         transaction.trnAmt = amount!
         transaction.trip = account
@@ -110,17 +111,16 @@ struct SettlementRecordsView: View {
         // Increase the balance of the person paying
         transaction.paidBy = payingFrom!
         if let payingFrom = account.sortedPeopleArray.firstIndex(where: { $0.id == payingFrom?.id }) {
-            account.sortedPeopleArray[payingFrom].localBal -= amount!
+            account.sortedPeopleArray[payingFrom].localBal += amount!
         }
                 
         // Reduce the balance of beneficiary
         transaction.addToPaidFor(payingTo!)
         if let payingTo = account.sortedPeopleArray.firstIndex(where: { $0.id == payingTo?.id }) {
-            account.sortedPeopleArray[payingTo].localBal += amount!
+            account.sortedPeopleArray[payingTo].localBal -= amount!
         }
         
         try? moc.save()
-//        presentationMode.wrappedValue.dismiss()
     }
 
     
