@@ -16,6 +16,7 @@ struct SettlementRecordsView: View {
     
     @State private var settlementData: [SettlementRecord] = []
     @State private var showingPostTransactionAlert = false
+    @State private var settlementLockedIn = false
     
     // Adding these to get around the bug where the wrong record is being sent to the alert screen on selecting the settle button
     @State private var settleRecordId: UUID?

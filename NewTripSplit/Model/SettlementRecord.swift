@@ -15,3 +15,8 @@ struct SettlementRecord: Identifiable {
     var amount: Double
     var paid = false
 }
+
+struct SettlementRecords {
+    var tripId: UUID
+    var records: [SettlementRecord]
+}
