@@ -16,6 +16,7 @@ struct SettlementRecordsView: View {
     
     @State private var settlementData: [SettlementRecord] = []
     @State private var showingPostTransactionAlert = false
+    
     @State private var settlementLockedIn = false
     
     // Adding these to get around the bug where the wrong record is being sent to the alert screen on selecting the settle button
@@ -72,9 +73,6 @@ struct SettlementRecordsView: View {
                                         print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
                                         
                                     }
-                                
-                                
-                                
                             } else {
                                 Text("Settled 🙂")
                             }
@@ -86,7 +84,14 @@ struct SettlementRecordsView: View {
             }
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() })
-            .onAppear { settlementData = account.calculateSettlement2() }
+            .onAppear {
+                checkIfSettlementLockedIn {
+                    if !settlementLockedIn {
+                        settlementData = account.calculateSettlement2()
+                        account.saveSettlement()
+                    }
+                }
+            }
             
         }
         .accentColor(.green)
@@ -124,7 +129,15 @@ struct SettlementRecordsView: View {
         try? moc.save()
     }
 
-    
+    func checkIfSettlementLockedIn(completion: () -> Void) {
+        // try to load existing settlement data (will be stored using file manager)
+        if let settlementRecords = account.fetchSavedLockedInSettlement() {
+            settlementData = settlementRecords
+            completion()
+        } else {
+            completion()
+        }
+    }
     
 }
 

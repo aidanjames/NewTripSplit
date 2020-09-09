@@ -219,4 +219,21 @@ extension Trip {
         return returnArray
     }
     
+    
+    func saveSettlement() {
+        // Save [SettlementRecord] to file manager
+    }
+    
+    func deleteSettlement() {
+        // Delete [SettlementRecord] from file manager, if exists
+    }
+    
+    
+    func fetchSavedLockedInSettlement() -> [SettlementRecord]? {
+        // Check file manager for saved settlement position
+        // If exists, return the array
+        // If not, return nil
+        return nil
+    }
+    
 }
