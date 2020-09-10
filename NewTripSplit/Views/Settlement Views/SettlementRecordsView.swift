@@ -64,14 +64,11 @@ struct SettlementRecordsView: View {
                                     .background(Color.blue)
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .onTapGesture {
-                                        // TODO: POST THE TRANSACTION!!!...
                                         settleRecordId = record.id
                                         payingFrom = record.from
                                         payingTo = record.to
                                         amount = abs(record.amount)
                                         showingPostTransactionAlert = true
-                                        print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
-                                        
                                     }
                             } else {
                                 Text("Settled 🙂")
