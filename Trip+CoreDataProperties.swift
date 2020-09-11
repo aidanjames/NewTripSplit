@@ -216,6 +216,10 @@ extension Trip {
                 }
             }
         }
+        
+        // Get rid of transactions caused by rounding issues.
+        returnArray = returnArray.filter { abs($0.amount) > 0.01 }
+        
         return returnArray
     }
     

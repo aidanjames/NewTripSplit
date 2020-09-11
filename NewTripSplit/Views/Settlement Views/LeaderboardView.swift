@@ -22,8 +22,8 @@ struct LeaderboardView: View {
             Form {
                 Section(header: Text("")) {
                     ForEach(members, id: \.self) {
-                        Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")
-                            .foregroundColor($0.localBal < 0 ? .red : .green)
+                        Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")                            
+                            .foregroundColor(BalancePosition.forPerson($0) == .allSquare ? .secondary : BalancePosition.forPerson($0) == .owes ? .red : .green)
                     }
                 }
             }

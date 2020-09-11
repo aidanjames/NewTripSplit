@@ -96,11 +96,11 @@ struct MemberDetailView: View {
                         
                 }
 
-                Text("\(member.localBal < -0.099 ? "Owes \(member.displayLocalBal)" : member.localBal > 0.099 ? "Owed \(member.displayLocalBal)" : "All square")")
+                Text(member.displayLocalBal)
                     .font(.body)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(member.localBal < -0.0099 ? Color.red : member.localBal > 0.0099 ? Color.green : Color.blue)
+                    .background(BalancePosition.forPerson(member) == .owes ? Color.red : BalancePosition.forPerson(member) == .owed ? Color.green : Color.secondary)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .opacity(50)
                     .alert(isPresented: $showingDeleteMemberAlert) {

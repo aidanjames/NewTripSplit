@@ -62,6 +62,7 @@
 		3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743923BFFE7300010233 /* TransactionListItemView.swift */; };
 		3DB1743F23C0021500010233 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743E23C0021500010233 /* TripView.swift */; };
 		3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1323C929AD0012F714 /* TransactionListView.swift */; };
+		3DCBC522250BD5C60030425C /* BalancePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBC521250BD5C60030425C /* BalancePosition.swift */; };
 		3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975023C3C02F003042F0 /* ColorExtension.swift */; };
 		3DF0846A241036450022C414 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF08469241036450022C414 /* Category.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		3DB1743923BFFE7300010233 /* TransactionListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListItemView.swift; sourceTree = "<group>"; };
 		3DB1743E23C0021500010233 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		3DBDDF1323C929AD0012F714 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
+		3DCBC521250BD5C60030425C /* BalancePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancePosition.swift; sourceTree = "<group>"; };
 		3DD0975023C3C02F003042F0 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3DF08469241036450022C414 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +206,7 @@
 				3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */,
 				3DF08469241036450022C414 /* Category.swift */,
 				3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */,
+				3DCBC521250BD5C60030425C /* BalancePosition.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */,
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
 				3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */,
+				3DCBC522250BD5C60030425C /* BalancePosition.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
 				3D0727E7240192F600022421 /* MemberDetailView.swift in Sources */,
 				3D47A87123EB69060095655C /* SettlementView.swift in Sources */,

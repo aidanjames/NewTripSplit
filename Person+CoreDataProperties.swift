@@ -12,11 +12,11 @@ import CoreData
 import SwiftUI
 
 extension Person {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Person> {
         return NSFetchRequest<Person>(entityName: "Person")
     }
-
+    
     @NSManaged public var id: UUID?
     @NSManaged public var localBal: Double
     @NSManaged public var name: String?
@@ -34,7 +34,7 @@ extension Person {
             return "Unknown name"
         }
     }
-
+    
     public var beneficiaryArray: [Transaction] {
         let set = beneficiary as? Set<Transaction> ?? []
         return set.sorted {
@@ -55,12 +55,21 @@ extension Person {
     }
     
     public var displayLocalBal: String {
-        return String(format: "%.02f", abs(localBal))
+        if localBal < -0.019 {
+            return String(format: "Owes %.02f", abs(localBal))
+        } else if localBal > 0.019 {
+            return String(format: "Owed %.02f", abs(localBal))
+        }
+        return "All square"
     }
     
     public var displayLocalBalWithSign: String {
+        if localBal > -0.02 && localBal < 0.02 {
+            return "All square"
+        }
         return String(format: "%.02f", localBal)
     }
+    
     
     public var wrappedMemberImage: Image {
         if let imageName = photo {
@@ -73,42 +82,42 @@ extension Person {
         return Image("unknown")
     }
     
-
+    
 }
 
 
 // MARK: Generated accessors for beneficiary
 extension Person {
-
+    
     @objc(addBeneficiaryObject:)
     @NSManaged public func addToBeneficiary(_ value: Transaction)
-
+    
     @objc(removeBeneficiaryObject:)
     @NSManaged public func removeFromBeneficiary(_ value: Transaction)
-
+    
     @objc(addBeneficiary:)
     @NSManaged public func addToBeneficiary(_ values: NSSet)
-
+    
     @objc(removeBeneficiary:)
     @NSManaged public func removeFromBeneficiary(_ values: NSSet)
-
+    
 }
 
 // MARK: Generated accessors for payee
 extension Person {
-
+    
     @objc(addPayeeObject:)
     @NSManaged public func addToPayer(_ value: Transaction)
-
+    
     @objc(removePayeeObject:)
     @NSManaged public func removeFromPayer(_ value: Transaction)
-
+    
     @objc(addPayee:)
     @NSManaged public func addToPayer(_ values: NSSet)
-
+    
     @objc(removePayee:)
     @NSManaged public func removeFromPayer(_ values: NSSet)
-
+    
 }
 
 // MARK: Toggle function for isSelected property

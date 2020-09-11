@@ -78,7 +78,7 @@ struct AddExpenseView: View {
                         Text("\(Currencies.symbol(for: selectedTransactionCurrency.rawValue))")
                         TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
                     }
-                    Picker("Transaction currency", selection: $selectedTransactionCurrency) {
+                    Picker("Currency", selection: $selectedTransactionCurrency) {
                         ForEach(Currencies.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
@@ -109,7 +109,7 @@ struct AddExpenseView: View {
                             }.disabled(manualExchRateButtonDisabled)
                         }
                     }
-                    DatePicker("Transaction date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
+                    DatePicker("Date", selection: $transactionDate, in: ...Date(), displayedComponents: .date)
                     if locationFetcher.hasPermission { // Only show if we have permission to use location
                         Toggle(isOn: $useCurrentLocation) {
                             Text("Use current location")
@@ -274,7 +274,6 @@ struct AddExpenseView: View {
             if let currency = trip.wrappedCurrenciesUsed.first {
                 if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
                     selectedTransactionCurrency = currencyObject
-                    print("This happened")
                 }
             }
         }

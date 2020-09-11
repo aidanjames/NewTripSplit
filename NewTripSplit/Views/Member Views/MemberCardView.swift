@@ -30,11 +30,13 @@ struct MemberCardView: View {
                 Text(person.wrappedName)
                     .font(.footnote)
                 HStack {
-                    Text("\(person.localBal < -0.0099 ? "Owes \(person.displayLocalBal) " : person.localBal > 0.0099 ? "Owed \(person.displayLocalBal) " : "All square")")
+                    Text(person.displayLocalBal)
                         .font(.caption)
                         .foregroundColor(.white)
                         .padding(5)
-                        .background(person.localBal < -0.0099 ? Color.red : person.localBal > 0.0099 ? Color.green : Color.blue)
+                        .background(BalancePosition.forPerson(person) == .owes ? Color.red : BalancePosition.forPerson(person) == .owed ? Color.green : Color.secondary)
+                        
+                        
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
             }

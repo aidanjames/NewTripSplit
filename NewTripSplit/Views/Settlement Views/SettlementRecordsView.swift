@@ -42,7 +42,7 @@ struct SettlementRecordsView: View {
                             }.foregroundColor(record.paid ? .secondary : .primary)
                             .alert(isPresented: $showingPostTransactionAlert) {
                                 // There's a bug here where it is not recognising the correct record so I'm temporarily saving the record in context using @State variables.
-                                Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(amount != nil ? amount! : 0)))) from \(payingFrom?.wrappedName ?? "Error") to \(payingTo?.wrappedName ?? "Error")"), primaryButton: .destructive(Text("Live dangerously"), action: {
+                                Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(amount != nil ? amount! : 0)))) from \(payingFrom?.wrappedName ?? "Error") to \(payingTo?.wrappedName ?? "Error")"), primaryButton: .destructive(Text("Confirm"), action: {
                                     // TODO: Post transaction
                                     saveExpense()
                                     
