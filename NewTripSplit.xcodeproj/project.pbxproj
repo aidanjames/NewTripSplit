@@ -20,7 +20,6 @@
 		3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */; };
 		3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */; };
 		3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */; };
-		3D47A87123EB69060095655C /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47A87023EB69060095655C /* SettlementView.swift */; };
 		3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */; };
 		3D4EADDB240ACCFD00C5DF63 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4EADDA240ACCFD00C5DF63 /* ShareSheet.swift */; };
 		3D540A6823F5CF6600CEBBAF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D540A6723F5CF6600CEBBAF /* NetworkService.swift */; };
@@ -50,6 +49,7 @@
 		3D81812A23DCC4B4009301BB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81812923DCC4B4009301BB /* MapView.swift */; };
 		3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D90F9A223C3FB340065B039 /* AddExpenseView.swift */; };
 		3D98DDC223E4D01F0029D432 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D98DDC123E4D01F0029D432 /* MemberCardView.swift */; };
+		3D994334250CDBFD009CC678 /* LeaderboardRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D994333250CDBFD009CC678 /* LeaderboardRecordView.swift */; };
 		3DA43D6123E605D00014F198 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA43D6023E605D00014F198 /* AccountCardView.swift */; };
 		3DA4B62D23CC943C00A07971 /* PersonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */; };
 		3DA8E6D0240E9C590036B536 /* GreenButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */; };
@@ -81,7 +81,6 @@
 		3D30BBDD23E4E17D005A8244 /* AddMemberToTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberToTripView.swift; sourceTree = "<group>"; };
 		3D44E46223E8C3DC00527040 /* TransactionReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptView.swift; sourceTree = "<group>"; };
 		3D4662AD23F841CE005C48D7 /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
-		3D47A87023EB69060095655C /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
 		3D4EADD8240931ED00C5DF63 /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
 		3D4EADDA240ACCFD00C5DF63 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		3D540A6723F5CF6600CEBBAF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		3D81812923DCC4B4009301BB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		3D90F9A223C3FB340065B039 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
 		3D98DDC123E4D01F0029D432 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
+		3D994333250CDBFD009CC678 /* LeaderboardRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardRecordView.swift; sourceTree = "<group>"; };
 		3DA43D6023E605D00014F198 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
 		3DA4B62C23CC943C00A07971 /* PersonListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListItemView.swift; sourceTree = "<group>"; };
 		3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenButtonView.swift; sourceTree = "<group>"; };
@@ -214,8 +214,8 @@
 		3D59FE0724408ADD00A415D3 /* Settlement Views */ = {
 			isa = PBXGroup;
 			children = (
-				3D47A87023EB69060095655C /* SettlementView.swift */,
 				3D1D131824F259A500568968 /* LeaderboardView.swift */,
+				3D994333250CDBFD009CC678 /* LeaderboardRecordView.swift */,
 				3D17B70F24FFB19500F12B4F /* SettlementRecordsView.swift */,
 			);
 			path = "Settlement Views";
@@ -406,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */,
+				3D994334250CDBFD009CC678 /* LeaderboardRecordView.swift in Sources */,
 				3DB1739E23BFD63E00DF2CE1 /* Person+CoreDataClass.swift in Sources */,
 				3D30BBDE23E4E17D005A8244 /* AddMemberToTripView.swift in Sources */,
 				3DB1739C23BFD63E00DF2CE1 /* Transaction+CoreDataClass.swift in Sources */,
@@ -423,7 +424,6 @@
 				3DCBC522250BD5C60030425C /* BalancePosition.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
 				3D0727E7240192F600022421 /* MemberDetailView.swift in Sources */,
-				3D47A87123EB69060095655C /* SettlementView.swift in Sources */,
 				3D4662AE23F841CE005C48D7 /* CurrencyPair.swift in Sources */,
 				3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */,
 				3D5B9E9724FFE794007BBCFA /* SettlementRecord.swift in Sources */,

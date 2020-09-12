@@ -22,8 +22,7 @@ struct LeaderboardView: View {
             Form {
                 Section(header: Text("")) {
                     ForEach(members, id: \.self) {
-                        Text("\($0.wrappedName): \($0.displayLocalBalWithSign)")                            
-                            .foregroundColor(BalancePosition.forPerson($0) == .allSquare ? .secondary : BalancePosition.forPerson($0) == .owes ? .red : .green)
+                        LeaderboardRecordView(name: $0.wrappedName, amount: $0.displayLocalBalWithSign, balancePosition: BalancePosition.forPerson($0))
                     }
                 }
             }
@@ -40,24 +39,3 @@ struct LeaderboardView_Previews: PreviewProvider {
     }
 }
 
-// DELETE THESE TWO STRUCTS WHEN THE SORTED ARRAY IS PLUGGED INTO THE MEMBERS VAR
-struct TempMemberObject: Identifiable {
-    let id = UUID()
-    let name: String
-    let balance: Double
-}
-
-struct TempTripObject {
-    let members: [TempMemberObject]
-    
-    init() {
-        let aidan = TempMemberObject(name: "Aidan", balance: -150.45)
-        let john = TempMemberObject(name: "John", balance: -234.11)
-        let luke = TempMemberObject(name: "Luke", balance: 23.40)
-        let mick = TempMemberObject(name: "Mick Dole", balance: 289.94)
-        let sara = TempMemberObject(name: "Sara", balance: 122.20)
-        let paul = TempMemberObject(name: "Paul", balance: 179.21)
-        
-        members = [aidan, john, luke, mick, sara, paul].sorted { $0.balance < $1.balance }
-    }
-}

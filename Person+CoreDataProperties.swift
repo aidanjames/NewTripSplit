@@ -55,16 +55,16 @@ extension Person {
     }
     
     public var displayLocalBal: String {
-        if localBal < -0.019 {
+        if localBal < -0.01 {
             return String(format: "Owes %.02f", abs(localBal))
-        } else if localBal > 0.019 {
+        } else if localBal > 0.01 {
             return String(format: "Owed %.02f", abs(localBal))
         }
         return "All square"
     }
     
     public var displayLocalBalWithSign: String {
-        if localBal > -0.02 && localBal < 0.02 {
+        if localBal > -0.01 && localBal < 0.01 {
             return "All square"
         }
         return String(format: "%.02f", localBal)

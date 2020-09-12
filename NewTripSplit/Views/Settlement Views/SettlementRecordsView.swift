@@ -30,7 +30,11 @@ struct SettlementRecordsView: View {
     var body: some View {
         NavigationView {
             Form {
+                
                 Section(header: Text("")) {
+                    // Empty state
+                    if settlementData.isEmpty { Text("All settled 🙂") }
+                    // Should really do an 'else' but I'm a bit lazy and it's not strictly necessary.
                     ForEach(settlementData) { record in
                         HStack {
                             Group {

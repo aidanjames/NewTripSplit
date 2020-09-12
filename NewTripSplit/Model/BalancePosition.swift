@@ -12,9 +12,9 @@ enum BalancePosition: String {
     case owes, owed, allSquare
     
     static func forPerson(_ person: Person) -> BalancePosition {
-        if person.localBal < -0.019 {
+        if person.localBal < -0.01 {
             return .owes
-        } else if person.localBal > 0.019 {
+        } else if person.localBal > 0.01 {
             return .owed
         }
         return .allSquare
