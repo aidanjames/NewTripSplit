@@ -224,18 +224,40 @@ extension Trip {
     }
     
     
-    func saveSettlement() {
-        // Save [SettlementRecord] to file manager
+    func saveSettlement(_ records: [SettlementRecord]) {
+        // Save [SavableSettlementRecord] to file manager
+        var saveableRecords = [SaveableSettlementRecord]()
+        for record in records {
+            var saveableRecord = SaveableSettlementRecord(fromId: record.from.wrappedId, toId: record.to.wrappedId, amount: record.amount, paid: record.paid)
+            saveableRecords.append(saveableRecord)
+        }
+        let saveableSettlement = SaveableSettlementRecords(tripId: self.wrappedId, records: saveableRecords)
+        
+        
+        FileManager.default.writeData(saveableSettlement, to: "savedSettlement")
+        
+        
     }
     
     func deleteSettlement() {
-        // Delete [SettlementRecord] from file manager, if exists
+        // Delete [SaveableSettlementRecord] from file manager, if exists
+        FileManager.default.deleteData(from: "savedSettlement")
     }
     
     
     func fetchSavedLockedInSettlement() -> [SettlementRecord]? {
         // Check file manager for saved settlement position
-        // If exists, return the array
+        if let savedSettlementRecords: [SaveableSettlementRecord] = FileManager.default.fetchData(from: "savedSettlement") {
+            // If exists, convert from [SaveableSettlementRecord] to [SettlementRecord] and return
+            let returnArray = [SettlementRecord]()
+            for record in savedSettlementRecords {
+                if let fromPerson = self.sortedPeopleArray.first { $0.id == record.fromId } {
+                    
+                }
+                
+            }
+        }
+        
         // If not, return nil
         return nil
     }

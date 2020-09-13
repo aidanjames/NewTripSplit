@@ -89,7 +89,7 @@ struct SettlementRecordsView: View {
                 checkIfSettlementLockedIn {
                     if !settlementLockedIn {
                         settlementData = account.calculateSettlement2()
-                        account.saveSettlement()
+                        account.saveSettlement(settlementData)
                     }
                 }
             }

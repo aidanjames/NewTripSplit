@@ -20,3 +20,17 @@ struct SettlementRecords {
     var tripId: UUID
     var records: [SettlementRecord]
 }
+
+
+struct SaveableSettlementRecord: Codable {
+    var id = UUID()
+    var fromId: UUID
+    var toId: UUID
+    var amount: Double
+    var paid = false
+}
+
+struct SaveableSettlementRecords: Codable {
+    var tripId: UUID
+    var records: [SaveableSettlementRecord]
+}
