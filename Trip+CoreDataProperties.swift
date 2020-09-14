@@ -228,34 +228,33 @@ extension Trip {
         // Save [SavableSettlementRecord] to file manager
         var saveableRecords = [SaveableSettlementRecord]()
         for record in records {
-            var saveableRecord = SaveableSettlementRecord(fromId: record.from.wrappedId, toId: record.to.wrappedId, amount: record.amount, paid: record.paid)
-            saveableRecords.append(saveableRecord)
+            saveableRecords.append(SaveableSettlementRecord(fromId: record.from.wrappedId, toId: record.to.wrappedId, amount: record.amount, paid: record.paid))
         }
         let saveableSettlement = SaveableSettlementRecords(tripId: self.wrappedId, records: saveableRecords)
-        
-        
-        FileManager.default.writeData(saveableSettlement, to: "savedSettlement")
-        
-        
+                
+        FileManager.default.writeData(saveableSettlement, to: "savedSettlement\(self.wrappedId)")
     }
+    
     
     func deleteSettlement() {
         // Delete [SaveableSettlementRecord] from file manager, if exists
-        FileManager.default.deleteData(from: "savedSettlement")
+        FileManager.default.deleteData(from: "savedSettlement\(self.wrappedId)")
     }
     
     
     func fetchSavedLockedInSettlement() -> [SettlementRecord]? {
         // Check file manager for saved settlement position
-        if let savedSettlementRecords: [SaveableSettlementRecord] = FileManager.default.fetchData(from: "savedSettlement") {
+        if let savedSettlementRecords: SaveableSettlementRecords = FileManager.default.fetchData(from: "savedSettlement\(self.wrappedId)") {
             // If exists, convert from [SaveableSettlementRecord] to [SettlementRecord] and return
-            let returnArray = [SettlementRecord]()
-            for record in savedSettlementRecords {
-                if let fromPerson = self.sortedPeopleArray.first { $0.id == record.fromId } {
-                    
+            var returnArray = [SettlementRecord]()
+            for record in savedSettlementRecords.records {
+                if let fromPerson = self.sortedPeopleArray.first(where: { $0.id == record.fromId } ) {
+                    if let toPerson = self.sortedPeopleArray.first(where: { $0.id == record.toId } ) {
+                        returnArray.append(SettlementRecord(from: fromPerson, to: toPerson, amount: record.amount, paid: record.paid))
+                    }
                 }
-                
             }
+            return returnArray
         }
         
         // If not, return nil

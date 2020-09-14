@@ -211,6 +211,9 @@ struct AddExpenseView: View {
         
         guard !expenseName.isEmpty, !paidFor.isEmpty, baseTransactionAmount > 0 else { return }
         
+        // Delete any saved settlement data as we'll need to recalculate...
+        trip.deleteSettlement()
+        
         // Create the transaction
         let transaction = Transaction(context: moc)
         transaction.id = UUID()

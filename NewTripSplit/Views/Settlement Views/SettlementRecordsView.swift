@@ -47,13 +47,13 @@ struct SettlementRecordsView: View {
                             .alert(isPresented: $showingPostTransactionAlert) {
                                 // There's a bug here where it is not recognising the correct record so I'm temporarily saving the record in context using @State variables.
                                 Alert(title: Text("Post transaction?"), message: Text("This will post a settlement transaction for \(String(format: "%.02f", (abs(amount != nil ? amount! : 0)))) from \(payingFrom?.wrappedName ?? "Error") to \(payingTo?.wrappedName ?? "Error")"), primaryButton: .destructive(Text("Confirm"), action: {
-                                    // TODO: Post transaction
                                     saveExpense()
                                     
                                     print("The selected record is \(record.from.wrappedName) to \(record.to.wrappedName)")
                                     if let index = settlementData.firstIndex(where: { $0.id == settleRecordId }) {
                                         settlementData[index].paid = true
                                     }
+                                    account.saveSettlement(settlementData)
                                     showingPostTransactionAlert = false
                                 }), secondaryButton: .cancel())
                                 
@@ -82,16 +82,34 @@ struct SettlementRecordsView: View {
                         }
                     }
                 }
+//                Section {
+//                    Button("Save settlement") {
+//                        account.saveSettlement(settlementData)
+//                    }
+//                    Button("Delete saved settlement") {
+//                        account.deleteSettlement()
+//                    }
+//                    Button("Re-calculate settlement") {
+//                        account.deleteSettlement()
+//                        settlementData = account.calculateSettlement2()
+//                        account.saveSettlement(settlementData)
+//                    }
+//                }
             }
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() })
             .onAppear {
-                checkIfSettlementLockedIn {
-                    if !settlementLockedIn {
-                        settlementData = account.calculateSettlement2()
-                        account.saveSettlement(settlementData)
+                // Check if we have a asved settlement...
+                if let savedSettlement = account.fetchSavedLockedInSettlement() {
+                    for record in savedSettlement {
+                        print("From: \(record.from.wrappedName) To: \(record.to.wrappedName) Amount: Paid: \(record.paid ? "true" : "false")")
                     }
+                    settlementData = savedSettlement
+                } else {
+                    settlementData = account.calculateSettlement2()
+                    account.saveSettlement(settlementData)
                 }
+
             }
             
         }

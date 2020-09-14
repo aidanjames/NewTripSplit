@@ -30,7 +30,7 @@ extension FileManager {
         do {
             try self.removeItem(at: path)
         } catch {
-            fatalError("There was an error deleting the item: \(error.localizedDescription)")
+            print("Couldn't delete item because it probably doesn't exist: \(error.localizedDescription)")
         }
     }
     
