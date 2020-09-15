@@ -108,7 +108,7 @@ struct TransactionDetailView: View {
     }
     
     func deleteTransaction() {
-        
+        trip.deleteSettlement()
         if let transaction = transaction {
             // reduce the balance of the paid for user
             if let paidByIndex = trip.sortedPeopleArray.firstIndex(where: { $0.wrappedId == transaction.paidBy?.wrappedId }) {

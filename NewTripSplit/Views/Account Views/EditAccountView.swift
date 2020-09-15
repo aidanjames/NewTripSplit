@@ -122,6 +122,7 @@ struct EditAccountView: View {
     
     
     func deleteAccount() {
+        account.deleteSettlement()
         for member in account.sortedPeopleArray {
             // Delete old image
             if let imageName = member.photo {
