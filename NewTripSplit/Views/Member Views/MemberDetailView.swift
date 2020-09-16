@@ -24,8 +24,9 @@ struct MemberDetailView: View {
     @State private var showingEditNameField = false
     @State private var showingDeleteMemberAlert = false
     @State private var showingCannotDeleteMemberAlert = false
+    @State private var hasLeft = false
     
-    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField }
+    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && member.hasLeft == hasLeft }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -55,6 +56,10 @@ struct MemberDetailView: View {
                         .offset(x: 0, y: 95)
                         .padding()
                         .onTapGesture { showingCameraOrPhotoLibActionSheet.toggle() }
+                        .onAppear {
+                            hasLeft = member.hasLeft
+                            memberName = member.wrappedName
+                        }
                 }
                 .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
                     ActionSheet(title: Text("Change photo"), buttons: [
@@ -96,6 +101,13 @@ struct MemberDetailView: View {
                         
                 }
 
+                HStack {
+                    Text("Has left? \(hasLeft ? "YES" : "NO")")
+                    Button(action: { hasLeft = !hasLeft }) {
+                        Text("\(hasLeft ? "Mark as back" : "Mark as left")")
+                    }
+                }
+                
                 Text(member.displayLocalBal)
                     .font(.body)
                     .foregroundColor(.white)
@@ -181,9 +193,8 @@ struct MemberDetailView: View {
     }
     
     func saveButtonPressed() {
-        if memberName != member.wrappedName {
-            member.name = memberName
-        }
+
+        member.name = memberName
         if inputImage != nil {
             // Delete old image
             if let imageName = member.photo {
@@ -200,6 +211,8 @@ struct MemberDetailView: View {
                 }
             }
         }
+        // Save 'hasLeft'
+        member.hasLeft = hasLeft
         if moc.hasChanges {
             try? moc.save()
         }
