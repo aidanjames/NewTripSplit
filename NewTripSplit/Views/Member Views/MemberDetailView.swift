@@ -24,9 +24,9 @@ struct MemberDetailView: View {
     @State private var showingEditNameField = false
     @State private var showingDeleteMemberAlert = false
     @State private var showingCannotDeleteMemberAlert = false
-    @State private var hasLeft = false
+    @State private var changedHasLeft = false
     
-    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && member.hasLeft == hasLeft }
+    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && !changedHasLeft }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -57,8 +57,14 @@ struct MemberDetailView: View {
                         .padding()
                         .onTapGesture { showingCameraOrPhotoLibActionSheet.toggle() }
                         .onAppear {
-                            hasLeft = member.hasLeft
+//                            print("I'm about to set the local 'hasLeft' variable - It's currently set to \(hasLeft ? "true" : "false")")
+//
+//                            hasLeft = member.hasLeft
                             memberName = member.wrappedName
+                            
+//                            print("I've set the local 'hasLeft' variable - It's currently set to \(hasLeft ? "true" : "false")")
+//                            print("For some reason it thinks the member is \(member.wrappedName)")
+//                            print("It probably didn't work and I don't know why. The member value is set to \(member.hasLeft ? "true" : "false")")
                         }
                 }
                 .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
@@ -98,15 +104,18 @@ struct MemberDetailView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .multilineTextAlignment(.center)
                         .frame(width: 250)
-                        
+                    
                 }
-
+                
                 HStack {
-                    Text("Has left? \(hasLeft ? "YES" : "NO")")
-                    Button(action: { hasLeft = !hasLeft }) {
-                        Text("\(hasLeft ? "Mark as back" : "Mark as left")")
+                    Text("\(member.hasLeft ? "LEFT" : "NOT LEFT")")
+                    Button(action: {
+                        member.hasLeft = !member.hasLeft
+                        changedHasLeft = true
+                    }) {
+                        Text("\(member.hasLeft ? "Mark as back" : "Mark as left")")
                     }
-                }
+                }.padding(.bottom)
                 
                 Text(member.displayLocalBal)
                     .font(.body)
@@ -119,7 +128,7 @@ struct MemberDetailView: View {
                         Alert(title: Text("Are you sure?"), message: Text("Are you sure you want to delete this member? This is permanent and cannot be undone!"), primaryButton: .destructive(Text("Confirm"), action: {
                             deleteMember()
                         }), secondaryButton: .cancel())
-                }
+                    }
                 List {
                     Section(header: Text("Paid for:")) {
                         if member.payerArray.isEmpty {
@@ -158,12 +167,12 @@ struct MemberDetailView: View {
             .navigationBarTitle(Text("Edit member"), displayMode: .inline)
             .navigationBarItems(
                 leading:
-                Button("Cancel") { presentationMode.wrappedValue.dismiss() },
+                    Button("Cancel") { presentationMode.wrappedValue.dismiss() },
                 trailing:
-                HStack {
-                    Button(action: { deleteMemberInitialCheck() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
-                    Button("Save") { saveButtonPressed() }.disabled(saveButtonDisabled)
-                }
+                    HStack {
+                        Button(action: { deleteMemberInitialCheck() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
+                        Button("Save") { saveButtonPressed() }.disabled(saveButtonDisabled)
+                    }
             )
         }
         .accentColor(.green)
@@ -193,7 +202,7 @@ struct MemberDetailView: View {
     }
     
     func saveButtonPressed() {
-
+        
         member.name = memberName
         if inputImage != nil {
             // Delete old image
@@ -212,7 +221,7 @@ struct MemberDetailView: View {
             }
         }
         // Save 'hasLeft'
-        member.hasLeft = hasLeft
+//        member.hasLeft = hasLeft
         if moc.hasChanges {
             try? moc.save()
         }

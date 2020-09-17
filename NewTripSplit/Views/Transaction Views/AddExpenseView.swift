@@ -201,7 +201,7 @@ struct AddExpenseView: View {
     func everyoneIsBeneficiary() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         for person in trip.sortedPeopleArray {
-            person.isSelected = true
+            person.isSelected = !person.hasLeft
         }
         firstEntry = false
     }
