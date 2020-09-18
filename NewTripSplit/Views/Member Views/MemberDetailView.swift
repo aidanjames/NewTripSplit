@@ -24,9 +24,8 @@ struct MemberDetailView: View {
     @State private var showingEditNameField = false
     @State private var showingDeleteMemberAlert = false
     @State private var showingCannotDeleteMemberAlert = false
-    @State private var changedHasLeft = false
     
-    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && !changedHasLeft }
+    var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && !moc.hasChanges }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -57,14 +56,7 @@ struct MemberDetailView: View {
                         .padding()
                         .onTapGesture { showingCameraOrPhotoLibActionSheet.toggle() }
                         .onAppear {
-//                            print("I'm about to set the local 'hasLeft' variable - It's currently set to \(hasLeft ? "true" : "false")")
-//
-//                            hasLeft = member.hasLeft
                             memberName = member.wrappedName
-                            
-//                            print("I've set the local 'hasLeft' variable - It's currently set to \(hasLeft ? "true" : "false")")
-//                            print("For some reason it thinks the member is \(member.wrappedName)")
-//                            print("It probably didn't work and I don't know why. The member value is set to \(member.hasLeft ? "true" : "false")")
                         }
                 }
                 .actionSheet(isPresented: $showingCameraOrPhotoLibActionSheet) {
@@ -107,15 +99,9 @@ struct MemberDetailView: View {
                     
                 }
                 
-                HStack {
-                    Text("\(member.hasLeft ? "LEFT" : "NOT LEFT")")
-                    Button(action: {
-                        member.hasLeft = !member.hasLeft
-                        changedHasLeft = true
-                    }) {
-                        Text("\(member.hasLeft ? "Mark as back" : "Mark as left")")
-                    }
-                }.padding(.bottom)
+                Toggle(isOn: $member.defaultAsBeneficiary) {
+                    Text("Default as beneficiary?")
+                }.padding()
                 
                 Text(member.displayLocalBal)
                     .font(.body)
@@ -167,7 +153,10 @@ struct MemberDetailView: View {
             .navigationBarTitle(Text("Edit member"), displayMode: .inline)
             .navigationBarItems(
                 leading:
-                    Button("Cancel") { presentationMode.wrappedValue.dismiss() },
+                    Button("Cancel") {
+                        moc.rollback()
+                        presentationMode.wrappedValue.dismiss()
+                    },
                 trailing:
                     HStack {
                         Button(action: { deleteMemberInitialCheck() }) { Image(systemName: "trash") }.foregroundColor(.red).padding()
@@ -221,7 +210,7 @@ struct MemberDetailView: View {
             }
         }
         // Save 'hasLeft'
-//        member.hasLeft = hasLeft
+        //        member.hasLeft = hasLeft
         if moc.hasChanges {
             try? moc.save()
         }

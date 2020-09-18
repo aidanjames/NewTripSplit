@@ -78,12 +78,19 @@ struct AddExpenseView: View {
                         Text("\(Currencies.symbol(for: selectedTransactionCurrency.rawValue))")
                         TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
                     }
+                    .onAppear {
+                        // Needs work
+//                        selectedTransactionCurrency = Currencies.currencyForCode(trip.wrappedCurrenciesUsed.first ?? "GBP")
+                    }
                     Picker("Currency", selection: $selectedTransactionCurrency) {
                         ForEach(Currencies.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
                     }
-                    .onAppear(perform: setExchangeRate)
+                    .onAppear {
+                        setExchangeRate()
+                        
+                    }
                     if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
                         Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
                     }
@@ -161,7 +168,6 @@ struct AddExpenseView: View {
                         }
                     }
                 }
-                //                .onAppear(perform: everyoneIsBeneficiary)
             }
             .navigationBarTitle("Add transaction")
             .navigationBarItems(
@@ -201,7 +207,7 @@ struct AddExpenseView: View {
     func everyoneIsBeneficiary() {
         guard firstEntry else { return } // So we don't re-run this every time the user changes currency
         for person in trip.sortedPeopleArray {
-            person.isSelected = !person.hasLeft
+            person.isSelected = person.defaultAsBeneficiary
         }
         firstEntry = false
     }

@@ -81,6 +81,7 @@ struct AddMemberView: View {
         member.id = UUID()
         member.name = name
         member.isSelected = true
+        member.defaultAsBeneficiary = true
         
         // Convert to data
         if let inputImage = inputImage {

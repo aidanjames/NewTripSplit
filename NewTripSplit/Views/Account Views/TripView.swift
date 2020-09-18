@@ -44,7 +44,7 @@ struct TripView: View {
                                         .padding(.vertical)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .sheet(isPresented: $showingMemberSummaryView) {
+                                .fullScreenCover(isPresented: $showingMemberSummaryView) {
                                     MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)
                                 }
                             }
@@ -54,7 +54,7 @@ struct TripView: View {
                         Button(action: { showingAddExpenseView.toggle() }) {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Transaction", onButtonImage: "plus")
                         }
-                        .sheet(isPresented: $showingAddExpenseView) {
+                        .fullScreenCover(isPresented: $showingAddExpenseView) {
                             AddExpenseView(moc: moc, trip: trip)
                         }
                         //                        NavigationLink(destination: SideBetsSummaryView(trip: trip)) {
@@ -73,7 +73,6 @@ struct TripView: View {
                             NeumorphicButton(width: 150, height: 80, belowButtonText: "Settlement", onButtonImage: "equal")
                         }
                         .sheet(isPresented: $showingSettlementView) {
-//                            SettlementView(moc: moc, account: trip)
                             SettlementRecordsView(moc: moc, account: trip)
                         }
                         Button(action: {
@@ -88,7 +87,7 @@ struct TripView: View {
                         .alert(isPresented: $showingTooManyMembersWarning) {
                             Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { showingAddMemberView.toggle() }), secondaryButton: .cancel())
                         }
-                        .sheet(isPresented: $showingAddMemberView) {
+                        .fullScreenCover(isPresented: $showingAddMemberView) {
                             AddMemberToTripView(moc: moc, account: trip)
                         }
                     }

@@ -75,4 +75,16 @@ public enum Currencies: String, CaseIterable {
             return "$"
         }
     }
+    
+    static func currencyForCode(_ code: String) -> Currencies {
+        var returnCurrency: Currencies = .gbp
+        
+        for currency in Currencies.allCases {
+            if currency.rawValue == code {
+                print(currency.rawValue.prefix(3))
+                returnCurrency = currency
+            }
+        }
+        return returnCurrency
+    }
 }

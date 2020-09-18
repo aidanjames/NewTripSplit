@@ -88,7 +88,7 @@ struct AddAccountView: View {
                     .alert(isPresented: $showingTooManyMembersWarning) {
                         Alert(title: Text("Waooooh!"), message: Text("Looks like you're a risk taker. You're about to exceed the maximum recommended number of members for an account! Our testing demonstrates that things work best where the number of members is less than 50. If you want to add more, go ahead, but know that you might get some unexpected behaviour."), primaryButton: .destructive(Text("Live dangerously"), action: { showingAddMemberView.toggle() }), secondaryButton: .cancel())
                     }
-                    .sheet(isPresented: $showingAddMemberView) { AddMemberView(moc: moc, members: $members) }
+                    .fullScreenCover(isPresented: $showingAddMemberView) { AddMemberView(moc: moc, members: $members) }
                     ForEach(members, id: \.wrappedId) { member in
                         PersonListItemView(person: member, showingCheckmark: false)
                     }
@@ -111,6 +111,7 @@ struct AddAccountView: View {
         account.id = UUID()
         account.dateCreated = Date()
         account.name = accountName
+        account.currenciesUsed?.insert(selectedBaseCurrency.rawValue, at: 0)
         
         // Convert to data
         if let inputImage = inputImage {

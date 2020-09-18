@@ -25,7 +25,7 @@ extension Person {
     @NSManaged public var payer: NSSet?
     @NSManaged public var trip: Trip?
     @NSManaged public var isSelected: Bool
-    @NSManaged public var hasLeft: Bool
+    @NSManaged public var defaultAsBeneficiary: Bool
     
     public var wrappedId: UUID { id ?? UUID() }
     public var wrappedName: String {

@@ -52,7 +52,7 @@ struct ContentView: View {
                     }
                 }
                 .navigationBarTitle("Accounts")
-                .sheet(isPresented: $showingAddTrip) { AddAccountView(moc: moc) }
+                .fullScreenCover(isPresented: $showingAddTrip) { AddAccountView(moc: moc) }
             }
         }
         .accentColor(.green)
