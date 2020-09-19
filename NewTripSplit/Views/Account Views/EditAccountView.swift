@@ -85,6 +85,9 @@ struct EditAccountView: View {
                         deleteAccount()
                     }), secondaryButton: .cancel())
                 }
+                
+                Text("Base currency: \(account.wrappedBaseCurrency)")
+                    .padding(.bottom)
 
                 Button(action: { showingAddMemberView.toggle() }) {
                     HStack {
