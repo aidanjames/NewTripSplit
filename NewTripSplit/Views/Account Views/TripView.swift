@@ -37,13 +37,14 @@ struct TripView: View {
                         HStack(spacing: 7) {
                             ForEach(trip.sortedPeopleArray, id: \.id) { person in
                                 Button(action: {
-                                    showingMemberSummaryView.toggle()
                                     selectedMember = person
+                                    showingMemberSummaryView.toggle()
                                 }) {
                                     MemberCardView(person: person)
                                         .padding(.vertical)
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                // There is a weird bug where the selectedMember value is not being populated on the MemberDetailView and we're sending through the first person in the array instead. I cannot for the life of me figure this one out and cannot figure out a workaround either.
                                 .fullScreenCover(isPresented: $showingMemberSummaryView) {
                                     MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)
                                 }
