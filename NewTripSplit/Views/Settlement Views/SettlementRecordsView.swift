@@ -62,7 +62,7 @@ struct SettlementRecordsView: View {
                             Spacer()
                             
                             if !record.paid {
-                                Text("Settle")
+                                Text("Mark paid")
                                     .foregroundColor(.white)
                                     .padding(10)
                                     .background(Color.blue)
@@ -82,19 +82,6 @@ struct SettlementRecordsView: View {
                         }
                     }
                 }
-//                Section {
-//                    Button("Save settlement") {
-//                        account.saveSettlement(settlementData)
-//                    }
-//                    Button("Delete saved settlement") {
-//                        account.deleteSettlement()
-//                    }
-//                    Button("Re-calculate settlement") {
-//                        account.deleteSettlement()
-//                        settlementData = account.calculateSettlement2()
-//                        account.saveSettlement(settlementData)
-//                    }
-//                }
             }
             .navigationBarTitle(Text("Settlement"))
             .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() })
