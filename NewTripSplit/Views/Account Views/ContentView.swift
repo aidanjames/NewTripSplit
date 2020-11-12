@@ -30,7 +30,7 @@ struct ContentView: View {
                             }
                             .padding()
                             .padding(.top)
-                            Text("Hmmm there's no accounts yet....")
+                            Text("Hmm there's no accounts yet....")
                                 .foregroundColor(.secondary)
                                 .padding()
                                 .padding(.bottom)
