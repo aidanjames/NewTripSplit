@@ -28,7 +28,7 @@ struct MemberDetailView: View {
     var saveButtonDisabled: Bool { return inputImage == nil && !showingEditNameField && !moc.hasChanges }
     
     @Environment(\.presentationMode) var presentationMode
-    
+
     var body: some View {
         NavigationView {
             VStack {

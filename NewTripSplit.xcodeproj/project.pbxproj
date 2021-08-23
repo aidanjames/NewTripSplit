@@ -31,9 +31,7 @@
 		3D57F29923BFC7D300938E11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29823BFC7D300938E11 /* Preview Assets.xcassets */; };
 		3D57F29C23BFC7D300938E11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D57F29A23BFC7D300938E11 /* LaunchScreen.storyboard */; };
 		3D5B9E9724FFE794007BBCFA /* SettlementRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */; };
-		3D5D3C872452134B003635E6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5D3C862452134B003635E6 /* Lottie */; };
 		3D5D3C8A2452140B003635E6 /* Payment-animated-illustrationOLD.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */; };
-		3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8B24521450003635E6 /* LottieView.swift */; };
 		3D5D3C8E2452181E003635E6 /* Payment-animated-illustration.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */; };
 		3D698B7724EEFC51001047CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D698B7624EEFC51001047CA /* Constants.swift */; };
 		3D6ED07223BFFA2D004F7083 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6ED07123BFFA2D004F7083 /* Currencies.swift */; };
@@ -95,7 +93,6 @@
 		3D57F29D23BFC7D300938E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D5B9E9624FFE794007BBCFA /* SettlementRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementRecord.swift; sourceTree = "<group>"; };
 		3D5D3C892452140B003635E6 /* Payment-animated-illustrationOLD.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustrationOLD.json"; sourceTree = "<group>"; };
-		3D5D3C8B24521450003635E6 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		3D5D3C8D2452181E003635E6 /* Payment-animated-illustration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Payment-animated-illustration.json"; sourceTree = "<group>"; };
 		3D698B7624EEFC51001047CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D6ED07123BFFA2D004F7083 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
@@ -134,7 +131,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D5D3C872452134B003635E6 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +303,6 @@
 			children = (
 				3DA8E6CF240E9C590036B536 /* GreenButtonView.swift */,
 				3D30BBDB23E4D3BE005A8244 /* NeumorphicButton.swift */,
-				3D5D3C8B24521450003635E6 /* LottieView.swift */,
 			);
 			path = "Shared Views";
 			sourceTree = "<group>";
@@ -343,7 +338,6 @@
 			);
 			name = NewTripSplit;
 			packageProductDependencies = (
-				3D5D3C862452134B003635E6 /* Lottie */,
 			);
 			productName = NewTripSplit;
 			productReference = 3D57F28923BFC7D200938E11 /* NewTripSplit.app */;
@@ -416,7 +410,6 @@
 				3DB1739D23BFD63E00DF2CE1 /* Transaction+CoreDataProperties.swift in Sources */,
 				3D145EEC23E0CA310078AC75 /* AddMemberView.swift in Sources */,
 				3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */,
-				3D5D3C8C24521450003635E6 /* LottieView.swift in Sources */,
 				3DB1739F23BFD63E00DF2CE1 /* Person+CoreDataProperties.swift in Sources */,
 				3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */,
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
@@ -667,14 +660,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		3D5D3C862452134B003635E6 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D5D3C852452134B003635E6 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3D57F29023BFC7D200938E11 /* NewTripSplit.xcdatamodeld */ = {

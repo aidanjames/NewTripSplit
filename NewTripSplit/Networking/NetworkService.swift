@@ -21,6 +21,7 @@ class NetworkService {
             completion(.failure(.badURL))
             return
         }
+        print(url)
         URLSession.shared.dataTask(with: url) { data, response, error in
             // the task has completed – push our work back to the main thread
             DispatchQueue.main.async {

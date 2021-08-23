@@ -23,6 +23,7 @@ struct TripView: View {
     @State private var shareItems: ShareItems = .leaderboard
     @State private var showingShareSheet = false
     @State private var selectedMember: Person?
+    @State private var newSelectedMember: UUID = UUID()
     @State private var showingLeaderboard = false
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
@@ -36,14 +37,17 @@ struct TripView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 7) {
                             ForEach(trip.sortedPeopleArray, id: \.id) { person in
-                                Button(action: {
-                                    selectedMember = person
-                                    showingMemberSummaryView.toggle()
-                                }) {
-                                    MemberCardView(person: person)
-                                        .padding(.vertical)
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                                
+                                MemberCardView(person: person)
+                                    .onTapGesture {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                            selectedMember = person
+                                            showingMemberSummaryView.toggle()
+
+                                        }
+                                    }
+                                    .padding(.vertical)
+                                
                                 // There is a weird bug where the selectedMember value is not being populated on the MemberDetailView and we're sending through the first person in the array instead. I cannot for the life of me figure this one out and cannot figure out a workaround either.
                                 .fullScreenCover(isPresented: $showingMemberSummaryView) {
                                     MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)

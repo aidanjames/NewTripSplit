@@ -283,6 +283,7 @@ struct AddExpenseView: View {
             if let currency = trip.wrappedCurrenciesUsed.first {
                 if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
                     selectedTransactionCurrency = currencyObject
+                    print("I am here")
                 }
             }
         }

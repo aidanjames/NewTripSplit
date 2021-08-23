@@ -22,7 +22,8 @@ class CurrencyPair: ObservableObject {
         
     
     func getExchangeRate() {
-        NetworkService.shared.fetchData(from: "https://api.exchangeratesapi.io/latest?symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
+              
+        NetworkService.shared.fetchData(from: "http://api.exchangeratesapi.io/latest?access_key=b60dceb2f7a0b655e8a46719fe0c2e02&symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
             switch result {
             case .success(let str):
                 let decoder = JSONDecoder()
