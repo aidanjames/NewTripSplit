@@ -22,7 +22,6 @@ struct AddExpenseView: View {
     @State private var expenseName = ""
     @State private var transactionAmount = ""
     @State private var selectedTransactionCurrency = Currencies.gbp
-    @State private var firstEntry = true
     @State private var transactionDate = Date()
     @State private var paidBySelection = 0
     @State private var useCurrentLocation = true
@@ -40,6 +39,11 @@ struct AddExpenseView: View {
     // Confirm paid by...
     @State private var showingPaidByConfirmationAlert = false
     @State private var paidByConfirmed = false
+    
+    // Stop calling the same things over again
+    @State private var alreadyGotLocation = false
+    @State private var alreadyGotPreviouslyUsedExchg = false
+    @State private var alreadySetBeneficiaries = false
     
     
     @ObservedObject var locationFetcher = LocationFetcher.shared
@@ -78,21 +82,28 @@ struct AddExpenseView: View {
                         Text("\(Currencies.symbol(for: selectedTransactionCurrency.rawValue))")
                         TextField("Transaction amount", text: $transactionAmount).keyboardType(.decimalPad)
                     }
-                    .onAppear {
-                        // Needs work
-//                        selectedTransactionCurrency = Currencies.currencyForCode(trip.wrappedCurrenciesUsed.first ?? "GBP")
-                    }
+
                     Picker("Currency", selection: $selectedTransactionCurrency) {
                         ForEach(Currencies.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
                     }
+                    .onChange(of: selectedTransactionCurrency) { _ in
+                        setExchangeRate()
+                    }
                     .onAppear {
                         setExchangeRate()
-                        
                     }
                     if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
-                        Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
+                        if currencyPair.exchangeRate < 0.0001 {
+                            Text("No rate")
+                                .onTapGesture {
+                                    setExchangeRate()
+                                }
+                        } else {
+                            Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
+                        }
+                        
                     }
                     if currencyPair.error != nil && !showingManualRateInputField {
                         Text("Cannot fetch exchange rate")
@@ -194,8 +205,9 @@ struct AddExpenseView: View {
     
     
     func fetchLocation() {
-        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
+        guard !alreadyGotLocation else { return } // So we don't re-run this every time the user changes currency
         locationFetcher.start()
+        alreadyGotLocation = true
     }
     
     
@@ -205,11 +217,11 @@ struct AddExpenseView: View {
     
     
     func everyoneIsBeneficiary() {
-        guard firstEntry else { return } // So we don't re-run this every time the user changes currency
+        guard !alreadySetBeneficiaries else { return } // So we don't re-run this every time the user changes currency
         for person in trip.sortedPeopleArray {
             person.isSelected = person.defaultAsBeneficiary
         }
-        firstEntry = false
+        alreadySetBeneficiaries = true
     }
     
     
@@ -279,11 +291,11 @@ struct AddExpenseView: View {
         currencyPair.error = nil
         
         // This will pre-populate the transaction currency with the most recently used transaction
-        if firstEntry { // So we don't reset it every time we return from the currency selection screen
+        if !alreadyGotPreviouslyUsedExchg { // So we don't reset it every time we return from the currency selection screen
             if let currency = trip.wrappedCurrenciesUsed.first {
                 if let currencyObject = Currencies.allCases.first(where: { $0.rawValue == currency }) {
                     selectedTransactionCurrency = currencyObject
-                    print("I am here")
+                    alreadyGotPreviouslyUsedExchg = true
                 }
             }
         }

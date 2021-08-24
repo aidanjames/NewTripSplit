@@ -40,18 +40,15 @@ struct TripView: View {
                                 
                                 MemberCardView(person: person)
                                     .onTapGesture {
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                            selectedMember = person
-                                            showingMemberSummaryView.toggle()
-
-                                        }
+                                        selectedMember = person
+                                        showingMemberSummaryView.toggle()
                                     }
                                     .padding(.vertical)
                                 
                                 // There is a weird bug where the selectedMember value is not being populated on the MemberDetailView and we're sending through the first person in the array instead. I cannot for the life of me figure this one out and cannot figure out a workaround either.
-                                .fullScreenCover(isPresented: $showingMemberSummaryView) {
-                                    MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)
-                                }
+                                    .fullScreenCover(isPresented: $showingMemberSummaryView) {
+                                        MemberDetailView(member: selectedMember ?? person, account: trip, moc: moc)
+                                    }
                             }
                         }
                     }
@@ -105,39 +102,39 @@ struct TripView: View {
             .navigationBarTitle("\(trip.wrappedName)", displayMode: .inline)
             .navigationBarItems(trailing:
                                     HStack {
-                                        Button(action: { showingShareActionSheet.toggle() }) {
-                                            Image(systemName: "square.and.arrow.up")
-                                                .font(.title)
-                                        }
-                                        .actionSheet(isPresented: $showingShareActionSheet) {
-                                            ActionSheet(title: Text("Share trip info"), message: nil, buttons: [
-                                                .default(Text("Leaderboard")) {
-                                                    shareItems = .leaderboard
-                                                    showingShareSheet.toggle()
-                                                },
-                                                .default(Text("Settlement")) {
-                                                    shareItems = .settlement
-                                                    showingShareSheet.toggle()
-                                                },
-                                                .default(Text("Transactions")) {
-                                                    shareItems = .transactions
-                                                    showingShareSheet.toggle()
-                                                },
-                                                .default(Text("Full bhuna")) {
-                                                    shareItems = .all
-                                                    showingShareSheet.toggle()
-                                                },
-                                                .cancel()
-                                            ])
-                                        }
-                                        .sheet(isPresented: $showingShareSheet) { ShareSheet(activityItems: itemsForShareSheet()) }
-                                        .padding()
-                                        Button(action: { showingEditAccountSheet.toggle() }) {
-                                            Image(systemName: "ellipsis.circle")
-                                                .font(.title)
-                                        }
-                                        .sheet(isPresented: $showingEditAccountSheet) { EditAccountView(moc: moc, account: trip) }
-                                    }
+                Button(action: { showingShareActionSheet.toggle() }) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.title)
+                }
+                .actionSheet(isPresented: $showingShareActionSheet) {
+                    ActionSheet(title: Text("Share trip info"), message: nil, buttons: [
+                        .default(Text("Leaderboard")) {
+                            shareItems = .leaderboard
+                            showingShareSheet.toggle()
+                        },
+                        .default(Text("Settlement")) {
+                            shareItems = .settlement
+                            showingShareSheet.toggle()
+                        },
+                        .default(Text("Transactions")) {
+                            shareItems = .transactions
+                            showingShareSheet.toggle()
+                        },
+                        .default(Text("Full bhuna")) {
+                            shareItems = .all
+                            showingShareSheet.toggle()
+                        },
+                        .cancel()
+                    ])
+                }
+                .sheet(isPresented: $showingShareSheet) { ShareSheet(activityItems: itemsForShareSheet()) }
+                .padding()
+                Button(action: { showingEditAccountSheet.toggle() }) {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.title)
+                }
+                .sheet(isPresented: $showingEditAccountSheet) { EditAccountView(moc: moc, account: trip) }
+            }
                                     .foregroundColor(.green)
                                 
             )
