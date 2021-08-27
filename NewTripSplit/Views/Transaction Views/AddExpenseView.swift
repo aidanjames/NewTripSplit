@@ -88,9 +88,11 @@ struct AddExpenseView: View {
                             Text(currency.rawValue)
                         }
                     }
+                    // This is to get the exchange rate immediately after changing currency
                     .onChange(of: selectedTransactionCurrency) { _ in
                         setExchangeRate()
                     }
+                    // TODO: Not sure if this is necessary... test this!
                     .onAppear {
                         setExchangeRate()
                     }
