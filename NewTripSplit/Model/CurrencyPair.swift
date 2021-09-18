@@ -19,16 +19,23 @@ class CurrencyPair: ObservableObject {
     @Published var exchangeRate: Double = 0.0
     
     private init() { }
-        
+    
     
     func getExchangeRate() {
-              
-//        https://api.exchangerate.host/latest?base=GBP&symbols=EUR
-//        NetworkService.shared.fetchData(from: "http://api.exchangeratesapi.io/latest?access_key=b60dceb2f7a0b655e8a46719fe0c2e02&symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
-        NetworkService.shared.fetchData(from: "https://api.exchangerate.host/latest?base=\(baseCurrency)&symbols=\(foreignCurrency)") { result in
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let today = formatter.string(from: Date())
+        
+        
+        
+        //        https://api.exchangerate.host/latest?base=GBP&symbols=EUR
+        //        NetworkService.shared.fetchData(from: "http://api.exchangeratesapi.io/latest?access_key=b60dceb2f7a0b655e8a46719fe0c2e02&symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
+        NetworkService.shared.fetchData(from: "https://api.exchangerate.host/latest?base=\(baseCurrency)&symbols=\(foreignCurrency)&v=\(today)") { result in
             switch result {
             case .success(let str):
                 let decoder = JSONDecoder()
+                print("This is the str: \(str)")
                 if let rateObject = try? decoder.decode(ExchangeRate.self, from: str) {
                     print(rateObject)
                     if let rate = rateObject.rates[self.foreignCurrency] {
@@ -39,10 +46,10 @@ class CurrencyPair: ObservableObject {
             case .failure(let error):
                 switch error {
                 case .badURL:
-                    print("Bad URL")
+                    print("Bad URL1")
                     self.error = error.localizedDescription
                 case .requestFailed:
-                    print("Bad URL")
+                    print("Bad URL2")
                     self.error = error.localizedDescription
                 case .unknown:
                     print("Unknown error")

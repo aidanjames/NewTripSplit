@@ -18,11 +18,13 @@ class NetworkService {
     func fetchData(from urlString: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         // check the URL is OK, otherwise return with a failure
         guard let url = URL(string: urlString) else {
+            print(urlString)
             completion(.failure(.badURL))
             return
         }
         print(url)
         URLSession.shared.dataTask(with: url) { data, response, error in
+                        
             // the task has completed – push our work back to the main thread
             DispatchQueue.main.async {
                 if let data = data {
