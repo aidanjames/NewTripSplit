@@ -23,14 +23,13 @@ class CurrencyPair: ObservableObject {
     
     func getExchangeRate() {
         
+        // https://api.exchangerate.host/latest?base=GBP&symbols=EUR&v=2021-03-23
+        
+        // Get today's date and format it correctly for the API request (so we don't get back a cached repsponse).
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let today = formatter.string(from: Date())
         
-        
-        
-        //        https://api.exchangerate.host/latest?base=GBP&symbols=EUR
-        //        NetworkService.shared.fetchData(from: "http://api.exchangeratesapi.io/latest?access_key=b60dceb2f7a0b655e8a46719fe0c2e02&symbols=\(foreignCurrency)&base=\(baseCurrency)") { result in
         NetworkService.shared.fetchData(from: "https://api.exchangerate.host/latest?base=\(baseCurrency)&symbols=\(foreignCurrency)&v=\(today)") { result in
             switch result {
             case .success(let str):
