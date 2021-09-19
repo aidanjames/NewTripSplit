@@ -18,7 +18,6 @@ class NetworkService {
     func fetchData(from urlString: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         // check the URL is OK, otherwise return with a failure
         guard let url = URL(string: urlString) else {
-            print(urlString)
             completion(.failure(.badURL))
             return
         }

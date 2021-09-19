@@ -45,7 +45,6 @@ struct AddExpenseView: View {
     @State private var alreadyGotPreviouslyUsedExchg = false
     @State private var alreadySetBeneficiaries = false
     
-    
     @ObservedObject var locationFetcher = LocationFetcher.shared
     
     var baseTransactionAmount: Double {
@@ -87,14 +86,6 @@ struct AddExpenseView: View {
                         ForEach(Currencies.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
-                    }
-                    // This is to get the exchange rate immediately after changing currency
-                    .onChange(of: selectedTransactionCurrency) { _ in
-                        setExchangeRate()
-                    }
-                    // TODO: Not sure if this is necessary... test this!
-                    .onAppear {
-                        setExchangeRate()
                     }
                     if trip.baseCurrency != selectedTransactionCurrency.rawValue && currencyPair.error == nil {
                         if currencyPair.exchangeRate < 0.0001 {
@@ -199,6 +190,7 @@ struct AddExpenseView: View {
             .onAppear {
                 fetchLocation()
                 everyoneIsBeneficiary()
+                setExchangeRate()
             }
             
         }
@@ -289,6 +281,7 @@ struct AddExpenseView: View {
     
     
     func setExchangeRate() {
+
         currencyPair.exchangeRate = 0
         currencyPair.error = nil
         

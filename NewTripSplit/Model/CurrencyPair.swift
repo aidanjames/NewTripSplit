@@ -34,7 +34,6 @@ class CurrencyPair: ObservableObject {
             switch result {
             case .success(let str):
                 let decoder = JSONDecoder()
-                print("This is the str: \(str)")
                 if let rateObject = try? decoder.decode(ExchangeRate.self, from: str) {
                     print(rateObject)
                     if let rate = rateObject.rates[self.foreignCurrency] {
@@ -45,10 +44,10 @@ class CurrencyPair: ObservableObject {
             case .failure(let error):
                 switch error {
                 case .badURL:
-                    print("Bad URL1")
+                    print("Bad URL .badURL")
                     self.error = error.localizedDescription
                 case .requestFailed:
-                    print("Bad URL2")
+                    print("Bad URL2 .requestFailed")
                     self.error = error.localizedDescription
                 case .unknown:
                     print("Unknown error")
