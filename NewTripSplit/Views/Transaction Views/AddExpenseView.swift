@@ -95,6 +95,9 @@ struct AddExpenseView: View {
                                 }
                         } else {
                             Text("Base amount \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: baseTransactionAmount, withSymbol: true, withSign: true)) (rate: \(currencyPair.exchangeRate))")
+                                .onTapGesture {
+                                    showingManualRateInputField.toggle()
+                                }
                         }
                         
                     }
