@@ -48,7 +48,6 @@ struct TransactionListView: View {
                         }
                     }
                 }
-                Spacer(minLength: CGFloat(trip.transactionsArray.count * 10))
             }
             .colorMultiply(colorScheme == .dark ? .white : Color(.secondarySystemBackground))
             .disabled(!bottomSheetIsOpen)
