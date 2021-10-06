@@ -60,6 +60,9 @@
 		3DB1743A23BFFE7300010233 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743923BFFE7300010233 /* TransactionListItemView.swift */; };
 		3DB1743F23C0021500010233 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1743E23C0021500010233 /* TripView.swift */; };
 		3DBDDF1423C929AD0012F714 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDDF1323C929AD0012F714 /* TransactionListView.swift */; };
+		3DC3369F270DE4E300DB2D3D /* CSVGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC3369E270DE4E300DB2D3D /* CSVGenerator.swift */; };
+		3DC336A1270DE79C00DB2D3D /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC336A0270DE79C00DB2D3D /* Double+Ext.swift */; };
+		3DC336A3270DE8BD00DB2D3D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC336A2270DE8BD00DB2D3D /* Date+Ext.swift */; };
 		3DCBC522250BD5C60030425C /* BalancePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBC521250BD5C60030425C /* BalancePosition.swift */; };
 		3DD0975123C3C02F003042F0 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0975023C3C02F003042F0 /* ColorExtension.swift */; };
 		3DF0846A241036450022C414 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF08469241036450022C414 /* Category.swift */; };
@@ -121,6 +124,9 @@
 		3DB1743923BFFE7300010233 /* TransactionListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListItemView.swift; sourceTree = "<group>"; };
 		3DB1743E23C0021500010233 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		3DBDDF1323C929AD0012F714 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
+		3DC3369E270DE4E300DB2D3D /* CSVGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVGenerator.swift; sourceTree = "<group>"; };
+		3DC336A0270DE79C00DB2D3D /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
+		3DC336A2270DE8BD00DB2D3D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		3DCBC521250BD5C60030425C /* BalancePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancePosition.swift; sourceTree = "<group>"; };
 		3DD0975023C3C02F003042F0 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3DF08469241036450022C414 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -317,6 +323,9 @@
 				3D145EED23E0CEFE0078AC75 /* ImagePickerView.swift */,
 				3D4EADDA240ACCFD00C5DF63 /* ShareSheet.swift */,
 				3D698B7624EEFC51001047CA /* Constants.swift */,
+				3DC3369E270DE4E300DB2D3D /* CSVGenerator.swift */,
+				3DC336A0270DE79C00DB2D3D /* Double+Ext.swift */,
+				3DC336A2270DE8BD00DB2D3D /* Date+Ext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -399,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DC3369F270DE4E300DB2D3D /* CSVGenerator.swift in Sources */,
 				3D57F29223BFC7D200938E11 /* NewTripSplit.xcdatamodeld in Sources */,
 				3D994334250CDBFD009CC678 /* LeaderboardRecordView.swift in Sources */,
 				3DB1739E23BFD63E00DF2CE1 /* Person+CoreDataClass.swift in Sources */,
@@ -414,6 +424,7 @@
 				3D44E46323E8C3DC00527040 /* TransactionReceiptView.swift in Sources */,
 				3D90F9A323C3FB340065B039 /* AddExpenseView.swift in Sources */,
 				3D145EEA23E0C1910078AC75 /* AddAccountView.swift in Sources */,
+				3DC336A1270DE79C00DB2D3D /* Double+Ext.swift in Sources */,
 				3DCBC522250BD5C60030425C /* BalancePosition.swift in Sources */,
 				3D81812A23DCC4B4009301BB /* MapView.swift in Sources */,
 				3D0727E7240192F600022421 /* MemberDetailView.swift in Sources */,
@@ -424,6 +435,7 @@
 				3D17B71024FFB19500F12B4F /* SettlementRecordsView.swift in Sources */,
 				3D4EADD9240931ED00C5DF63 /* EditAccountView.swift in Sources */,
 				3D57F28D23BFC7D200938E11 /* AppDelegate.swift in Sources */,
+				3DC336A3270DE8BD00DB2D3D /* Date+Ext.swift in Sources */,
 				3D698B7724EEFC51001047CA /* Constants.swift in Sources */,
 				3DA8E6D0240E9C590036B536 /* GreenButtonView.swift in Sources */,
 				3D57F29423BFC7D200938E11 /* ContentView.swift in Sources */,

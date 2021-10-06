@@ -124,6 +124,11 @@ struct TripView: View {
                             shareItems = .all
                             showingShareSheet.toggle()
                         },
+                        .default(Text("Transactions CSV")) {
+                            print(CSVGenerator.transactionsToCSVString(transactions: trip.transactionsArray))
+                            shareItems = .csv
+                            showingShareSheet.toggle()
+                        },
                         .cancel()
                     ])
                 }
@@ -146,7 +151,11 @@ struct TripView: View {
     
     func itemsForShareSheet() -> [String] {
         var array = [String]()
-        array.append("*****\(trip.wrappedName.uppercased())*****")
+        
+        if shareItems != .csv {
+            array.append("*****\(trip.wrappedName.uppercased())*****")
+        }
+        
         
         if shareItems == .leaderboard || shareItems == .all {
             array.append("\n\n***MEMBER BALANCES***")
@@ -168,13 +177,18 @@ struct TripView: View {
                 array.append("\(transaction.dateDisplay) \(transaction.wrappedTitle): \(Currencies.format(currency: trip.wrappedBaseCurrency, amount: transaction.baseAmt, withSymbol: true, withSign: false)) \(trip.baseCurrency != transaction.trnCurrency ? "(\(Currencies.format(currency: transaction.trnCurrency ?? "Unknown", amount: transaction.trnAmt, withSymbol: true, withSign: true)) @\(String(format: "%.06f", transaction.exchangeRate)))" : "")\nPaid by \(transaction.paidBy?.wrappedName ?? "") for \(transaction.populatePaidForNames()).\n------------")
             }
         }
+        
+        if shareItems == .csv {
+            array.append(CSVGenerator.transactionsToCSVString(transactions: trip.transactionsArray))
+        }
+        
         return array
     }
     
 }
 
 enum ShareItems {
-    case leaderboard, settlement, transactions, all
+    case leaderboard, settlement, transactions, all, csv
 }
 
 struct TripView_Previews: PreviewProvider {
